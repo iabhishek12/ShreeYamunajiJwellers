@@ -25,14 +25,14 @@ import {
   categoryPromo,
 } from '../../../data/mock/categoryMock';
 
-const screenHorizontalPadding = 18;
+const gridHorizontalPadding = 28;
 const cardGap = 5;
 
 function CategoriesScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const cardWidth = Math.floor(
-    (width - screenHorizontalPadding * 2 - cardGap * 2) / 3,
+    (width - gridHorizontalPadding - cardGap * 1.2) / 3,
   );
   const cardImageHeight = Math.round(cardWidth * 1.08);
 
@@ -54,23 +54,23 @@ function CategoriesScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
         >
-          <View style={styles.heroCard}>
-            <ImageBackground
-              source={categoryHero.image}
-              resizeMode="cover"
-              imageStyle={styles.heroImage}
-              style={styles.heroImageFill}
+          <ImageBackground
+            source={categoryHero.image}
+            resizeMode="cover"
+            className="mx-[14px] mt-2 h-[180px] overflow-hidden rounded-[14px]"
+          >
+            <View
+              className="flex-1 justify-center px-2"
+              style={styles.heroOverlay}
             >
-              <View className="flex-1 justify-center px-5" style={styles.heroOverlay}>
-                <Text style={styles.heroTitle}>{categoryHero.title}</Text>
-                <Text className="mt-2 text-[12px] leading-[18px] text-[#5d554d]">
-                  {categoryHero.description}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
+              <Text style={styles.heroTitle}>{categoryHero.title}</Text>
+              <Text className="mt-3 text-[12px] leading-[10px] text-[#5d554d]">
+                {categoryHero.description}
+              </Text>
+            </View>
+          </ImageBackground>
 
-          <View className="mt-4 flex-row flex-wrap justify-between px-[18px]">
+          <View className="mx-[14px] mt-4 flex-row flex-wrap justify-between">
             {categoryCards.map(item => {
               const Icon = iconMap[item.icon];
 
@@ -83,7 +83,7 @@ function CategoriesScreen({ navigation }) {
                       productId: item.featuredProductId,
                     })
                   }
-                  className="mb-4 overflow-hidden rounded-[16px] border border-[#eee4d8] bg-white"
+                  className="mb-4 mt-5 overflow-hidden rounded-[12px] border border-[#eee4d8] bg-white "
                   style={[styles.cardShadow, { width: cardWidth }]}
                 >
                   <Image
@@ -129,7 +129,7 @@ function CategoriesScreen({ navigation }) {
                 productId: categoryPromo.featuredProductId,
               })
             }
-            className="mx-[18px] mt-2 overflow-hidden rounded-[12px] bg-[#f5ecdf]"
+            className="mx-[14px] mt-5 overflow-hidden rounded-[12px] bg-[#f5ecdf]"
             style={styles.cardShadow}
           >
             <ImageBackground
@@ -137,19 +137,22 @@ function CategoriesScreen({ navigation }) {
               resizeMode="cover"
               className="h-[150px] w-full"
             >
-              <View className="flex-1 justify-center bg-[#fff8f14d] px-5">
-                <View className="max-w-[52%]">
+              <View className="flex-1 justify-center bg-[#fff8f14d] px-2 py-4">
+                <View className="max-w-[72%]">
                   <Text className="text-[10px] font-bold tracking-[1.8px] text-[#27211c]">
                     {categoryPromo.eyebrow}
                   </Text>
-                  <Text style={styles.promoTitle} className="mt-3 text-[#181410]">
+                  <Text
+                    style={styles.promoTitle}
+                    className="mt-3 text-[#181410]"
+                  >
                     {categoryPromo.title}
                   </Text>
-                  <Text className="mt-2 text-[13px] leading-[20px] text-[#5f554d]">
+                  <Text className="mt-1 text-[11px] font-semibold leading-[8px] text-[#5f554d]">
                     {categoryPromo.description}
                   </Text>
 
-                  <View className="mt-4 flex-row items-center self-start rounded-full bg-[#1b1a18] px-4 py-2.5">
+                  <View className="mt-2 flex-row items-center self-start rounded-full bg-[#1b1a18] px-4 py-2.5">
                     <Text className="text-[12px] font-bold text-white">
                       {categoryPromo.buttonLabel}
                     </Text>
@@ -165,7 +168,7 @@ function CategoriesScreen({ navigation }) {
             </ImageBackground>
           </TouchableOpacity>
 
-          <View className="mx-[18px] mt-8 flex-row border-y border-[#eee5d8] bg-[#fbf7f1] py-5">
+          <View className="mx-[14px] mt-10 flex-row border-y border-[#eee5d8] bg-[#fbf7f1] py-5">
             {categoryAssuranceItems.map((item, index) => {
               const Icon = iconMap[item.icon];
 
@@ -201,21 +204,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 18,
   },
-  heroCard: {
-    height: 108,
-    marginHorizontal: screenHorizontalPadding,
-    marginTop: 6,
-    overflow: 'hidden',
-    borderRadius: 14,
-    backgroundColor: '#f7efe3',
-  },
-  heroImage: {
-    borderRadius: 14,
-  },
-  heroImageFill: {
-    height: 108,
-    width: '100%',
-  },
   heroOverlay: {
     backgroundColor: 'rgba(255,255,255,0.18)',
   },
@@ -225,8 +213,9 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
-    fontSize: 23,
-    lineHeight: 29,
+    fontSize: 20,
+    fontWeight: 'bold',
+    lineHeight: 24,
     color: '#171411',
   },
   promoTitle: {
@@ -235,8 +224,9 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
-    fontSize: 22,
-    lineHeight: 27,
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 22,
   },
   arrowSpacing: {
     marginLeft: 8,
