@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text, View } = require('react-native');
-const { iconMap } = require('./iconMap');
+import React from 'react';
+import { Text, View } from 'react-native';
+import { iconMap } from './iconMap';
 
 const gold = '#b58b3c';
 
@@ -33,4 +33,4 @@ function AssuranceStrip({ items }) {
   );
 }
 
-module.exports = AssuranceStrip;
+export default AssuranceStrip;

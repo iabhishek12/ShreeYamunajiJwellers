@@ -1,5 +1,5 @@
-const { createAsyncThunk, createSlice } = require('@reduxjs/toolkit');
-const { findMockAccountByPhone } = require('../../../data/mock/authMock');
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { findMockAccountByPhone } from '../../../data/mock/authMock';
 
 const OTP_RESEND_SECONDS = 30;
 
@@ -8,7 +8,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const maskPhoneNumber = phoneNumber =>
   `+91 ${phoneNumber.slice(0, 2)}******${phoneNumber.slice(-2)}`;
 
-const requestMockOtp = createAsyncThunk(
+export const requestMockOtp = createAsyncThunk(
   'auth/requestMockOtp',
   async (phoneNumber, { rejectWithValue }) => {
     const sanitizedPhone = `${phoneNumber || ''}`.replace(/\D/g, '').slice(0, 10);
@@ -31,7 +31,7 @@ const requestMockOtp = createAsyncThunk(
   }
 );
 
-const verifyMockOtp = createAsyncThunk(
+export const verifyMockOtp = createAsyncThunk(
   'auth/verifyMockOtp',
   async (otpCode, { getState, rejectWithValue }) => {
     const state = getState().auth;
@@ -135,13 +135,5 @@ const authSlice = createSlice({
   },
 });
 
-const { clearAuthError, resetAuthFlow, logout } = authSlice.actions;
-
-module.exports = {
-  authReducer: authSlice.reducer,
-  clearAuthError,
-  resetAuthFlow,
-  logout,
-  requestMockOtp,
-  verifyMockOtp,
-};
+export const { clearAuthError, resetAuthFlow, logout } = authSlice.actions;
+export const authReducer = authSlice.reducer;

@@ -1,24 +1,30 @@
-const React = require('react');
-const { SafeAreaView, ScrollView, StatusBar, Text, View } = require('react-native');
-const { useSafeAreaInsets } = require('react-native-safe-area-context');
-const HomeHeader = require('../../../components/home/HomeHeader');
-const SearchBar = require('../../../components/home/SearchBar');
-const HeroBanner = require('../../../components/home/HeroBanner');
-const CategoryRow = require('../../../components/home/CategoryRow');
-const AssuranceStrip = require('../../../components/home/AssuranceStrip');
-const CollectionCard = require('../../../components/home/CollectionCard');
-const SectionHeader = require('../../../components/home/SectionHeader');
-const BestSellerRow = require('../../../components/home/BestSellerRow');
-const BottomBar = require('../../../components/home/BottomBar');
-const {
+import React from 'react';
+import { SafeAreaView, ScrollView, StatusBar, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import HomeHeader from '../../../components/home/HomeHeader';
+import SearchBar from '../../../components/home/SearchBar';
+import HeroBanner from '../../../components/home/HeroBanner';
+import CategoryRow from '../../../components/home/CategoryRow';
+import AssuranceStrip from '../../../components/home/AssuranceStrip';
+import CollectionCard from '../../../components/home/CollectionCard';
+import SectionHeader from '../../../components/home/SectionHeader';
+import BestSellerRow from '../../../components/home/BestSellerRow';
+import NewArrivalsSection from '../../../components/home/NewArrivalsSection';
+import PromiseSection from '../../../components/home/PromiseSection';
+import ReviewSwiperSection from '../../../components/home/ReviewSwiperSection';
+import BottomBar from '../../../components/home/BottomBar';
+import {
   assuranceItems,
   bestSellerItems,
   bottomNavItems,
   categoryItems,
   collectionCards,
   heroBanner,
-} = require('../../../data/mock/homeMock');
-const { useAppSelector } = require('../../../store/hooks');
+  newArrivalsSection,
+  promiseSection,
+  reviewSection,
+} from '../../../data/mock/homeMock';
+import { useAppSelector } from '../../../store/hooks';
 
 const scrollContentStyle = {
   paddingBottom: 16,
@@ -33,13 +39,20 @@ function HomeScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#fbf7f1" />
 
       <View className="flex-1 bg-[#fbf7f1]">
+        <View
+          className="bg-[#fbf7f1] pb-3"
+          style={{ paddingTop: Math.max(insets.top, 4) }}
+        >
+          <HomeHeader />
+        </View>
+
         <ScrollView
+          className="flex-1"
           bounces={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={scrollContentStyle}
         >
-          <View style={{ paddingTop: Math.max(insets.top, 6) }}>
-            <HomeHeader />
+          <View>
             <SearchBar />
             <HeroBanner banner={heroBanner} />
             <CategoryRow items={categoryItems} />
@@ -59,6 +72,9 @@ function HomeScreen() {
 
             <SectionHeader title="Best Sellers" actionLabel="VIEW ALL" />
             <BestSellerRow items={bestSellerItems} />
+            <PromiseSection section={promiseSection} />
+            <NewArrivalsSection section={newArrivalsSection} />
+            <ReviewSwiperSection section={reviewSection} />
           </View>
         </ScrollView>
 
@@ -68,4 +84,4 @@ function HomeScreen() {
   );
 }
 
-module.exports = HomeScreen;
+export default HomeScreen;

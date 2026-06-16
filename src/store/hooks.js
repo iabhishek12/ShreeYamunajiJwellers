@@ -1,9 +1,4 @@
-const { useDispatch, useSelector } = require('react-redux');
+import { useDispatch, useSelector } from 'react-redux';
 
-const useAppDispatch = () => useDispatch();
-const useAppSelector = useSelector;
-
-module.exports = {
-  useAppDispatch,
-  useAppSelector,
-};
+export const useAppDispatch = () => useDispatch();
+export const useAppSelector = useSelector;

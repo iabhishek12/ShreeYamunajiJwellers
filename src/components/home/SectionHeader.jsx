@@ -1,6 +1,6 @@
-const React = require('react');
-const { Platform, StyleSheet, Text, TouchableOpacity, View } = require('react-native');
-const { ArrowRight } = require('lucide-react-native');
+import React from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ArrowRight } from 'lucide-react-native';
 
 function SectionHeader({ title, actionLabel }) {
   return (
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = SectionHeader;
+export default SectionHeader;

@@ -1,4 +1,4 @@
-const {
+import {
   BadgeHelp,
   Cable,
   Circle,
@@ -11,9 +11,9 @@ const {
   Sparkles,
   Truck,
   User,
-} = require('lucide-react-native');
+} from 'lucide-react-native';
 
-const iconMap = {
+export const iconMap = {
   BadgeHelp,
   Cable,
   Circle,
@@ -26,8 +26,4 @@ const iconMap = {
   Sparkles,
   Truck,
   User,
-};
-
-module.exports = {
-  iconMap,
 };

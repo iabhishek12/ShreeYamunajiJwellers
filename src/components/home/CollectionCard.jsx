@@ -1,6 +1,6 @@
-const React = require('react');
-const { ImageBackground, Text, TouchableOpacity, View } = require('react-native');
-const { ArrowRight } = require('lucide-react-native');
+import React from 'react';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ArrowRight } from 'lucide-react-native';
 
 const cardImageStyle = {
   borderRadius: 20,
@@ -44,4 +44,4 @@ function CollectionCard({ item }) {
   );
 }
 
-module.exports = CollectionCard;
+export default CollectionCard;

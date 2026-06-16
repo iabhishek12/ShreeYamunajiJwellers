@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text, TouchableOpacity, View } = require('react-native');
-const { Search } = require('lucide-react-native');
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Search } from 'lucide-react-native';
 
 function SearchBar() {
   return (
@@ -17,4 +17,4 @@ function SearchBar() {
   );
 }
 
-module.exports = SearchBar;
+export default SearchBar;

@@ -1,4 +1,4 @@
-const mockAccounts = [
+export const mockAccounts = [
   {
     id: 'cust-001',
     phoneNumber: '9876543210',
@@ -23,7 +23,7 @@ const defaultMockAccount = {
   tier: 'New Member',
 };
 
-function findMockAccountByPhone(phoneNumber) {
+export function findMockAccountByPhone(phoneNumber) {
   return (
     mockAccounts.find(account => account.phoneNumber === phoneNumber) ||
     {
@@ -32,8 +32,3 @@ function findMockAccountByPhone(phoneNumber) {
     }
   );
 }
-
-module.exports = {
-  mockAccounts,
-  findMockAccountByPhone,
-};

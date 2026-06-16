@@ -1,12 +1,12 @@
-const React = require('react');
-const { Platform, StyleSheet, Text, TouchableOpacity, View } = require('react-native');
-const { Gem, Heart, Menu, Search, ShoppingBag } = require('lucide-react-native');
+import React from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Gem, Heart, Menu, Search, ShoppingBag } from 'lucide-react-native';
 
 const gold = '#b58b3c';
 
 function HomeHeader() {
   return (
-    <View className="flex-row items-center justify-between px-6 pt-2 pb-3">
+    <View className="flex-row items-center justify-between px-6 pt-1 pb-0">
       <TouchableOpacity activeOpacity={0.8} className="h-10 w-10 items-center justify-center rounded-full">
         <Menu size={24} color="#1d1b18" strokeWidth={2} />
       </TouchableOpacity>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = HomeHeader;
+export default HomeHeader;

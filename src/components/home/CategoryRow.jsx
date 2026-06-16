@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text, TouchableOpacity, View } = require('react-native');
-const { iconMap } = require('./iconMap');
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { iconMap } from './iconMap';
 
 const gold = '#c08d39';
 
@@ -29,4 +29,4 @@ function CategoryRow({ items }) {
   );
 }
 
-module.exports = CategoryRow;
+export default CategoryRow;
