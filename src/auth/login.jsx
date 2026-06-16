@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dimensions,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   StatusBar,
@@ -42,11 +43,24 @@ const featureItems = [
   },
 ];
 
-function Login() {
+function Login({ navigation }) {
   const insets = useSafeAreaInsets();
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const sanitizedPhone = phoneNumber.replace(/\D/g, '').slice(0, 10);
+
+  const isPhoneValid = sanitizedPhone.length === 10;
+
+  const handleSendOtp = () => {
+    if (!isPhoneValid) {
+      return;
+    }
+
+    navigation.navigate('Otp', { phoneNumber: sanitizedPhone });
+  };
 
   return (
-    <View style={styles.screen}>
+    <View className="flex-1 bg-[#f8f4ed] -mt-8">
       <StatusBar
         translucent
         barStyle="light-content"
@@ -56,106 +70,135 @@ function Login() {
       <ScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: Math.max(insets.bottom, 20) },
-        ]}
+        contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 10) }}
+        className="bg-white"
       >
         <ImageBackground
           source={bannerImage}
           resizeMode="cover"
-          style={styles.hero}
+          style={{ height: heroHeight }}
           imageStyle={styles.heroImage}
+          className="overflow-hidden"
         >
-          <View style={[styles.heroOverlay, { paddingTop: insets.top + 20 }]}>
-            <View style={styles.brandBlock}>
-              <Gem size={30} color={gold} strokeWidth={1.7} />
-              <Text style={styles.brandName}>Shree</Text>
-              <Text style={styles.brandSub}>Yamunaji</Text>
-              <Text style={styles.brandSub}>Jewellers</Text>
+          <View
+            style={{ paddingTop: insets.top + 40 }}
+            className="flex-1 bg-[#f8f0e633] px-6"
+          >
+            <View className="items-start justify-center">
+            <View className=" mt-1 items-center">
+            
+                <Gem size={26} color={gold} strokeWidth={1.7} />
+              
+              <Text style={styles.brandTitle}>
+                Shree
+              </Text>
+              <Text style={styles.brandSubtitle}>
+                Yamunaji Jewellers
+              </Text>
+            </View>
             </View>
 
-            <View style={styles.welcomeBlock}>
-              <Text style={styles.welcomeText}>
-                Welcome <Text style={styles.goldText}>Back</Text>
+            <View className="mt-6 items-start pl-4">
+              <Text style={styles.welcomeTitle}>
+                Welcome <Text className="text-[#b58b3c]">Back</Text>
               </Text>
-              <Text style={styles.welcomeSub}>
-                Sign in to continue your{'\n'}jewelry journey
+              <Text style={styles.welcomeSubtitle}>
+                Sign in to continue your jewellery journey
               </Text>
             </View>
           </View>
         </ImageBackground>
 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Login with Mobile Number</Text>
-          <Text style={styles.cardSub}>
+        <View className="-mt-8 rounded-t-[30px] bg-white px-6 pb-6 pt-7">
+          <Text className="text-center font-italic  text-[18px] font-bold leading-18 text-[#171717] ">
+            Login with Mobile Number
+          </Text>
+          <Text className="mt-1 text-center text-[12px] font-500 leading-[12px] text-[#747474]">
             We'll send you a verification code
           </Text>
 
-          <View style={styles.inputWrap}>
-            <View style={styles.flag}>
-              <View style={styles.flagSaffron} />
-              <View style={styles.flagWhite}>
-                <View style={styles.flagWheel} />
-              </View>
-              <View style={styles.flagGreen} />
-            </View>
-            <Text style={styles.countryCode}>+91</Text>
+          <View className="mt-6 h-[60px] flex-row items-center rounded-[17px] border border-[#ded9d0] bg-white px-4">
+            <Text className="ml-3 mr-1 text-[15px] font-semibold leading-[22px] text-[#171717]">
+              +91
+            </Text>
             <ChevronDown size={17} color="#171717" />
-            <View style={styles.inputDivider} />
+            <View className="mx-[13px] h-[34px] w-px bg-[#ddd6cb]" />
             <TextInput
               placeholder="Enter mobile number"
               placeholderTextColor="#b5b5b5"
               keyboardType="phone-pad"
-              style={styles.phoneInput}
+              value={sanitizedPhone}
+              onChangeText={setPhoneNumber}
+              maxLength={10}
+              className="flex-1 p-0 text-[17px] text-[#171717]"
             />
           </View>
 
-          <TouchableOpacity activeOpacity={0.9} style={styles.otpButton}>
-            <Text style={styles.otpText}>Send OTP</Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={handleSendOtp}
+            disabled={!isPhoneValid}
+            className={`mt-5 h-[60px] items-center justify-center rounded-[17px] ${
+              isPhoneValid ? 'bg-[#181818]' : 'bg-[#b8b1a7]'
+            }`}
+            style={isPhoneValid ? styles.otpButtonShadow : undefined}
+          >
+            <Text className="text-[18px] font-semibold leading-6 text-white">
+              Send OTP
+            </Text>
             <ArrowRight
-              size={28}
+              size={24}
               color="#ffffff"
               strokeWidth={2.4}
               style={styles.otpIcon}
             />
           </TouchableOpacity>
 
-          <View style={styles.orRow}>
-            <View style={styles.orLine} />
-            <Text style={styles.orText}>OR</Text>
-            <View style={styles.orLine} />
+          <View className="mt-5 flex-row items-center">
+            <View className="h-px flex-1 bg-[#dfdbd3]" />
+            <Text className="mx-[18px] text-[15px] font-semibold leading-5 text-[#6e6e6e]">
+              OR
+            </Text>
+            <View className="h-px flex-1 bg-[#dfdbd3]" />
           </View>
 
-          <TouchableOpacity activeOpacity={0.9} style={styles.whatsappButton}>
-            <View style={styles.whatsappIcon}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            className="mt-[22px] h-[56px] flex-row items-center justify-center rounded-full border border-[#b58b3c] bg-[#fffdfa] px-[22px]"
+          >
+            <View className="mr-[14px] h-[42px] w-[42px] items-center justify-center rounded-full bg-[#f8f1e4]">
               <Phone size={20} color={gold} strokeWidth={2} />
             </View>
-            <Text style={styles.whatsappText}>Continue with WhatsApp</Text>
+            <Text className="shrink text-center text-[15px] font-semibold leading-[15px] text-[#171717]">
+              Continue with WhatsApp
+            </Text>
           </TouchableOpacity>
 
-          <View style={styles.featuresRow}>
+          <View className="mt-[34px] flex-row">
             {featureItems.map((item, index) => {
               const Icon = item.icon;
 
               return (
                 <View
                   key={item.title}
-                  style={[
-                    styles.featureItem,
-                    index < featureItems.length - 1 && styles.featureDivider,
-                  ]}
+                  className={`flex-1 items-center px-2 py-1 ${
+                    index < featureItems.length - 1 ? 'border-r border-[#e5ddd0]' : ''
+                  }`}
                 >
-                  <Icon size={36} color={gold} strokeWidth={1.8} />
-                  <Text style={styles.featureText}>{item.title}</Text>
+                  <Icon size={30} color={gold} strokeWidth={1.8} />
+                  <Text className="mt-2 text-center text-[12px] font-semibold leading-5 text-[#1f1f1f]">
+                    {item.title}
+                  </Text>
                 </View>
               );
             })}
           </View>
 
-          <Text style={styles.termsText}>
+          <Text className="mt-5 px-2 text-center text-[13px] leading-5 text-[#8a7f70]">
             By continuing, you agree to our{' '}
-            <Text style={styles.termsLink}>Terms & Conditions</Text>
+            <Text className="font-semibold text-[#b58b3c]">
+              Terms & Conditions
+            </Text>
           </Text>
         </View>
       </ScrollView>
@@ -164,252 +207,70 @@ function Login() {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#f8f4ed',
+  brandTitle: {
+    fontFamily: Platform.select({
+      ios: 'Baskerville',
+      android: 'serif',
+      default: 'serif',
+    }),
+    marginTop: 10,
+    color: '#171717',
+    fontSize: 33,
+    lineHeight: 40,
+    letterSpacing: 8,
+    textAlign: 'center',
   },
-  scrollContent: {
-    backgroundColor: '#ffffff',
+  brandSubtitle: {
+    fontFamily: Platform.select({
+      ios: 'Baskerville',
+      android: 'serif',
+      default: 'serif',
+    }),
+    marginTop: 8,
+    color: gold,
+    fontSize: 10,
+    lineHeight: 14,
+    letterSpacing: 4,
+    textAlign: 'center',
+    textTransform: 'none',
   },
-  hero: {
-    height: heroHeight,
-    overflow: 'hidden',
+  welcomeTitle: {
+    fontFamily: Platform.select({
+      ios: 'Baskerville',
+      android: 'serif',
+      default: 'serif',
+    }),
+    color: '#171717',
+    fontSize: 29,
+    lineHeight: 40,
+  },
+  welcomeSubtitle: {
+    fontFamily: Platform.select({
+      ios: 'Baskerville',
+      android: 'serif',
+      default: 'serif',
+    }),
+    marginTop: 2,
+    maxWidth: 210,
+    color: '#66615b',
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    fontWeight: '600',
   },
   heroImage: {
     resizeMode: 'cover',
   },
-  heroOverlay: {
-    flex: 1,
-    paddingHorizontal: 24,
-    backgroundColor: 'rgba(248, 240, 230, 0.2)',
-  },
-  brandBlock: {
-    alignItems: 'center',
-  },
-  brandName: {
-    marginTop: 8,
-    fontSize: 34,
-    lineHeight: 42,
-    color: '#171717',
-    fontFamily: 'serif',
-    letterSpacing: 8,
-  },
-  brandSub: {
-    marginTop: 2,
-    fontSize: 16,
-    lineHeight: 24,
-    color: gold,
-    fontWeight: '700',
-    letterSpacing: 6,
-  },
-  welcomeBlock: {
-    marginTop: 30,
-    alignItems: 'center',
-  },
-  welcomeText: {
-    fontSize: 35,
-    lineHeight: 42,
-    color: '#171717',
-    fontFamily: 'serif',
-    textAlign: 'center',
-  },
-  goldText: {
-    color: gold,
-  },
-  welcomeSub: {
-    marginTop: 12,
-    fontSize: 17,
-    lineHeight: 25,
-    color: '#66615b',
-    textAlign: 'center',
-  },
-  card: {
-    marginTop: -32,
-    paddingHorizontal: 24,
-    paddingTop: 28,
-    paddingBottom: 24,
-    borderTopLeftRadius: 34,
-    borderTopRightRadius: 34,
-    backgroundColor: '#ffffff',
-  },
-  cardTitle: {
-    fontSize: 25,
-    lineHeight: 32,
-    color: '#171717',
-    textAlign: 'center',
-    fontFamily: 'serif',
-  },
-  cardSub: {
-    marginTop: 8,
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#747474',
-    textAlign: 'center',
-  },
-  inputWrap: {
-    height: 60,
-    marginTop: 24,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ded9d0',
-    borderRadius: 17,
-    backgroundColor: '#ffffff',
-  },
-  flag: {
-    width: 38,
-    height: 26,
-    overflow: 'hidden',
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#eadfca',
-    backgroundColor: '#ffffff',
-  },
-  flagSaffron: {
-    flex: 1,
-    backgroundColor: '#f59f2f',
-  },
-  flagWhite: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-  flagWheel: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#2b55a2',
-  },
-  flagGreen: {
-    flex: 1,
-    backgroundColor: '#1c9a53',
-  },
-  countryCode: {
-    marginLeft: 12,
-    marginRight: 5,
-    fontSize: 17,
-    lineHeight: 22,
-    color: '#171717',
-    fontWeight: '700',
-  },
-  inputDivider: {
-    width: 1,
-    height: 34,
-    marginHorizontal: 13,
-    backgroundColor: '#ddd6cb',
-  },
-  phoneInput: {
-    flex: 1,
-    minWidth: 0,
-    padding: 0,
-    fontSize: 17,
-    color: '#171717',
-  },
-  otpButton: {
-    height: 62,
-    marginTop: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 17,
-    backgroundColor: '#181818',
+  otpButtonShadow: {
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.16,
     shadowRadius: 18,
     elevation: 8,
   },
-  otpText: {
-    fontSize: 18,
-    lineHeight: 24,
-    color: '#ffffff',
-    fontWeight: '700',
-  },
   otpIcon: {
     position: 'absolute',
     right: 28,
-  },
-  orRow: {
-    marginTop: 28,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  orLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#dfdbd3',
-  },
-  orText: {
-    marginHorizontal: 18,
-    fontSize: 15,
-    lineHeight: 20,
-    color: '#6e6e6e',
-    fontWeight: '700',
-  },
-  whatsappButton: {
-    height: 56,
-    marginTop: 22,
-    paddingHorizontal: 22,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: gold,
-    borderRadius: 28,
-    backgroundColor: '#fffdfa',
-  },
-  whatsappIcon: {
-    width: 42,
-    height: 42,
-    marginRight: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 21,
-    backgroundColor: '#f8f1e4',
-  },
-  whatsappText: {
-    flexShrink: 1,
-    fontSize: 16,
-    lineHeight: 21,
-    color: '#171717',
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  featuresRow: {
-    marginTop: 34,
-    flexDirection: 'row',
-  },
-  featureItem: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
-  featureDivider: {
-    borderRightWidth: 1,
-    borderRightColor: '#e5ddd0',
-  },
-  featureText: {
-    marginTop: 12,
-    fontSize: 14,
-    lineHeight: 20,
-    color: '#1f1f1f',
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  termsText: {
-    marginTop: 28,
-    paddingHorizontal: 8,
-    fontSize: 13,
-    lineHeight: 20,
-    color: '#8a7f70',
-    textAlign: 'center',
-  },
-  termsLink: {
-    color: gold,
-    fontWeight: '600',
   },
 });
 
