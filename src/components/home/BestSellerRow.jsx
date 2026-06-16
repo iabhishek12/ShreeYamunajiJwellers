@@ -3,8 +3,12 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Heart, Plus, Star } from 'lucide-react-native';
 import { productDetails } from '../../data/mock/productMock';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToCart } from '../../features/cart/store/cartSlice';
+import {
+  addWishlistItem,
+  removeWishlistProduct,
+} from '../../features/wishlist/store/wishlistSlice';
 
 const contentContainerStyle = {
   paddingLeft: 16,
@@ -15,6 +19,7 @@ const contentContainerStyle = {
 function BestSellerRow({ items }) {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+  const wishlistItems = useAppSelector(state => state.wishlist.items);
 
   const handleAddToCart = (event, item) => {
     event?.stopPropagation?.();
@@ -36,6 +41,33 @@ function BestSellerRow({ items }) {
     );
   };
 
+  const handleToggleWishlist = (event, item) => {
+    event?.stopPropagation?.();
+
+    const product = productDetails[item.productId];
+
+    if (!product) {
+      return;
+    }
+
+    const isWishlisted = wishlistItems.some(
+      wishlistItem => wishlistItem.productId === product.id,
+    );
+
+    if (isWishlisted) {
+      dispatch(removeWishlistProduct(product.id));
+      return;
+    }
+
+    dispatch(
+      addWishlistItem({
+        id: `wishlist-${product.id}`,
+        productId: product.id,
+        note: 'Saved from home',
+      }),
+    );
+  };
+
   return (
     <ScrollView
       horizontal
@@ -52,18 +84,32 @@ function BestSellerRow({ items }) {
           className="mr-4 w-[132px] rounded-[22px] border border-[#efe6d8] bg-[#fffdf9] px-3 py-3"
           style={styles.cardShadow}
         >
+          {(() => {
+            const isWishlisted = wishlistItems.some(
+              wishlistItem => wishlistItem.productId === item.productId,
+            );
+
+            return (
           <View className="relative">
             <View className="overflow-hidden rounded-[18px] bg-[#f8f1e6]">
               <Image source={item.image} resizeMode="cover" className="h-[96px] w-full" />
             </View>
             <TouchableOpacity
               activeOpacity={0.85}
+              onPress={event => handleToggleWishlist(event, item)}
               className="absolute right-2 top-2 h-[28px] w-[28px] items-center justify-center rounded-full bg-white"
               style={styles.iconShadow}
             >
-              <Heart size={15} color="#2a2724" strokeWidth={2} />
+              <Heart
+                size={15}
+                color={isWishlisted ? '#bd8934' : '#2a2724'}
+                fill={isWishlisted ? '#bd8934' : 'transparent'}
+                strokeWidth={2}
+              />
             </TouchableOpacity>
           </View>
+            );
+          })()}
 
           <Text
             numberOfLines={1}

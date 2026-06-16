@@ -95,26 +95,26 @@ function WishlistScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
         >
-          <View className="mx-4 mt-2 overflow-hidden rounded-[22px] bg-[#dec38b] px-5 py-5" style={styles.cardShadow}>
+          <View className="mx-4 mt-2 overflow-hidden rounded-[18px] bg-[#d7c39a77] px-4 py-4" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View>
                 <Text style={styles.title}>Wishlist</Text>
-                <Text className="mt-2 max-w-[230px] text-[13px] leading-[20px] text-[#5f5142]">
+                <Text className="mt-1.5 max-w-[220px] text-[12px] leading-[18px] text-[#5f5142]">
                   Your saved jewelry pieces, ready when the moment feels right.
                 </Text>
               </View>
-              <View className="h-14 w-14 items-center justify-center rounded-full bg-[#fff6e5]">
-                <Heart size={27} color="#bd8934" fill="#bd8934" strokeWidth={1.5} />
+              <View className="h-11 w-11 items-center justify-center rounded-full bg-[#fff6e5]">
+                <Heart size={22} color="#bd8934" fill="#bd8934" strokeWidth={1.5} />
               </View>
             </View>
 
-            <View className="mt-5 flex-row justify-between">
+            <View className="mt-4 flex-row justify-between">
               {wishlistInsights.map(item => (
-                <View key={item.id} className="w-[31%] rounded-[16px] bg-[#f7e4ba] px-2 py-3">
-                  <Text className="text-center text-[18px] font-bold text-[#171411]">
+                <View key={item.id} className="w-[31%] rounded-[13px] bg-[#f7e4ba] px-2 py-2.5">
+                  <Text className="text-center text-[15px] font-bold text-[#171411]">
                     {item.id === 'saved' ? items.length : item.value}
                   </Text>
-                  <Text className="mt-1 text-center text-[10px] font-bold leading-[13px] text-[#6c5540]">
+                  <Text className="mt-0.5 text-center text-[9px] font-bold leading-[12px] text-[#6c5540]">
                     {item.label}
                   </Text>
                 </View>
@@ -135,7 +135,7 @@ function WishlistScreen({ navigation }) {
           </View>
 
           {items.length === 0 ? (
-            <View className="mx-4 mt-5 items-center rounded-[20px] border border-[#d3b574] bg-[#dec38b] px-6 py-12">
+            <View className="mx-4 mt-5 items-center rounded-[20px] border border-[#c5ad77] bg-[#d7c39a] px-6 py-12">
               <Heart size={35} color="#bd8934" strokeWidth={1.8} />
               <Text className="mt-4 text-[18px] font-bold text-[#181410]">
                 Your wishlist is empty
@@ -168,39 +168,39 @@ function WishlistScreen({ navigation }) {
                       productId: item.product.id,
                     })
                   }
-                  className="mb-4 w-[48%] overflow-hidden rounded-[18px] border border-[#d3b574] bg-[#dec38b]"
+                  className="mb-3 w-[48%] overflow-hidden rounded-[15px] border border-[#c5ad77] bg-[#d7c39a]"
                   style={styles.cardShadow}
                 >
                   <View className="relative bg-[#f7e9c7]">
                     <Image
                       source={item.product.gallery[0].image}
                       resizeMode="cover"
-                      className="h-[130px] w-full"
+                      className="h-[96px] w-full"
                     />
                     <TouchableOpacity
                       activeOpacity={0.85}
                       onPress={() => dispatch(removeWishlistItem(item.id))}
-                      className="absolute right-2 top-2 h-8 w-8 items-center justify-center rounded-full bg-white"
+                      className="absolute right-2 top-2 h-7 w-7 items-center justify-center rounded-full bg-white"
                       style={styles.smallShadow}
                     >
-                      <Trash2 size={15} color="#2f2924" strokeWidth={1.9} />
+                      <Trash2 size={13} color="#2f2924" strokeWidth={1.9} />
                     </TouchableOpacity>
                   </View>
 
-                  <View className="px-3 pb-3 pt-3">
+                  <View className="px-2.5 pb-2.5 pt-2.5">
                     <Text
                       numberOfLines={1}
-                      className="text-[13px] font-bold text-[#181410]"
+                      className="text-[12px] font-bold text-[#181410]"
                       style={styles.productTitle}
                     >
                       {item.product.title}
                     </Text>
 
-                    <View className="mt-2 flex-row items-center">
+                    <View className="mt-1.5 flex-row items-center">
                       {[0, 1, 2, 3, 4].map(index => (
                         <Star
                           key={`${item.id}-star-${index}`}
-                          size={11}
+                          size={10}
                           color="#8f6527"
                           fill="#8f6527"
                           strokeWidth={1.4}
@@ -213,21 +213,21 @@ function WishlistScreen({ navigation }) {
 
                     <Text
                       numberOfLines={1}
-                      className="mt-2 text-[11px] text-[#6b5b4b]"
+                      className="mt-1.5 text-[10px] text-[#6b5b4b]"
                     >
                       {item.note}
                     </Text>
 
-                    <View className="mt-3 flex-row items-center justify-between">
-                      <Text className="text-[15px] font-bold text-[#111111]">
+                    <View className="mt-2.5 flex-row items-center justify-between">
+                      <Text className="text-[13px] font-bold text-[#111111]">
                         {formatCurrency(item.product.price)}
                       </Text>
                       <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={() => handleMoveToCart(item)}
-                        className="h-9 w-9 items-center justify-center rounded-full bg-[#171717]"
+                        className="h-8 w-8 items-center justify-center rounded-full bg-[#171717]"
                       >
-                        <ShoppingBag size={16} color="#ffffff" strokeWidth={2} />
+                        <ShoppingBag size={14} color="#ffffff" strokeWidth={2} />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: 23,
+    lineHeight: 29,
     color: '#171411',
   },
   productTitle: {

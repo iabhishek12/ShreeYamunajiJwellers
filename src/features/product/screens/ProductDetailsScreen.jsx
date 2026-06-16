@@ -28,6 +28,10 @@ import {
 import { productDetails } from '../../../data/mock/productMock';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addToCart } from '../../cart/store/cartSlice';
+import {
+  addWishlistItem,
+  removeWishlistProduct,
+} from '../../wishlist/store/wishlistSlice';
 
 const assuranceIconMap = {
   BadgeCheck,
@@ -45,8 +49,10 @@ function ProductDetailsScreen({ navigation, route }) {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const cartCount = useAppSelector(state => state.cart.totalQuantity);
+  const wishlistItems = useAppSelector(state => state.wishlist.items);
   const productId = route.params?.productId ?? 'infinity-sparkle-ring';
   const product = productDetails[productId] ?? productDetails['infinity-sparkle-ring'];
+  const isWishlisted = wishlistItems.some(item => item.productId === product.id);
 
   const [selectedGalleryId, setSelectedGalleryId] = useState(product.gallery[0]?.id);
   const [selectedMetalId, setSelectedMetalId] = useState(product.defaultMetal);
@@ -94,6 +100,21 @@ function ProductDetailsScreen({ navigation, route }) {
     navigation.navigate('Cart');
   };
 
+  const handleToggleWishlist = () => {
+    if (isWishlisted) {
+      dispatch(removeWishlistProduct(product.id));
+      return;
+    }
+
+    dispatch(
+      addWishlistItem({
+        id: `wishlist-${product.id}`,
+        productId: product.id,
+        note: 'Saved from product details',
+      }),
+    );
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-[#fcf8f2]">
       <StatusBar barStyle="dark-content" backgroundColor="#fcf8f2" />
@@ -117,9 +138,15 @@ function ProductDetailsScreen({ navigation, route }) {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.85}
+              onPress={handleToggleWishlist}
               className="mr-2 h-10 w-10 items-center justify-center rounded-full"
             >
-              <Heart size={20} color="#201b17" strokeWidth={2.1} />
+              <Heart
+                size={20}
+                color={isWishlisted ? '#bd8934' : '#201b17'}
+                fill={isWishlisted ? '#bd8934' : 'transparent'}
+                strokeWidth={2.1}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.85}

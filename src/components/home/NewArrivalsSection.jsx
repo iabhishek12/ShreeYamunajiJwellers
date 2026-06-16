@@ -10,12 +10,17 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { Heart, Plus, Star } from 'lucide-react-native';
 import { productDetails } from '../../data/mock/productMock';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToCart } from '../../features/cart/store/cartSlice';
+import {
+  addWishlistItem,
+  removeWishlistProduct,
+} from '../../features/wishlist/store/wishlistSlice';
 
 function NewArrivalsSection({ section }) {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+  const wishlistItems = useAppSelector(state => state.wishlist.items);
 
   const handleAddToCart = (event, item) => {
     event?.stopPropagation?.();
@@ -37,6 +42,33 @@ function NewArrivalsSection({ section }) {
     );
   };
 
+  const handleToggleWishlist = (event, item) => {
+    event?.stopPropagation?.();
+
+    const product = productDetails[item.productId];
+
+    if (!product) {
+      return;
+    }
+
+    const isWishlisted = wishlistItems.some(
+      wishlistItem => wishlistItem.productId === product.id,
+    );
+
+    if (isWishlisted) {
+      dispatch(removeWishlistProduct(product.id));
+      return;
+    }
+
+    dispatch(
+      addWishlistItem({
+        id: `wishlist-${product.id}`,
+        productId: product.id,
+        note: 'Saved from new arrivals',
+      }),
+    );
+  };
+
   return (
     <View className="mx-2 mt-4 rounded-[28px] bg-[#fbf7f1] px-3 pb-4 pt-5">
       <Text className="text-center text-[10px] font-bold tracking-[3.2px] text-[#c79635]">
@@ -52,7 +84,12 @@ function NewArrivalsSection({ section }) {
       </Text>
 
       <View className="mt-6 flex-row flex-wrap justify-between">
-        {section.items.map(item => (
+        {section.items.map(item => {
+          const isWishlisted = wishlistItems.some(
+            wishlistItem => wishlistItem.productId === item.productId,
+          );
+
+          return (
           <TouchableOpacity
             key={item.id}
             activeOpacity={0.92}
@@ -70,10 +107,16 @@ function NewArrivalsSection({ section }) {
               />
               <TouchableOpacity
                 activeOpacity={0.85}
+                onPress={event => handleToggleWishlist(event, item)}
                 className="absolute right-2 top-2 h-[30px] w-[30px] items-center justify-center rounded-full bg-white"
                 style={styles.iconShadow}
               >
-                <Heart size={16} color="#534b44" strokeWidth={2} />
+                <Heart
+                  size={16}
+                  color={isWishlisted ? '#bd8934' : '#534b44'}
+                  fill={isWishlisted ? '#bd8934' : 'transparent'}
+                  strokeWidth={2}
+                />
               </TouchableOpacity>
             </View>
 
@@ -123,7 +166,8 @@ function NewArrivalsSection({ section }) {
               </View>
             </View>
           </TouchableOpacity>
-        ))}
+          );
+        })}
       </View>
     </View>
   );

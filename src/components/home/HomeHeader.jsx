@@ -9,6 +9,7 @@ const gold = '#b58b3c';
 function HomeHeader() {
   const navigation = useNavigation();
   const cartCount = useAppSelector(state => state.cart.totalQuantity);
+  const wishlistCount = useAppSelector(state => state.wishlist.items.length);
 
   return (
     <View className="flex-row items-center justify-between px-6 pt-1 pb-0">
@@ -29,9 +30,16 @@ function HomeHeader() {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate('Wishlist')}
-          className="mr-1 h-10 w-10 items-center justify-center rounded-full"
+          className="relative mr-1 h-10 w-10 items-center justify-center rounded-full"
         >
           <Heart size={21} color="#1d1b18" strokeWidth={2} />
+          {wishlistCount > 0 ? (
+            <View className="absolute right-0 top-0 h-5 min-w-[20px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <Text className="text-[10px] font-bold text-white">
+                {wishlistCount}
+              </Text>
+            </View>
+          ) : null}
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
