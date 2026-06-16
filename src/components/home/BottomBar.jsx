@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { iconMap } from './iconMap';
 
 function BottomBar({ items }) {
+  const navigation = useNavigation();
+
   return (
     <View className="border-t border-[#e6dece] bg-[#fbf7f1] px-3 pt-2 pb-6">
       <View className="flex-row justify-between">
@@ -14,6 +17,11 @@ function BottomBar({ items }) {
             <TouchableOpacity
               key={item.id}
               activeOpacity={0.85}
+              onPress={() => {
+                if (item.route) {
+                  navigation.navigate(item.route);
+                }
+              }}
               className="flex-1 items-center"
             >
               <Icon size={22} color={color} strokeWidth={1.9} />

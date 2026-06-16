@@ -58,7 +58,7 @@ export const bestSellerItems = [
   },
   {
     id: 'bestseller-2',
-    productId: 'infinity-sparkle-ring',
+    productId: 'classic-solitaire-studs',
     title: 'Classic Solitaire Studs',
     subtitle: 'Timeless diamond studs for every day.',
     price: '599',
@@ -68,7 +68,7 @@ export const bestSellerItems = [
   },
   {
     id: 'bestseller-3',
-    productId: 'infinity-sparkle-ring',
+    productId: 'blossom-pendant',
     title: 'Blossom Pendant',
     subtitle: 'Floral shimmer with a fine chain finish.',
     price: '699',
@@ -100,7 +100,7 @@ export const newArrivalsSection = {
   items: [
     {
       id: 'arrival-1',
-      productId: 'infinity-sparkle-ring',
+      productId: 'modern-halo-ring',
       title: 'Modern Halo Ring',
       subtitle: 'A halo of diamonds around a brilliant centre.',
       price: '549',
@@ -110,7 +110,7 @@ export const newArrivalsSection = {
     },
     {
       id: 'arrival-2',
-      productId: 'infinity-sparkle-ring',
+      productId: 'aurora-drop-earrings',
       title: 'Aurora Drop Earrings',
       subtitle: 'Graceful drops that move with you.',
       price: '459',
@@ -120,7 +120,7 @@ export const newArrivalsSection = {
     },
     {
       id: 'arrival-3',
-      productId: 'infinity-sparkle-ring',
+      productId: 'heritage-gold-necklace',
       title: 'Heritage Gold Necklace',
       subtitle: 'A radiant floral pendant with soft shimmer.',
       price: '629',
@@ -130,7 +130,7 @@ export const newArrivalsSection = {
     },
     {
       id: 'arrival-4',
-      productId: 'infinity-sparkle-ring',
+      productId: 'petite-charm-bracelet',
       title: 'Petite Charm Bracelet',
       subtitle: 'Delicate sparkle made for effortless layering.',
       price: '499',
@@ -184,8 +184,8 @@ export const reviewSection = {
 };
 
 export const bottomNavItems = [
-  { id: 'home', label: 'HOME', icon: 'House', active: true },
-  { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: false },
+  { id: 'home', label: 'HOME', icon: 'House', active: true, route: 'Home' },
+  { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: false, route: 'Categories' },
   { id: 'new-arrivals', label: 'NEW ARRIVALS', icon: 'Sparkles', active: false },
   { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: false },
   { id: 'account', label: 'ACCOUNT', icon: 'User', active: false },

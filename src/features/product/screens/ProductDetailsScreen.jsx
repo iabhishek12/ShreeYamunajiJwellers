@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Image,
   Platform,
@@ -16,7 +16,6 @@ import {
   BadgeCheck,
   Heart,
   Minus,
-  Play,
   RotateCcw,
   Share2,
   Shield,
@@ -49,6 +48,13 @@ function ProductDetailsScreen({ navigation, route }) {
   const [selectedMetalId, setSelectedMetalId] = useState(product.defaultMetal);
   const [selectedSizeId, setSelectedSizeId] = useState(product.defaultSize);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    setSelectedGalleryId(product.gallery[0]?.id);
+    setSelectedMetalId(product.defaultMetal);
+    setSelectedSizeId(product.defaultSize);
+    setQuantity(1);
+  }, [product]);
 
   const selectedImage = useMemo(
     () =>
@@ -119,7 +125,7 @@ function ProductDetailsScreen({ navigation, route }) {
                     key={item.id}
                     activeOpacity={0.9}
                     onPress={() => setSelectedGalleryId(item.id)}
-                    className={`mb-2.5 h-[54px] overflow-hidden rounded-[14px] border ${
+                    className={`mb-2.5 h-[60px] overflow-hidden rounded-[14px] border ${
                       selected
                         ? 'border-[#c08d39] bg-[#fff6e7]'
                         : 'border-[#e7ddcf] bg-white'
@@ -131,9 +137,9 @@ function ProductDetailsScreen({ navigation, route }) {
                         className="absolute bottom-0 left-0 right-0 top-0 items-center justify-center"
                         style={styles.videoOverlay}
                       >
-                        <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
+                        {/* <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
                           <Play size={14} color="#6f5a43" fill="#6f5a43" strokeWidth={1.6} />
-                        </View>
+                        </View> */}
                       </View>
                     ) : null}
                   </TouchableOpacity>
@@ -141,7 +147,7 @@ function ProductDetailsScreen({ navigation, route }) {
               })}
             </View>
 
-            <View className="flex-1 overflow-hidden rounded-[28px] bg-[#f8efe1]">
+            <View className="flex-1 h-[280px] overflow-hidden rounded-[28px] bg-[#f8efe1] ">
               <Image
                 source={selectedImage.image}
                 resizeMode="cover"
@@ -151,17 +157,17 @@ function ProductDetailsScreen({ navigation, route }) {
           </View>
 
           <View className="px-4 pb-10">
-            <Text className="mt-6 text-[11px] font-bold tracking-[4px] text-[#c08d39]">
+            <Text className="mt-5 text-[11px] font-bold tracking-[4px] text-[#c08d39]">
               {product.badge}
             </Text>
 
-            <Text className="mt-3 text-[#15120f]" style={styles.productTitle}>
+            <Text className="mt-2 text-[#15120f]" style={styles.productTitle}>
               {product.title}
             </Text>
 
-            <Text className="mt-2 text-[18px] text-[#564d44]">{product.subtitle}</Text>
+            <Text className="mt-0 text-[15px] text-[#564d44]">{product.subtitle}</Text>
 
-            <View className="mt-4 flex-row items-center">
+            <View className="mt-2 flex-row items-center">
               <View className="flex-row">
                 {[0, 1, 2, 3, 4].map(index => (
                   <Star
@@ -173,27 +179,27 @@ function ProductDetailsScreen({ navigation, route }) {
                   />
                 ))}
               </View>
-              <Text className="ml-2 text-[18px] font-medium text-[#2d251d]">
+              <Text className="ml-2 text-[15px] font-medium text-[#2d251d]">
                 {product.rating}
               </Text>
-              <Text className="ml-2 text-[18px] text-[#675e55]">
+              <Text className="ml-2 text-[15px] text-[#675e55]">
                 ({product.reviews} reviews)
               </Text>
             </View>
 
-            <View className="mt-5 flex-row items-center">
-              <Text className="text-[26px] font-bold text-[#111111]">Rs {product.price}</Text>
+            <View className="mt-4 flex-row items-center">
+              <Text className="text-[22px] font-bold text-[#111111]">Rs {product.price}</Text>
               <Text className="ml-3 text-[18px] text-[#8a8178]" style={styles.strikeText}>
                 Rs {product.originalPrice}
               </Text>
               <View className="ml-3 rounded-full bg-[#f8ebd9] px-4 py-2">
-                <Text className="text-[14px] font-bold text-[#c08d39]">
+                <Text className="text-[12px] font-bold text-[#c08d39]">
                   {product.discountLabel}
                 </Text>
               </View>
             </View>
 
-            <View className="mt-8 rounded-[22px] border border-[#e8dece] bg-[#fffdf9] px-2 py-4">
+            <View className="mt-10 rounded-[18px] border border-[#e8dece] bg-[#fffdf9] px-1.5 py-2">
               <View className="flex-row">
                 {product.assuranceItems.map((item, index) => {
                   const Icon = assuranceIconMap[item.icon];
@@ -220,11 +226,11 @@ function ProductDetailsScreen({ navigation, route }) {
               </View>
             </View>
 
-            <View className="mt-8 flex-row items-center justify-between">
-              <Text className="text-[22px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
+            <View className="mt-6 flex-row items-center justify-between">
+              <Text className="text-[16px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
                 Metal
               </Text>
-              <Text className="text-[17px] text-[#7d705f]">{selectedMetal.value}</Text>
+              <Text className="text-[14px] text-[#7d705f]">{selectedMetal.value}</Text>
             </View>
 
             <View className="mt-4 flex-row justify-between">
@@ -254,11 +260,11 @@ function ProductDetailsScreen({ navigation, route }) {
               })}
             </View>
 
-            <View className="mt-8 flex-row items-center justify-between">
-              <Text className="text-[22px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
+            <View className="mt-6 flex-row items-center justify-between">
+              <Text className="text-[16px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
                 Size
               </Text>
-              <Text className="text-[17px] text-[#7d705f]">Choose ring size</Text>
+              <Text className="text-[14px] text-[#7d705f]">Choose ring size</Text>
             </View>
 
             <View className="mt-4 flex-row justify-between">
@@ -270,7 +276,7 @@ function ProductDetailsScreen({ navigation, route }) {
                     key={item.id}
                     activeOpacity={0.9}
                     onPress={() => setSelectedSizeId(item.id)}
-                    className={`w-[22%] items-center rounded-[16px] border px-2 py-3 ${
+                    className={`w-[22%] items-center rounded-[16px] border px-2.5 py-3 ${
                       selected
                         ? 'border-[#c08d39] bg-[#fff8eb]'
                         : 'border-[#e7ddcf] bg-white'
@@ -290,20 +296,20 @@ function ProductDetailsScreen({ navigation, route }) {
 
             <View className="mt-8 flex-row items-end justify-between">
               <View className="flex-1 pr-4">
-                <Text className="text-[22px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
+                <Text className="text-[16px] font-bold text-[#17120f]" style={styles.sectionTitle}>
                   Quantity
                 </Text>
                 <View className="mt-3 flex-row items-center">
                   <View className="mr-2 h-2.5 w-2.5 rounded-full bg-[#1ab37a]" />
-                  <Text className="text-[16px] text-[#5b5148]">{product.stockLabel}</Text>
+                  <Text className="text-[14px] text-[#5b5148]">{product.stockLabel}</Text>
                 </View>
               </View>
 
-              <View className="flex-row items-center rounded-[18px] border border-[#e7ddcf] bg-white px-2 py-1">
+              <View className="flex-row items-center rounded-[18px] border border-[#e7ddcf] bg-white px-1 py-1">
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={() => setQuantity(current => Math.max(1, current - 1))}
-                  className="h-11 w-11 items-center justify-center"
+                  className="h-10 w-11 items-center justify-center"
                 >
                   <Minus size={18} color="#7b736b" strokeWidth={2.1} />
                 </TouchableOpacity>
@@ -325,34 +331,34 @@ function ProductDetailsScreen({ navigation, route }) {
                 activeOpacity={0.92}
                 className="w-[47%] items-center rounded-[16px] bg-[#1a1a1a] py-4"
               >
-                <Text className="text-[18px] font-bold text-white">Add to Bag</Text>
+                <Text className="text-[18px] font-semibold text-white">Add to Bag</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 activeOpacity={0.92}
                 className="w-[47%] items-center rounded-[16px] bg-[#bc8735] py-4"
               >
-                <Text className="text-[18px] font-bold text-white">Buy Now</Text>
+                <Text className="text-[18px] font-semibold text-white">Buy Now</Text>
               </TouchableOpacity>
             </View>
 
-            <View className="mt-7 flex-row overflow-hidden rounded-[22px] border border-[#e8dece] bg-[#fbf8f1]">
+            <View className="mt-10 flex-row overflow-hidden rounded-[22px] border border-[#e8dece] bg-[#fbf8f1]">
               {product.highlights.map((item, index) => {
                 const Icon = highlightIconMap[item.icon];
 
                 return (
                   <View
                     key={item.id}
-                    className={`flex-1 flex-row items-center px-4 py-4 ${
+                    className={`flex-1 flex-row items-center px-2 py-2 ${
                       index === 0 ? 'border-r border-[#ebe1d3]' : ''
                     }`}
                   >
                     <Icon size={22} color="#c08d39" strokeWidth={1.8} />
                     <View className="ml-3 flex-1">
-                      <Text className="text-[14px] font-semibold text-[#2f2924]">
+                      <Text className="text-[12px] font-semibold text-[#2f2924]">
                         {item.title}
                       </Text>
-                      <Text className="mt-1 text-[13px] text-[#7a7168]">
+                      <Text className="mt-1 text-[10px] text-[#7a7168]">
                         {item.description}
                       </Text>
                     </View>
@@ -364,7 +370,7 @@ function ProductDetailsScreen({ navigation, route }) {
             <Text className="mt-10 text-[#17120f]" style={styles.detailsTitle}>
               Details
             </Text>
-            <Text className="mt-4 text-[18px] leading-[33px] text-[#4f4740]">
+            <Text className="mt-4 text-[16px] leading-[25px] text-[#4f4740]">
               {product.details}
             </Text>
           </View>
@@ -384,7 +390,8 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
-    fontSize: 27,
+    fontSize: 22,
+    fontWeight: '600',
     lineHeight: 34,
   },
   sectionTitle: {
@@ -393,6 +400,7 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
+    fontWeight: '700',
   },
   detailsTitle: {
     fontFamily: Platform.select({
@@ -400,8 +408,9 @@ const styles = StyleSheet.create({
       android: 'serif',
       default: 'serif',
     }),
-    fontSize: 24,
-    lineHeight: 30,
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 20,
   },
   strikeText: {
     textDecorationLine: 'line-through',

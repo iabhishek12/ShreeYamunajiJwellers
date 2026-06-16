@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import Login from './src/auth/login';
 // import OtpScreen from './src/auth/otp';
 import HomeScreen from './src/features/home/screens/HomeScreen';
+import CategoriesScreen from './src/features/categories/screens/CategoriesScreen';
 import ProductDetailsScreen from './src/features/product/screens/ProductDetailsScreen';
 import { store } from './src/store';
 
@@ -23,6 +24,7 @@ function App() {
             {/* <Stack.Screen name="Login" component={Login} /> */}
             {/* <Stack.Screen name="Otp" component={OtpScreen} /> */}
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Categories" component={CategoriesScreen} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
