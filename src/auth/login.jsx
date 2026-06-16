@@ -21,6 +21,8 @@ import {
   ShieldCheck,
   Truck,
 } from 'lucide-react-native';
+import { requestMockOtp, clearAuthError } from '../features/auth/store/authSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const bannerImage = require('../assets/images/loginBanner/image.png');
 const { width: screenWidth } = Dimensions.get('window');
@@ -45,18 +47,39 @@ const featureItems = [
 
 function Login({ navigation }) {
   const insets = useSafeAreaInsets();
+  const dispatch = useAppDispatch();
   const [phoneNumber, setPhoneNumber] = useState('');
+  const {
+    requestStatus,
+    error,
+    isAuthenticated,
+    user,
+  } = useAppSelector(state => state.auth);
 
   const sanitizedPhone = phoneNumber.replace(/\D/g, '').slice(0, 10);
 
   const isPhoneValid = sanitizedPhone.length === 10;
+  const isSendingOtp = requestStatus === 'loading';
 
-  const handleSendOtp = () => {
+  const handlePhoneChange = value => {
+    setPhoneNumber(value);
+
+    if (error) {
+      dispatch(clearAuthError());
+    }
+  };
+
+  const handleSendOtp = async () => {
     if (!isPhoneValid) {
       return;
     }
 
-    navigation.navigate('Otp', { phoneNumber: sanitizedPhone });
+    try {
+      await dispatch(requestMockOtp(sanitizedPhone)).unwrap();
+      navigation.navigate('Otp');
+    } catch {
+      // The slice already stores the mock auth error for UI display.
+    }
   };
 
   return (
@@ -116,6 +139,14 @@ function Login({ navigation }) {
           <Text className="mt-1 text-center text-[12px] font-500 leading-[12px] text-[#747474]">
             We'll send you a verification code
           </Text>
+          <Text className="mt-3 text-center text-[12px] leading-[18px] text-[#9b7d47]">
+            Demo accounts: `9876543210` or `9123456789`
+          </Text>
+          {isAuthenticated && user ? (
+            <Text className="mt-2 text-center text-[12px] font-semibold leading-[18px] text-[#2f6f4f]">
+              Signed in as {user.name} ({user.tier})
+            </Text>
+          ) : null}
 
           <View className="mt-6 h-[60px] flex-row items-center rounded-[17px] border border-[#ded9d0] bg-white px-4">
             <Text className="ml-3 mr-1 text-[15px] font-semibold leading-[22px] text-[#171717]">
@@ -128,23 +159,28 @@ function Login({ navigation }) {
               placeholderTextColor="#b5b5b5"
               keyboardType="phone-pad"
               value={sanitizedPhone}
-              onChangeText={setPhoneNumber}
+              onChangeText={handlePhoneChange}
               maxLength={10}
               className="flex-1 p-0 text-[17px] text-[#171717]"
             />
           </View>
+          {error ? (
+            <Text className="mt-3 text-center text-[13px] font-medium leading-[18px] text-[#b23a3a]">
+              {error}
+            </Text>
+          ) : null}
 
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={handleSendOtp}
-            disabled={!isPhoneValid}
+            disabled={!isPhoneValid || isSendingOtp}
             className={`mt-5 h-[60px] items-center justify-center rounded-[17px] ${
-              isPhoneValid ? 'bg-[#181818]' : 'bg-[#b8b1a7]'
+              isPhoneValid && !isSendingOtp ? 'bg-[#181818]' : 'bg-[#b8b1a7]'
             }`}
-            style={isPhoneValid ? styles.otpButtonShadow : undefined}
+            style={isPhoneValid && !isSendingOtp ? styles.otpButtonShadow : undefined}
           >
             <Text className="text-[18px] font-semibold leading-6 text-white">
-              Send OTP
+              {isSendingOtp ? 'Sending OTP...' : 'Send OTP'}
             </Text>
             <ArrowRight
               size={24}

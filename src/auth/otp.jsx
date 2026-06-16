@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StatusBar,
   Text,
   TextInput,
@@ -10,7 +9,13 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ArrowLeft, CheckCircle2, Clock3, Gem, ShieldCheck } from 'lucide-react-native';
+import { CheckCircle2, Clock3, Gem, ShieldCheck } from 'lucide-react-native';
+import {
+  clearAuthError,
+  requestMockOtp,
+  verifyMockOtp,
+} from '../features/auth/store/authSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const gold = '#c2933f';
 const otpLength = 4;
@@ -20,9 +25,6 @@ const cardShadow = {
   shadowOpacity: 0.12,
   shadowRadius: 26,
   elevation: 8,
-};
-const softWhiteOverlay = {
-  backgroundColor: 'rgba(255,255,255,0.65)',
 };
 const glowOrbStyle = {
   backgroundColor: 'rgba(234, 199, 120, 0.35)',
@@ -68,20 +70,57 @@ const infoTextStyle = {
   lineHeight: 22,
 };
 
-function OtpScreen({ navigation, route }) {
+function OtpScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+  const dispatch = useAppDispatch();
   const [otp, setOtp] = useState(['', '', '', '']);
+  const [secondsLeft, setSecondsLeft] = useState(0);
   const inputRefs = useRef([]);
+  const {
+    phoneNumber,
+    maskedPhone,
+    error,
+    isOtpSent,
+    mockOtpCode,
+    resendAvailableAt,
+    verifyStatus,
+  } = useAppSelector(state => state.auth);
 
-  const phoneNumber = route?.params?.phoneNumber || '9876543210';
-  const maskedPhone = `+91 ${phoneNumber.slice(0, 2)}******${phoneNumber.slice(-2)}`;
   const isComplete = otp.every(value => value.length === 1);
+  const isVerifying = verifyStatus === 'loading';
+
+  useEffect(() => {
+    if (!isOtpSent || !phoneNumber) {
+      navigation.replace('Login');
+    }
+  }, [isOtpSent, navigation, phoneNumber]);
+
+  useEffect(() => {
+    if (!resendAvailableAt) {
+      setSecondsLeft(0);
+      return undefined;
+    }
+
+    const updateCountdown = () => {
+      const remaining = Math.max(0, Math.ceil((resendAvailableAt - Date.now()) / 1000));
+      setSecondsLeft(remaining);
+    };
+
+    updateCountdown();
+    const timerId = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(timerId);
+  }, [resendAvailableAt]);
 
   const handleChange = (value, index) => {
     const digit = value.replace(/\D/g, '').slice(-1);
     const updatedOtp = [...otp];
     updatedOtp[index] = digit;
     setOtp(updatedOtp);
+
+    if (error) {
+      dispatch(clearAuthError());
+    }
 
     if (digit && index < otpLength - 1) {
       inputRefs.current[index + 1]?.focus();
@@ -92,6 +131,29 @@ function OtpScreen({ navigation, route }) {
     if (event.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!isComplete || isVerifying) {
+      return;
+    }
+
+    try {
+      await dispatch(verifyMockOtp(otp.join(''))).unwrap();
+      navigation.replace('Home');
+    } catch {
+      // The slice already stores the error for UI display.
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (!phoneNumber || secondsLeft > 0) {
+      return;
+    }
+
+    setOtp(['', '', '', '']);
+    inputRefs.current[0]?.focus();
+    await dispatch(requestMockOtp(phoneNumber));
   };
 
   return (
@@ -110,7 +172,6 @@ function OtpScreen({ navigation, route }) {
             className="bg-[#f7f1e7] px-6 pb-[18px]"
             style={{ paddingTop: insets.top + 10 }}
           >
-          
             <View className="mt-[8px] flex-row items-center self-start rounded-full border border-[#ecd6ad] bg-[#fff8ee] px-[14px] py-2">
               <Gem size={18} color={gold} strokeWidth={1.9} />
               <Text className="ml-2 text-[13px] font-bold text-[#826236]">
@@ -119,7 +180,7 @@ function OtpScreen({ navigation, route }) {
             </View>
 
             <Text
-              className="mt-[18px] font-extrabold"
+              className="mt-[15px] font-bold"
               style={titleStyle}
             >
               Enter your OTP
@@ -128,7 +189,10 @@ function OtpScreen({ navigation, route }) {
               className="mt-[8px] pr-3"
               style={subtitleStyle}
             >
-              A one-time code has been sent to {maskedPhone} to protect your account and purchases.
+              A one-time code has been sent to {maskedPhone} 
+            </Text>
+            <Text className="mt-2 text-[12px] font-medium leading-[18px] text-[#9b7d47]">
+              Demo OTP for this number: {mockOtpCode || '----'}
             </Text>
           </View>
 
@@ -146,7 +210,7 @@ function OtpScreen({ navigation, route }) {
               </View>
 
               <Text
-                className="mt-[14px] text-center font-extrabold"
+                className="mt-[14px] text-center font-bold"
                 style={cardTitleStyle}
               >
                 Verify your mobile number
@@ -171,7 +235,7 @@ function OtpScreen({ navigation, route }) {
                     keyboardType="number-pad"
                     textContentType="oneTimeCode"
                     maxLength={1}
-                    className={`flex-1 rounded-[18px] border text-center font-extrabold ${
+                    className={`flex-1 rounded-[18px] border text-center font-bold ${
                       digit
                         ? 'border-[#c2933f] bg-[#fff6e6]'
                         : 'border-[#e7dcc9] bg-[#fffaf4]'
@@ -184,16 +248,22 @@ function OtpScreen({ navigation, route }) {
 
               <TouchableOpacity
                 activeOpacity={0.92}
-                disabled={!isComplete}
+                disabled={!isComplete || isVerifying}
                 className={`mt-[22px] h-[54px] flex-row items-center justify-center rounded-[18px] ${
-                  isComplete ? 'bg-[#17120e]' : 'bg-[#b7aea4]'
+                  isComplete && !isVerifying ? 'bg-[#17120e]' : 'bg-[#b7aea4]'
                 }`}
+                onPress={handleVerifyOtp}
               >
                 <Text className="mr-[10px] text-[17px] font-extrabold text-white">
-                  Verify & Continue
+                  {isVerifying ? 'Verifying...' : 'Verify & Continue'}
                 </Text>
                 <CheckCircle2 size={20} color="#fff" strokeWidth={2.2} />
               </TouchableOpacity>
+              {error ? (
+                <Text className="mt-3 text-center text-[13px] font-medium leading-[18px] text-[#b23a3a]">
+                  {error}
+                </Text>
+              ) : null}
 
               <View className="mt-4 flex-row items-center justify-center">
                 <Clock3 size={16} color="#927553" strokeWidth={2} />
@@ -201,14 +271,22 @@ function OtpScreen({ navigation, route }) {
                   className="ml-2 font-semibold"
                   style={resendMetaStyle}
                 >
-                  Resend code in 00:28
+                  {secondsLeft > 0
+                    ? `Resend code in 00:${String(secondsLeft).padStart(2, '0')}`
+                    : 'You can resend a new code now'}
                 </Text>
               </View>
 
-              <TouchableOpacity activeOpacity={0.85}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={handleResendOtp}
+                disabled={secondsLeft > 0}
+              >
                 <Text
-                  className="mt-[14px] text-center font-extrabold"
-                  style={resendLinkStyle}
+                  className={`mt-[14px] text-center font-extrabold ${
+                    secondsLeft > 0 ? 'text-[#cabfaa]' : ''
+                  }`}
+                  style={secondsLeft > 0 ? undefined : resendLinkStyle}
                 >
                   Didn't receive it? Resend OTP
                 </Text>
@@ -220,10 +298,10 @@ function OtpScreen({ navigation, route }) {
                 className="text-[13px] font-extrabold uppercase text-[#6c522d]"
                 style={infoLabelStyle}
               >
-                Why this matters
+                Mock session
               </Text>
               <Text className="mt-2" style={infoTextStyle}>
-                OTP verification keeps your wishlist, orders, and premium offers safe.
+                OTP verification keeps your wishlist, orders, and premium offers safe while you test the mock auth flow.
               </Text>
             </View>
           </View>

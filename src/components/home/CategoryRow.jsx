@@ -1,0 +1,32 @@
+const React = require('react');
+const { Text, TouchableOpacity, View } = require('react-native');
+const { iconMap } = require('./iconMap');
+
+const gold = '#c08d39';
+
+function CategoryRow({ items }) {
+  return (
+    <View className="mx-2 mt-6 flex-row justify-between px-2">
+      {items.map(item => {
+        const Icon = iconMap[item.icon];
+
+        return (
+          <TouchableOpacity
+            key={item.id}
+            activeOpacity={0.85}
+            className="items-center"
+          >
+            <View className="h-[50px] w-[50px] items-center justify-center rounded-full bg-[#f2ede7]">
+              <Icon size={20} color={gold} strokeWidth={1.8} />
+            </View>
+            <Text className="mt-3 text-[10px] font-medium text-[#3c3834]">
+              {item.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
+module.exports = CategoryRow;
