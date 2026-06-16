@@ -187,6 +187,6 @@ export const bottomNavItems = [
   { id: 'home', label: 'HOME', icon: 'House', active: true, route: 'Home' },
   { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: false, route: 'Categories' },
   { id: 'new-arrivals', label: 'NEW ARRIVALS', icon: 'Sparkles', active: false },
-  { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: false },
+  { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: false, route: 'Wishlist' },
   { id: 'account', label: 'ACCOUNT', icon: 'User', active: false },
 ];

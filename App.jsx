@@ -8,6 +8,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './src/features/home/screens/HomeScreen';
 import CategoriesScreen from './src/features/categories/screens/CategoriesScreen';
 import ProductDetailsScreen from './src/features/product/screens/ProductDetailsScreen';
+import CartScreen from './src/features/cart/screens/CartScreen';
+import CheckoutScreen from './src/features/checkout/screens/CheckoutScreen';
+import AddressBookScreen from './src/features/checkout/screens/AddressBookScreen';
+import WishlistScreen from './src/features/wishlist/screens/WishlistScreen';
 import { store } from './src/store';
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +30,10 @@ function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Categories" component={CategoriesScreen} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+            <Stack.Screen name="Cart" component={CartScreen} />
+            <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="AddressBook" component={AddressBookScreen} />
+            <Stack.Screen name="Wishlist" component={WishlistScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

@@ -139,7 +139,7 @@ function CategoriesScreen({ navigation }) {
             >
               <View className="flex-1 justify-center bg-[#fff8f14d] px-2 py-4">
                 <View className="max-w-[72%]">
-                  <Text className="text-[10px] font-bold tracking-[1.8px] text-[#27211c]">
+                  <Text className="text-[10px] font-bold tracking-[1.8px] text-[#e6ce96]">
                     {categoryPromo.eyebrow}
                   </Text>
                   <Text

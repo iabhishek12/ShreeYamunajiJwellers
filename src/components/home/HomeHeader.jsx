@@ -1,10 +1,15 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Gem, Heart, Menu, Search, ShoppingBag } from 'lucide-react-native';
+import { useAppSelector } from '../../store/hooks';
 
 const gold = '#b58b3c';
 
 function HomeHeader() {
+  const navigation = useNavigation();
+  const cartCount = useAppSelector(state => state.cart.totalQuantity);
+
   return (
     <View className="flex-row items-center justify-between px-6 pt-1 pb-0">
       <TouchableOpacity activeOpacity={0.8} className="h-10 w-10 items-center justify-center rounded-full">
@@ -21,14 +26,24 @@ function HomeHeader() {
         <TouchableOpacity activeOpacity={0.8} className="mr-1 h-10 w-10 items-center justify-center rounded-full">
           <Search size={21} color="#1d1b18" strokeWidth={2} />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} className="mr-1 h-10 w-10 items-center justify-center rounded-full">
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('Wishlist')}
+          className="mr-1 h-10 w-10 items-center justify-center rounded-full"
+        >
           <Heart size={21} color="#1d1b18" strokeWidth={2} />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} className="relative h-10 w-10 items-center justify-center rounded-full">
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('Cart')}
+          className="relative h-10 w-10 items-center justify-center rounded-full"
+        >
           <ShoppingBag size={21} color="#1d1b18" strokeWidth={2} />
-          <View className="absolute right-0 top-0 h-5 min-w-[20px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
-            <Text className="text-[10px] font-bold text-white">2</Text>
-          </View>
+          {cartCount > 0 ? (
+            <View className="absolute right-0 top-0 h-5 min-w-[20px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <Text className="text-[10px] font-bold text-white">{cartCount}</Text>
+            </View>
+          ) : null}
         </TouchableOpacity>
       </View>
     </View>

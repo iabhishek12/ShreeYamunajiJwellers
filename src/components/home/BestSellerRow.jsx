@@ -2,6 +2,9 @@ import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Heart, Plus, Star } from 'lucide-react-native';
+import { productDetails } from '../../data/mock/productMock';
+import { useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../features/cart/store/cartSlice';
 
 const contentContainerStyle = {
   paddingLeft: 16,
@@ -11,6 +14,27 @@ const contentContainerStyle = {
 
 function BestSellerRow({ items }) {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (event, item) => {
+    event?.stopPropagation?.();
+
+    const product = productDetails[item.productId];
+
+    if (!product) {
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        productId: product.id,
+        selectedMetalId: product.defaultMetal,
+        selectedSizeId: product.defaultSize,
+        quantity: 1,
+        unitPrice: product.price,
+      }),
+    );
+  };
 
   return (
     <ScrollView
@@ -78,6 +102,7 @@ function BestSellerRow({ items }) {
             </Text>
             <TouchableOpacity
               activeOpacity={0.9}
+              onPress={event => handleAddToCart(event, item)}
               className="h-[32px] w-[32px] items-center justify-center rounded-full bg-[#1e1c19]"
             >
               <Plus size={18} color="#ffffff" strokeWidth={2.3} />

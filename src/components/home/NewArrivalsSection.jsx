@@ -9,9 +9,33 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Heart, Plus, Star } from 'lucide-react-native';
+import { productDetails } from '../../data/mock/productMock';
+import { useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../features/cart/store/cartSlice';
 
 function NewArrivalsSection({ section }) {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (event, item) => {
+    event?.stopPropagation?.();
+
+    const product = productDetails[item.productId];
+
+    if (!product) {
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        productId: product.id,
+        selectedMetalId: product.defaultMetal,
+        selectedSizeId: product.defaultSize,
+        quantity: 1,
+        unitPrice: product.price,
+      }),
+    );
+  };
 
   return (
     <View className="mx-2 mt-4 rounded-[28px] bg-[#fbf7f1] px-3 pb-4 pt-5">
@@ -91,6 +115,7 @@ function NewArrivalsSection({ section }) {
                 </Text>
                 <TouchableOpacity
                   activeOpacity={0.9}
+                  onPress={event => handleAddToCart(event, item)}
                   className="h-[30px] w-[30px] items-center justify-center rounded-full bg-[#1e1c19]"
                 >
                   <Plus size={16} color="#ffffff" strokeWidth={2.3} />

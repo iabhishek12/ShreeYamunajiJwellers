@@ -26,6 +26,8 @@ import {
   ShoppingBag,
 } from 'lucide-react-native';
 import { productDetails } from '../../../data/mock/productMock';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { addToCart } from '../../cart/store/cartSlice';
 
 const assuranceIconMap = {
   BadgeCheck,
@@ -41,6 +43,8 @@ const highlightIconMap = {
 
 function ProductDetailsScreen({ navigation, route }) {
   const insets = useSafeAreaInsets();
+  const dispatch = useAppDispatch();
+  const cartCount = useAppSelector(state => state.cart.totalQuantity);
   const productId = route.params?.productId ?? 'infinity-sparkle-ring';
   const product = productDetails[productId] ?? productDetails['infinity-sparkle-ring'];
 
@@ -67,6 +71,28 @@ function ProductDetailsScreen({ navigation, route }) {
       product.metals.find(item => item.id === selectedMetalId) ?? product.metals[0],
     [product.metals, selectedMetalId],
   );
+
+  const selectedSize = useMemo(
+    () => product.sizes.find(item => item.id === selectedSizeId) ?? product.sizes[0],
+    [product.sizes, selectedSizeId],
+  );
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        productId: product.id,
+        selectedMetalId: selectedMetal.id,
+        selectedSizeId: selectedSize?.id ?? null,
+        quantity,
+        unitPrice: product.price,
+      }),
+    );
+  };
+
+  const handleBuyNow = () => {
+    handleAddToCart();
+    navigation.navigate('Cart');
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#fcf8f2]">
@@ -97,14 +123,17 @@ function ProductDetailsScreen({ navigation, route }) {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.85}
+              onPress={() => navigation.navigate('Cart')}
               className="relative h-10 w-10 items-center justify-center rounded-full"
             >
               <ShoppingBag size={20} color="#201b17" strokeWidth={2.1} />
-              <View className="absolute right-0 top-0 h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ba8531] px-1">
-                <Text className="text-[10px] font-bold text-white">
-                  {product.activeCartCount}
-                </Text>
-              </View>
+              {cartCount > 0 ? (
+                <View className="absolute right-0 top-0 h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ba8531] px-1">
+                  <Text className="text-[10px] font-bold text-white">
+                    {cartCount}
+                  </Text>
+                </View>
+              ) : null}
             </TouchableOpacity>
           </View>
         </View>
@@ -329,6 +358,7 @@ function ProductDetailsScreen({ navigation, route }) {
             <View className="mt-7 flex-row justify-between">
               <TouchableOpacity
                 activeOpacity={0.92}
+                onPress={handleAddToCart}
                 className="w-[47%] items-center rounded-[16px] bg-[#1a1a1a] py-4"
               >
                 <Text className="text-[18px] font-semibold text-white">Add to Bag</Text>
@@ -336,6 +366,7 @@ function ProductDetailsScreen({ navigation, route }) {
 
               <TouchableOpacity
                 activeOpacity={0.92}
+                onPress={handleBuyNow}
                 className="w-[47%] items-center rounded-[16px] bg-[#bc8735] py-4"
               >
                 <Text className="text-[18px] font-semibold text-white">Buy Now</Text>
