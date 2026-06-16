@@ -25,13 +25,15 @@ import {
   categoryPromo,
 } from '../../../data/mock/categoryMock';
 
-const gridHorizontalPadding = 28;
+const screenHorizontalPadding = 18;
 const cardGap = 5;
 
 function CategoriesScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const cardWidth = Math.floor((width - gridHorizontalPadding - cardGap * 1.5) / 3);
+  const cardWidth = Math.floor(
+    (width - screenHorizontalPadding * 2 - cardGap * 2) / 3,
+  );
   const cardImageHeight = Math.round(cardWidth * 1.08);
 
   return (
@@ -68,7 +70,7 @@ function CategoriesScreen({ navigation }) {
             </ImageBackground>
           </View>
 
-          <View className="mx-[14px] mt-4 flex-row flex-wrap justify-between">
+          <View className="mt-4 flex-row flex-wrap justify-between px-[18px]">
             {categoryCards.map(item => {
               const Icon = iconMap[item.icon];
 
@@ -81,7 +83,7 @@ function CategoriesScreen({ navigation }) {
                       productId: item.featuredProductId,
                     })
                   }
-                  className="mb-4 overflow-hidden rounded-[10px] border border-[#eee4d8] bg-white"
+                  className="mb-4 overflow-hidden rounded-[16px] border border-[#eee4d8] bg-white"
                   style={[styles.cardShadow, { width: cardWidth }]}
                 >
                   <Image
@@ -127,7 +129,7 @@ function CategoriesScreen({ navigation }) {
                 productId: categoryPromo.featuredProductId,
               })
             }
-            className="mx-[14px] mt-2 overflow-hidden rounded-[12px] bg-[#f5ecdf]"
+            className="mx-[18px] mt-2 overflow-hidden rounded-[12px] bg-[#f5ecdf]"
             style={styles.cardShadow}
           >
             <ImageBackground
@@ -163,7 +165,7 @@ function CategoriesScreen({ navigation }) {
             </ImageBackground>
           </TouchableOpacity>
 
-          <View className="mx-[14px] mt-8 flex-row border-y border-[#eee5d8] bg-[#fbf7f1] py-5">
+          <View className="mx-[18px] mt-8 flex-row border-y border-[#eee5d8] bg-[#fbf7f1] py-5">
             {categoryAssuranceItems.map((item, index) => {
               const Icon = iconMap[item.icon];
 
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
   },
   heroCard: {
     height: 108,
-    marginHorizontal: 14,
+    marginHorizontal: screenHorizontalPadding,
     marginTop: 6,
     overflow: 'hidden',
     borderRadius: 14,
