@@ -360,8 +360,8 @@ const styles = StyleSheet.create({
   },
   orderTitle: {
     color: ink,
-    fontSize: 16,
-    fontWeight: '900',
+    fontSize: 14,
+    fontWeight: '700',
   },
   placedText: {
     marginTop: 5,
@@ -370,28 +370,28 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   statusPill: {
-    marginTop: 12,
+    marginTop: 8,
     alignSelf: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 8,
-    paddingHorizontal: 9,
-    paddingVertical: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
   },
   statusText: {
     marginLeft: 6,
     fontSize: 12,
-    fontWeight: '900',
+    fontWeight: '700',
   },
   statusLine: {
-    marginTop: 8,
+    marginTop: 5,
     color: '#302c28',
     fontSize: 12,
     fontWeight: '700',
-    lineHeight: 17,
+    lineHeight: 15,
   },
   orderFooter: {
-    marginTop: 14,
+    marginTop: 5,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
@@ -409,26 +409,26 @@ const styles = StyleSheet.create({
   totalLabel: {
     color: ink,
     fontSize: 12,
-    fontWeight: '900',
+    fontWeight: '700',
   },
   totalValue: {
-    marginLeft: 16,
+    marginLeft: 6,
     color: ink,
-    fontSize: 18,
-    fontWeight: '900',
+    fontSize: 12,
+    fontWeight: '700',
   },
   actionButton: {
-    minWidth: 106,
+    minWidth: 100,
     alignItems: 'center',
     borderRadius: 9,
     backgroundColor: '#f5ede5',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
   actionText: {
     color: ink,
     fontSize: 12,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   helpCard: {
     marginTop: 2,
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
   },
   helpTitle: {
     color: ink,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '900',
   },
   helpText: {
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
   supportText: {
     color: darkGold,
     fontSize: 12,
-    fontWeight: '900',
+    fontWeight: '800',
   },
 });
 
