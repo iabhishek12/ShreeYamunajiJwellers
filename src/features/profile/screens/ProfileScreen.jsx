@@ -35,6 +35,7 @@ import {
 } from 'lucide-react-native';
 import BottomBar from '../../../components/home/BottomBar';
 import { categoryBottomNavItems } from '../../../data/mock/categoryMock';
+import { notificationItems } from '../../../data/mock/notificationMock';
 import { useAppSelector } from '../../../store/hooks';
 
 const avatarImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
@@ -94,6 +95,7 @@ function ProfileScreen({ navigation }) {
   const user = useAppSelector(state => state.auth.user);
   const wishlistCount = useAppSelector(state => state.wishlist.items.length);
   const orders = useAppSelector(state => state.orders.items);
+  const unreadCount = notificationItems.filter(item => item.unread).length;
 
   const displayName = isAuthenticated ? user?.name || 'Guest Shopper' : 'Guest Shopper';
   const firstName = displayName.split(' ')[0] || 'Guest';
@@ -160,9 +162,17 @@ function ProfileScreen({ navigation }) {
             />
           </View>
           <View style={styles.headerActions}>
-            <TouchableOpacity activeOpacity={0.82} style={styles.headerIcon}>
+            <TouchableOpacity
+              activeOpacity={0.82}
+              style={styles.headerIcon}
+              onPress={() => navigation.navigate('Notifications')}
+            >
               <Bell size={21} color={ink} strokeWidth={1.9} />
-              <View style={styles.notificationDot} />
+              {unreadCount > 0 ? (
+                <View style={styles.notificationBadge}>
+                  <Text style={styles.notificationBadgeText}>{unreadCount}</Text>
+                </View>
+              ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.82}
@@ -217,7 +227,7 @@ function ProfileScreen({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.82}
               style={styles.viewAllButton}
-              onPress={() => navigation.navigate('Cart')}
+              onPress={() => navigation.navigate('Orders')}
             >
               <Text style={styles.viewAllText}>View All</Text>
               <ChevronRight size={18} color={darkGold} strokeWidth={2.1} />
@@ -343,14 +353,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 16,
   },
-  notificationDot: {
+  notificationBadge: {
     position: 'absolute',
-    right: 5,
-    top: 5,
-    height: 9,
-    width: 9,
-    borderRadius: 5,
+    right: -4,
+    top: -4,
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: gold,
+  },
+  notificationBadgeText: {
+    color: '#ffffff',
+    fontSize: 9,
+    fontWeight: '900',
   },
   profileIntro: {
     marginTop: 0,

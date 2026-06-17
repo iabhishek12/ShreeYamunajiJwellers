@@ -16,7 +16,6 @@ import BottomBar from '../../../components/home/BottomBar';
 import {
   assuranceItems,
   bestSellerItems,
-  bottomNavItems,
   categoryItems,
   collectionCards,
   heroBanner,
@@ -24,11 +23,17 @@ import {
   promiseSection,
   reviewSection,
 } from '../../../data/mock/homeMock';
+import { categoryBottomNavItems } from '../../../data/mock/categoryMock';
 import { useAppSelector } from '../../../store/hooks';
 
 const scrollContentStyle = {
   paddingBottom: 16,
 };
+
+const homeBottomNavItems = categoryBottomNavItems.map(item => ({
+  ...item,
+  active: item.id === 'home',
+}));
 
 function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -78,7 +83,7 @@ function HomeScreen() {
           </View>
         </ScrollView>
 
-        <BottomBar items={bottomNavItems} />
+        <BottomBar items={homeBottomNavItems} />
       </View>
     </SafeAreaView>
   );

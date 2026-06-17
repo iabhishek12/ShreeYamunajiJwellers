@@ -16,6 +16,7 @@ import MenuInfoScreen from './src/features/menu/screens/MenuInfoScreen';
 import ProfileScreen from './src/features/profile/screens/ProfileScreen';
 import OrderDetailsScreen from './src/features/orders/screens/OrderDetailsScreen';
 import OrdersScreen from './src/features/orders/screens/OrdersScreen';
+import NotificationsScreen from './src/features/notifications/screens/NotificationsScreen';
 import { store } from './src/store';
 
 const Stack = createNativeStackNavigator();
@@ -39,6 +40,7 @@ function App() {
             <Stack.Screen name="AddressBook" component={AddressBookScreen} />
             <Stack.Screen name="Wishlist" component={WishlistScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Notifications" component={NotificationsScreen} />
             <Stack.Screen name="Orders" component={OrdersScreen} />
             <Stack.Screen name="OrderDetails" component={OrderDetailsScreen} />
             <Stack.Screen name="Settings" component={MenuInfoScreen} />
