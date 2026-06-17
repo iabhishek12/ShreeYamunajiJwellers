@@ -37,7 +37,10 @@ import {
   checkoutSteps,
 } from '../../../data/mock/checkoutMock';
 import { productDetails } from '../../../data/mock/productMock';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { clearCart } from '../../cart/store/cartSlice';
+import { createMockOrderFromCheckout } from '../../orders/services/ordersService';
+import { addOrder } from '../../orders/store/ordersSlice';
 
 const formatCurrency = value => `Rs ${Math.round(value).toLocaleString('en-IN')}`;
 
@@ -48,6 +51,7 @@ const paymentIconMap = {
 };
 
 function CheckoutScreen({ navigation }) {
+  const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const { items, totalQuantity } = useAppSelector(state => state.cart);
   const { addresses, selectedAddressId } = useAppSelector(state => state.addressBook);
@@ -109,6 +113,28 @@ function CheckoutScreen({ navigation }) {
     } else {
       setCouponMessage('Invalid coupon code');
     }
+  };
+
+  const handlePlaceOrder = () => {
+    if (cartItems.length === 0) {
+      return;
+    }
+
+    const order = createMockOrderFromCheckout({
+      cartItems,
+      deliveryFee,
+      giftWrapFee,
+      offerDiscount,
+      paymentId: selectedPaymentId,
+      selectedAddress,
+      subtotal,
+      taxes,
+      total,
+    });
+
+    dispatch(addOrder(order));
+    dispatch(clearCart());
+    navigation.navigate('Orders');
   };
 
   return (
@@ -479,6 +505,7 @@ function CheckoutScreen({ navigation }) {
 
             <TouchableOpacity
               activeOpacity={0.9}
+              onPress={handlePlaceOrder}
               className={`mt-6 flex-row items-center justify-center rounded-[13px] py-4 ${
                 cartItems.length === 0 ? 'bg-[#8a8580]' : 'bg-[#171717]'
               }`}

@@ -53,14 +53,6 @@ const profileBottomNavItems = categoryBottomNavItems.map(item => ({
   active: item.id === 'profile',
 }));
 
-const orderStats = [
-  { id: 'total', value: '12', label: 'Total Orders', icon: Package },
-  { id: 'processing', value: '3', label: 'Processing', icon: MoreHorizontal },
-  { id: 'shipped', value: '6', label: 'Shipped', icon: Truck },
-  { id: 'delivered', value: '3', label: 'Delivered', icon: CheckCircle2 },
-  { id: 'cancelled', value: '0', label: 'Cancelled', icon: XCircle },
-];
-
 const makeEmail = name =>
   `${name || 'guest shopper'}`
     .trim()
@@ -101,6 +93,7 @@ function ProfileScreen({ navigation }) {
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const user = useAppSelector(state => state.auth.user);
   const wishlistCount = useAppSelector(state => state.wishlist.items.length);
+  const orders = useAppSelector(state => state.orders.items);
 
   const displayName = isAuthenticated ? user?.name || 'Guest Shopper' : 'Guest Shopper';
   const firstName = displayName.split(' ')[0] || 'Guest';
@@ -123,6 +116,33 @@ function ProfileScreen({ navigation }) {
     { id: 'faqs', label: 'FAQs', icon: CircleHelp, route: 'TermsConditions' },
     { id: 'contact', label: 'Contact Us', icon: Headphones, route: 'Settings' },
     { id: 'about', label: 'About Shree Yamunaji', icon: Info, route: 'PrivacyPolicy' },
+  ];
+  const orderStats = [
+    { id: 'total', value: orders.length, label: 'Total Orders', icon: Package },
+    {
+      id: 'processing',
+      value: orders.filter(order => order.status === 'Processing').length,
+      label: 'Processing',
+      icon: MoreHorizontal,
+    },
+    {
+      id: 'shipped',
+      value: orders.filter(order => order.status === 'Shipped').length,
+      label: 'Shipped',
+      icon: Truck,
+    },
+    {
+      id: 'delivered',
+      value: orders.filter(order => order.status === 'Delivered').length,
+      label: 'Delivered',
+      icon: CheckCircle2,
+    },
+    {
+      id: 'cancelled',
+      value: orders.filter(order => order.status === 'Cancelled').length,
+      label: 'Cancelled',
+      icon: XCircle,
+    },
   ];
 
   return (

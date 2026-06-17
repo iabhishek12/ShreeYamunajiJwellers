@@ -22,11 +22,9 @@ import {
 import BottomBar from '../../../components/home/BottomBar';
 import HomeHeader from '../../../components/home/HomeHeader';
 import { categoryBottomNavItems } from '../../../data/mock/categoryMock';
-
-const ringImage = require('../../../assets/images/products/modern-rings.jpg.jpeg');
-const pendantImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
-const studsImage = require('../../../assets/images/products/product-studs.jpg.jpeg');
-const braceletImage = require('../../../assets/images/products/product-bracelet.jpg.jpeg');
+import { orderStatusMeta, orderTabs } from '../../../data/mock/ordersMock';
+import { productDetails } from '../../../data/mock/productMock';
+import { useAppSelector } from '../../../store/hooks';
 
 const gold = '#bd8934';
 const darkGold = '#a66d16';
@@ -34,8 +32,6 @@ const ink = '#191714';
 const muted = '#6f6860';
 const ivory = '#fbf7f1';
 const line = '#ece4d9';
-
-const tabs = ['All Orders', 'Processing', 'Shipped', 'Delivered', 'Returns'];
 
 const statusConfig = {
   Delivered: {
@@ -60,65 +56,35 @@ const statusConfig = {
   },
 };
 
-const orderItems = [
-  {
-    id: 'LX10245',
-    placedOn: '15 May, 2024',
-    status: 'Delivered',
-    statusLine: 'Delivered on 20 May, 2024',
-    itemCount: '3 Items',
-    total: 'Rs 61,357',
-    action: 'Buy Again',
-    tab: 'Delivered',
-    images: [ringImage, pendantImage, studsImage],
-  },
-  {
-    id: 'LX10212',
-    placedOn: '10 May, 2024',
-    status: 'Shipped',
-    statusLine: 'Expected delivery: 18 May, 2024',
-    itemCount: '2 Items',
-    total: 'Rs 28,999',
-    action: 'Track Order',
-    tab: 'Shipped',
-    images: [ringImage, pendantImage],
-  },
-  {
-    id: 'LX10178',
-    placedOn: '05 May, 2024',
-    status: 'Processing',
-    statusLine: 'We are preparing your order',
-    itemCount: '1 Item',
-    total: 'Rs 16,999',
-    action: 'View Details',
-    tab: 'Processing',
-    images: [studsImage],
-  },
-  {
-    id: 'LX10098',
-    placedOn: '28 Apr, 2024',
-    status: 'Return Completed',
-    statusLine: 'Return completed on 03 May, 2024',
-    itemCount: '1 Item',
-    total: 'Rs 18,499',
-    action: 'View Details',
-    tab: 'Returns',
-    images: [braceletImage],
-  },
-];
-
 const ordersBottomNavItems = categoryBottomNavItems.map(item => ({
   ...item,
   active: item.id === 'orders',
 }));
 
-function OrderCard({ order }) {
+const formatCurrency = value => `Rs ${Math.round(value).toLocaleString('en-IN')}`;
+
+const getOrderItemLabel = order => {
+  const quantity = order.items.reduce((total, item) => total + item.quantity, 0);
+  return `${quantity} Item${quantity === 1 ? '' : 's'}`;
+};
+
+const getOrderImages = order =>
+  order.items
+    .map(item => productDetails[item.productId]?.gallery?.[0]?.image)
+    .filter(Boolean);
+
+function OrderCard({ navigation, order }) {
   const StatusIcon = statusConfig[order.status].icon;
+  const images = getOrderImages(order);
 
   return (
-    <TouchableOpacity activeOpacity={0.9} style={styles.orderCard}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={styles.orderCard}
+      onPress={() => navigation.navigate('OrderDetails', { orderId: order.id })}
+    >
       <View style={styles.thumbColumn}>
-        {order.images.slice(0, 3).map((image, index) => (
+        {images.slice(0, 3).map((image, index) => (
           <Image
             key={`${order.id}-${index}`}
             source={image}
@@ -162,14 +128,18 @@ function OrderCard({ order }) {
 
         <View style={styles.orderFooter}>
           <View>
-            <Text style={styles.itemCount}>{order.itemCount}</Text>
+            <Text style={styles.itemCount}>{getOrderItemLabel(order)}</Text>
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total</Text>
-              <Text style={styles.totalValue}>{order.total}</Text>
+              <Text style={styles.totalValue}>{formatCurrency(order.total)}</Text>
             </View>
           </View>
 
-          <TouchableOpacity activeOpacity={0.86} style={styles.actionButton}>
+          <TouchableOpacity
+            activeOpacity={0.86}
+            style={styles.actionButton}
+            onPress={() => navigation.navigate('OrderDetails', { orderId: order.id })}
+          >
             <Text style={styles.actionText}>{order.action}</Text>
           </TouchableOpacity>
         </View>
@@ -178,17 +148,18 @@ function OrderCard({ order }) {
   );
 }
 
-function OrdersScreen() {
+function OrdersScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState('All Orders');
+  const orders = useAppSelector(state => state.orders.items);
 
   const filteredOrders = useMemo(() => {
     if (selectedTab === 'All Orders') {
-      return orderItems;
+      return orders;
     }
 
-    return orderItems.filter(order => order.tab === selectedTab);
-  }, [selectedTab]);
+    return orders.filter(order => orderStatusMeta[order.status]?.tab === selectedTab);
+  }, [orders, selectedTab]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -210,7 +181,7 @@ function OrdersScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.tabsContent}
         >
-          {tabs.map(tab => {
+          {orderTabs.map(tab => {
             const isActive = tab === selectedTab;
 
             return (
@@ -236,9 +207,21 @@ function OrdersScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
       >
-        {filteredOrders.map(order => (
-          <OrderCard key={order.id} order={order} />
-        ))}
+        {filteredOrders.length > 0 ? (
+          filteredOrders.map(order => (
+            <OrderCard key={order.id} navigation={navigation} order={order} />
+          ))
+        ) : (
+          <View style={styles.emptyCard}>
+            <View style={styles.emptyIcon}>
+              <Package size={28} color={gold} strokeWidth={1.8} />
+            </View>
+            <Text style={styles.emptyTitle}>No orders yet</Text>
+            <Text style={styles.emptyText}>
+              Orders you place from checkout will appear here.
+            </Text>
+          </View>
+        )}
 
         <View style={styles.helpCard}>
           <View style={styles.helpIcon}>
@@ -320,6 +303,38 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 16,
   },
+  emptyCard: {
+    alignItems: 'center',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#eadfce',
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 20,
+    paddingVertical: 32,
+  },
+  emptyIcon: {
+    height: 58,
+    width: 58,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 29,
+    backgroundColor: '#fbf2e6',
+  },
+  emptyTitle: {
+    marginTop: 14,
+    color: ink,
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  emptyText: {
+    marginTop: 7,
+    maxWidth: 240,
+    textAlign: 'center',
+    color: muted,
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 18,
+  },
   orderCard: {
     marginBottom: 12,
     flexDirection: 'row',
@@ -386,7 +401,7 @@ const styles = StyleSheet.create({
   statusLine: {
     marginTop: 5,
     color: '#302c28',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '700',
     lineHeight: 15,
   },
@@ -452,14 +467,15 @@ const styles = StyleSheet.create({
   },
   helpTitle: {
     color: ink,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '900',
   },
   helpText: {
     marginTop: 3,
     color: muted,
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
+    
   },
   supportButton: {
     flexDirection: 'row',
@@ -467,7 +483,7 @@ const styles = StyleSheet.create({
   },
   supportText: {
     color: darkGold,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '800',
   },
 });

@@ -14,6 +14,7 @@ import AddressBookScreen from './src/features/checkout/screens/AddressBookScreen
 import WishlistScreen from './src/features/wishlist/screens/WishlistScreen';
 import MenuInfoScreen from './src/features/menu/screens/MenuInfoScreen';
 import ProfileScreen from './src/features/profile/screens/ProfileScreen';
+import OrderDetailsScreen from './src/features/orders/screens/OrderDetailsScreen';
 import OrdersScreen from './src/features/orders/screens/OrdersScreen';
 import { store } from './src/store';
 
@@ -39,6 +40,7 @@ function App() {
             <Stack.Screen name="Wishlist" component={WishlistScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Orders" component={OrdersScreen} />
+            <Stack.Screen name="OrderDetails" component={OrderDetailsScreen} />
             <Stack.Screen name="Settings" component={MenuInfoScreen} />
             <Stack.Screen name="TermsConditions" component={MenuInfoScreen} />
             <Stack.Screen name="PrivacyPolicy" component={MenuInfoScreen} />
