@@ -29,7 +29,7 @@ function PromiseSection({ section }) {
           <Text style={styles.titleAccent}>{section.accentTitle}</Text>
         </Text>
 
-        <Text className="mt-5 px-[8px] text-center text-[14px] font-thin leading-[28px] text-[#56524c]">
+        <Text className="mt-5 px-[8px] text-center text-[14px] font-medium leading-[28px] text-[#56524c]">
           {section.description}
         </Text>
 
@@ -47,7 +47,7 @@ function PromiseSection({ section }) {
               <Text className="text-center text-[18px] font-bold text-[#c79635]">
                 {item.value}
               </Text>
-              <Text className="mt-[2px] text-center text-[11px] leading-[15px] tracking-[0.2px] text-[#6d675f]">
+              <Text className="mt-[2px] mb-2 text-center text-[11px] leading-[15px] tracking-[0.2px] text-[#6d675f]">
                 {item.label}
               </Text>
             </View>
