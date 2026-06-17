@@ -13,6 +13,8 @@ import CheckoutScreen from './src/features/checkout/screens/CheckoutScreen';
 import AddressBookScreen from './src/features/checkout/screens/AddressBookScreen';
 import WishlistScreen from './src/features/wishlist/screens/WishlistScreen';
 import MenuInfoScreen from './src/features/menu/screens/MenuInfoScreen';
+import ProfileScreen from './src/features/profile/screens/ProfileScreen';
+import OrdersScreen from './src/features/orders/screens/OrdersScreen';
 import { store } from './src/store';
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +37,8 @@ function App() {
             <Stack.Screen name="Checkout" component={CheckoutScreen} />
             <Stack.Screen name="AddressBook" component={AddressBookScreen} />
             <Stack.Screen name="Wishlist" component={WishlistScreen} />
-            <Stack.Screen name="Profile" component={MenuInfoScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Orders" component={OrdersScreen} />
             <Stack.Screen name="Settings" component={MenuInfoScreen} />
             <Stack.Screen name="TermsConditions" component={MenuInfoScreen} />
             <Stack.Screen name="PrivacyPolicy" component={MenuInfoScreen} />

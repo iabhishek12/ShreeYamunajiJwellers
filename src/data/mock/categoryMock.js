@@ -85,6 +85,6 @@ export const categoryBottomNavItems = [
   { id: 'home', label: 'HOME', icon: 'House', active: false, route: 'Home' },
   { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: true, route: 'Categories' },
   { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: false, route: 'Wishlist' },
-  { id: 'orders', label: 'ORDERS', icon: 'ShoppingBag', active: false, route: 'Cart' },
-  { id: 'profile', label: 'PROFILE', icon: 'User', active: false },
+  { id: 'orders', label: 'ORDERS', icon: 'ShoppingBag', active: false, route: 'Orders' },
+  { id: 'profile', label: 'PROFILE', icon: 'User', active: false, route: 'Profile' },
 ];

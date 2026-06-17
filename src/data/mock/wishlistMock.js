@@ -26,7 +26,7 @@ export const wishlistBottomNavItems = [
   { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: false, route: 'Categories' },
   { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: true, route: 'Wishlist' },
   { id: 'cart', label: 'CART', icon: 'ShoppingBag', active: false, route: 'Cart' },
-  { id: 'profile', label: 'PROFILE', icon: 'User', active: false },
+  { id: 'profile', label: 'PROFILE', icon: 'User', active: false, route: 'Profile' },
 ];
 
 export const wishlistInsights = [

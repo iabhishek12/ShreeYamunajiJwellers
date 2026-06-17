@@ -33,5 +33,5 @@ export const cartBottomNavItems = [
   { id: 'categories', label: 'CATEGORIES', icon: 'LayoutGrid', active: false, route: 'Categories' },
   { id: 'wishlist', label: 'WISHLIST', icon: 'Heart', active: false, route: 'Wishlist' },
   { id: 'cart', label: 'CART', icon: 'ShoppingBag', active: true, route: 'Cart' },
-  { id: 'profile', label: 'PROFILE', icon: 'User', active: false },
+  { id: 'profile', label: 'PROFILE', icon: 'User', active: false, route: 'Profile' },
 ];

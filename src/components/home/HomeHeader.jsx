@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Gem, Heart, Menu, Search, ShoppingBag } from 'lucide-react-native';
+import { Heart, Menu, Search, ShoppingBag } from 'lucide-react-native';
 import { useAppSelector } from '../../store/hooks';
 import SidebarMenu from './SidebarMenu';
 
-const gold = '#b58b3c';
+const logoImage = require('../../assets/images/logo/logo.png');
 
 function HomeHeader() {
   const navigation = useNavigation();
@@ -24,10 +24,12 @@ function HomeHeader() {
           <Menu size={24} color="#1d1b18" strokeWidth={2} />
         </TouchableOpacity>
 
-        <View className="items-center">
-          <Gem size={15} color={gold} strokeWidth={1.7} />
-          <Text style={styles.brandTitle}>Shree</Text>
-          <Text style={styles.brandSubtitle}>Yamunaji Jewellers</Text>
+        <View style={styles.logoWrap}>
+          <Image
+            source={logoImage}
+            resizeMode="contain"
+            style={styles.logoImage}
+          />
         </View>
 
         <View className="flex-row items-center">
@@ -72,29 +74,15 @@ function HomeHeader() {
 }
 
 const styles = StyleSheet.create({
-  brandTitle: {
-    fontFamily: Platform.select({
-      ios: 'Baskerville',
-      android: 'serif',
-      default: 'serif',
-    }),
-    marginTop: 3,
-    fontSize: 27,
-    lineHeight: 31,
-    color: '#1e1b18',
-    letterSpacing: 5,
+  logoWrap: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
   },
-  brandSubtitle: {
-    fontFamily: Platform.select({
-      ios: 'Baskerville',
-      android: 'serif',
-      default: 'serif',
-    }),
-    marginTop: 3,
-    fontSize: 8,
-    lineHeight: 10,
-    color: gold,
-    letterSpacing: 3.5,
+  logoImage: {
+    height: 60,
+    width: 115,
   },
 });
 
