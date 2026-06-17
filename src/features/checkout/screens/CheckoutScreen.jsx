@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Image,
   Platform,
@@ -19,7 +19,6 @@ import {
   CheckCircle2,
   ChevronRight,
   CreditCard,
-  Gift,
   MapPin,
   Phone,
   ShieldCheck,
@@ -50,7 +49,7 @@ const paymentIconMap = {
   wallet: Wallet,
 };
 
-function CheckoutScreen({ navigation }) {
+function CheckoutScreen({ navigation, route }) {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const { items, totalQuantity } = useAppSelector(state => state.cart);
@@ -59,7 +58,7 @@ function CheckoutScreen({ navigation }) {
   const [selectedOfferId, setSelectedOfferId] = useState('welcome');
   const [couponCode, setCouponCode] = useState('YAMUNA10');
   const [couponMessage, setCouponMessage] = useState('YAMUNA10 applied');
-  const [giftWrapEnabled, setGiftWrapEnabled] = useState(true);
+  const [giftWrapEnabled] = useState(true);
   const selectedAddress =
     addresses.find(address => address.id === selectedAddressId) ?? addresses[0];
 
@@ -101,6 +100,23 @@ function CheckoutScreen({ navigation }) {
   const taxes = cartItems.length > 0 ? Math.round((subtotal - offerDiscount) * 0.04) : 0;
   const total = subtotal - offerDiscount + deliveryFee + giftWrapFee + taxes;
   const appliedOffer = checkoutOffers.find(offer => offer.id === selectedOfferId);
+
+  useEffect(() => {
+    const nextOfferId = route.params?.selectedOfferIdFromOffers;
+    const nextCouponCode = route.params?.couponCodeFromOffers;
+
+    if (!nextOfferId || !nextCouponCode) {
+      return;
+    }
+
+    setSelectedOfferId(nextOfferId);
+    setCouponCode(nextCouponCode);
+    setCouponMessage(`${nextCouponCode} applied`);
+    navigation.setParams({
+      selectedOfferIdFromOffers: undefined,
+      couponCodeFromOffers: undefined,
+    });
+  }, [navigation, route.params?.couponCodeFromOffers, route.params?.selectedOfferIdFromOffers]);
 
   const handleApplyCoupon = () => {
     const normalizedCode = couponCode.trim().toUpperCase();
@@ -269,20 +285,32 @@ function CheckoutScreen({ navigation }) {
             </Text>
           </View>
 
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
+          <View className="mx-4 mt-5 rounded-[16px] border border-[#eee4d8] bg-white p-3.5" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
                 <Tag size={20} color="#bd8934" strokeWidth={1.8} />
-                <Text className="ml-2 text-[15px] font-bold text-[#181410]">
+                <Text className="ml-2 text-[14px] font-semibold text-[#181410]">
                   Offers & Rewards
                 </Text>
               </View>
-              <Text className="text-[12px] font-bold text-[#2f8b55]">
-                Saved {formatCurrency(offerDiscount)}
-              </Text>
+              <View className="flex-row items-center">
+                <Text className="mr-3 text-[11px] font-semibold text-[#2f8b55]">
+                  Saved {formatCurrency(offerDiscount)}
+                </Text>
+                <TouchableOpacity
+                  activeOpacity={0.85}
+                  onPress={() =>
+                    navigation.navigate('Offers', { selectedOfferId })
+                  }
+                  className="flex-row items-center"
+                >
+                  <Text className="text-[11px] font-semibold text-[#bd8934]">SEE ALL</Text>
+                  <ChevronRight size={14} color="#bd8934" strokeWidth={2} />
+                </TouchableOpacity>
+              </View>
             </View>
 
-            <View className="mt-4 flex-row items-center rounded-[15px] border border-[#eee5dc] bg-[#fffdf9] px-3 py-2">
+            <View className="mt-3 flex-row items-center rounded-[13px] border border-[#eee5dc] bg-[#fffdf9] px-3 py-2">
               <TextInput
                 value={couponCode}
                 onChangeText={value => {
@@ -292,20 +320,20 @@ function CheckoutScreen({ navigation }) {
                 placeholder="Enter coupon code"
                 placeholderTextColor="#9a9188"
                 autoCapitalize="characters"
-                className="flex-1 text-[13px] font-semibold text-[#181410]"
+                className="flex-1 text-[12px] font-medium text-[#181410]"
               />
               <TouchableOpacity
                 activeOpacity={0.9}
                 onPress={handleApplyCoupon}
-                className="ml-3 rounded-full bg-[#171717] px-4 py-2"
+                className="ml-3 rounded-full bg-[#171717] px-3.5 py-2"
               >
-                <Text className="text-[12px] font-bold text-white">APPLY</Text>
+                <Text className="text-[11px] font-semibold text-white">APPLY</Text>
               </TouchableOpacity>
             </View>
 
             {couponMessage ? (
               <Text
-                className={`mt-2 text-[12px] font-semibold ${
+                className={`mt-2 text-[11px] font-medium ${
                   appliedOffer?.code === couponCode.trim().toUpperCase()
                     ? 'text-[#2f8b55]'
                     : 'text-[#b54b38]'
@@ -315,7 +343,7 @@ function CheckoutScreen({ navigation }) {
               </Text>
             ) : null}
 
-            {checkoutOffers.map(offer => {
+            {checkoutOffers.slice(0, 2).map(offer => {
               const selected = offer.id === selectedOfferId;
 
               return (
@@ -327,21 +355,21 @@ function CheckoutScreen({ navigation }) {
                     setCouponCode(offer.code);
                     setCouponMessage(`${offer.code} applied`);
                   }}
-                  className={`mt-3 rounded-[15px] border px-3 py-3 ${
+                  className={`mt-2.5 rounded-[13px] border px-3 py-2.5 ${
                     selected
                       ? 'border-[#bd8934] bg-[#fff8ef]'
                       : 'border-[#eee5dc] bg-white'
                   }`}
                 >
                   <View className="flex-row items-center justify-between">
-                    <Text className="text-[13px] font-bold text-[#2d2722]">
+                    <Text className="text-[12px] font-semibold text-[#2d2722]">
                       {offer.title}
                     </Text>
                     {selected ? (
-                      <CheckCircle2 size={18} color="#2f8b55" strokeWidth={2} />
+                      <CheckCircle2 size={16} color="#2f8b55" strokeWidth={2} />
                     ) : null}
                   </View>
-                  <Text className="mt-1 text-[12px] leading-[18px] text-[#7b7167]">
+                  <Text className="mt-1 text-[11px] leading-[16px] text-[#7b7167]">
                     {offer.subtitle}
                   </Text>
                 </TouchableOpacity>
@@ -401,30 +429,6 @@ function CheckoutScreen({ navigation }) {
               );
             })}
           </View>
-
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <Gift size={20} color="#bd8934" strokeWidth={1.8} />
-                <Text className="ml-2 text-[15px] font-bold text-[#181410]">
-                  Gift Packaging
-                </Text>
-              </View>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => setGiftWrapEnabled(current => !current)}
-                className={`h-7 w-12 justify-center rounded-full px-1 ${
-                  giftWrapEnabled ? 'items-end bg-[#bd8934]' : 'items-start bg-[#dfd6cb]'
-                }`}
-              >
-                <View className="h-5 w-5 rounded-full bg-white" />
-              </TouchableOpacity>
-            </View>
-            <Text className="mt-2 text-[12px] leading-[18px] text-[#7b7167]">
-              Premium velvet pouch, care card and secure gift box.
-            </Text>
-          </View>
-
           <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
             <Text className="text-[15px] font-bold text-[#181410]">
               Review Items
@@ -481,12 +485,7 @@ function CheckoutScreen({ navigation }) {
                 {deliveryFee === 0 ? 'FREE' : formatCurrency(deliveryFee)}
               </Text>
             </View>
-            <View className="mt-3 flex-row justify-between">
-              <Text className="text-[14px] text-[#302b26]">Gift Packaging</Text>
-              <Text className="text-[14px] font-semibold text-[#171411]">
-                {giftWrapFee === 0 ? 'FREE' : formatCurrency(giftWrapFee)}
-              </Text>
-            </View>
+            
             <View className="mt-3 flex-row justify-between">
               <Text className="text-[14px] text-[#302b26]">Taxes</Text>
               <Text className="text-[14px] font-semibold text-[#171411]">

@@ -45,7 +45,7 @@ function HomeHeader() {
           >
             <Bell size={21} color="#1d1b18" strokeWidth={2} />
             {unreadCount > 0 ? (
-              <View className="absolute right-0 top-0 h-5 min-w-[18px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
                 <Text className="text-[10px] font-bold text-white">
                   {unreadCount}
                 </Text>
@@ -59,7 +59,7 @@ function HomeHeader() {
           >
             <Heart size={21} color="#1d1b18" strokeWidth={2} />
             {wishlistCount > 0 ? (
-              <View className="absolute right-0 top-0 h-5 min-w-[18px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
                 <Text className="text-[10px] font-bold text-white">
                   {wishlistCount}
                 </Text>
@@ -73,7 +73,7 @@ function HomeHeader() {
           >
             <ShoppingBag size={21} color="#1d1b18" strokeWidth={2} />
             {cartCount > 0 ? (
-              <View className="absolute right-0 top-0 h-5 min-w-[18px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
                 <Text className="text-[10px] font-bold text-white">{cartCount}</Text>
               </View>
             ) : null}

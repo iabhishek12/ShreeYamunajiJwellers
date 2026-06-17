@@ -47,15 +47,35 @@ export const checkoutPaymentMethods = [
 export const checkoutOffers = [
   {
     id: 'welcome',
+    kind: 'Coupon',
     code: 'YAMUNA10',
     title: 'Apply YAMUNA10',
     subtitle: 'Extra 10% off on your first jewelry order',
+    savingsLabel: 'Save 10%',
   },
   {
     id: 'gold',
+    kind: 'Voucher',
     code: 'GOLDLOVE',
     title: 'Get 20% off on gold jewelry',
     subtitle: 'Free insured shipping and priority packing',
+    savingsLabel: 'Save 20%',
+  },
+  {
+    id: 'festive',
+    kind: 'Offer',
+    code: 'FESTIVE15',
+    title: 'Festive sparkle offer',
+    subtitle: '15% off on selected gifting designs above Rs 599',
+    savingsLabel: 'Save 15%',
+  },
+  {
+    id: 'shipping',
+    kind: 'Voucher',
+    code: 'SHIPFREE',
+    title: 'Complimentary shipping voucher',
+    subtitle: 'Free insured shipping plus gift-ready packaging',
+    savingsLabel: 'Free shipping',
   },
 ];
 

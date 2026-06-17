@@ -19,6 +19,9 @@ import OrdersScreen from './src/features/orders/screens/OrdersScreen';
 import NotificationsScreen from './src/features/notifications/screens/NotificationsScreen';
 import SupportInfoScreen from './src/features/support/screens/SupportInfoScreen';
 import AllProductsScreen from './src/features/catalog/screens/AllProductsScreen';
+import ProductReviewsScreen from './src/features/reviews/screens/ProductReviewsScreen';
+import AddReviewScreen from './src/features/reviews/screens/AddReviewScreen';
+import OffersScreen from './src/features/checkout/screens/OffersScreen';
 import { store } from './src/store';
 
 const Stack = createNativeStackNavigator();
@@ -38,8 +41,11 @@ function App() {
             <Stack.Screen name="Categories" component={CategoriesScreen} />
             <Stack.Screen name="AllProducts" component={AllProductsScreen} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+            <Stack.Screen name="ProductReviews" component={ProductReviewsScreen} />
+            <Stack.Screen name="AddReview" component={AddReviewScreen} />
             <Stack.Screen name="Cart" component={CartScreen} />
             <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="Offers" component={OffersScreen} />
             <Stack.Screen name="AddressBook" component={AddressBookScreen} />
             <Stack.Screen name="Wishlist" component={WishlistScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />

@@ -106,7 +106,7 @@ function CartScreen({ navigation }) {
           </View>
 
           {cartItems.length === 0 ? (
-            <View className="mx-4 mt-5 items-center rounded-[18px] border border-[#eee4d8] bg-white px-5 py-10">
+            <View className="mx-4 mt-5 items-center rounded-[15px] border border-[#eee4d8] bg-white px-4 py-8">
               <Text className="text-[18px] font-semibold text-[#181410]">
                 Your cart is empty
               </Text>
@@ -118,10 +118,10 @@ function CartScreen({ navigation }) {
             cartItems.map(item => (
               <View
                 key={item.id}
-                className="mx-4 mt-4 flex-row rounded-[18px] border border-[#eee4d8] bg-white p-3"
+                className="mx-4 mt-3 flex-row rounded-[15px] border border-[#eee4d8] bg-white p-2.5"
                 style={styles.cardShadow}
               >
-                <View className="h-[92px] w-[92px] overflow-hidden rounded-[14px] bg-[#f8f0e4]">
+                <View className="h-[78px] w-[78px] overflow-hidden rounded-[12px] bg-[#f8f0e4]">
                   <Image
                     source={item.product.gallery[0].image}
                     resizeMode="cover"
@@ -134,14 +134,14 @@ function CartScreen({ navigation }) {
                     <View className="mr-2 flex-1">
                       <Text
                         numberOfLines={1}
-                        className="text-[15px] font-bold text-[#181410]"
+                        className="text-[13px] font-bold text-[#181410]"
                         style={styles.productTitle}
                       >
                         {item.product.title}
                       </Text>
                       <Text
                         numberOfLines={1}
-                        className="mt-1 text-[12px] text-[#746b63]"
+                        className="mt-1 text-[11px] text-[#746b63]"
                       >
                         {item.product.subtitle}
                       </Text>
@@ -150,24 +150,24 @@ function CartScreen({ navigation }) {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => dispatch(removeCartItem(item.id))}
-                      className="h-8 w-8 items-center justify-center rounded-full"
+                      className="h-7 w-7 items-center justify-center rounded-full"
                     >
-                      <Trash2 size={20} color="#2f2a25" strokeWidth={1.9} />
+                      <Trash2 size={18} color="#2f2a25" strokeWidth={1.9} />
                     </TouchableOpacity>
                   </View>
 
-                  <Text className="mt-1 text-[16px] font-bold text-[#111111]">
+                  <Text className="mt-1 text-[14px] font-bold text-[#111111]">
                     {formatCurrency(item.unitPrice ?? item.product.price)}
                   </Text>
 
-                  <View className="mt-3 flex-row flex-wrap items-center">
+                  <View className="mt-2 flex-row flex-wrap items-center">
                     {item.selectedSize ? (
-                      <View className="mr-2 flex-row items-center rounded-full border border-[#ede5da] bg-white px-3 py-2">
-                        <Text className="text-[12px] text-[#4c453e]">
+                      <View className="mr-2 flex-row items-center rounded-full border border-[#ede5da] bg-white px-2.5 py-1.5">
+                        <Text className="text-[11px] text-[#4c453e]">
                           Size: {item.selectedSize.label}
                         </Text>
                         <ChevronDown
-                          size={14}
+                          size={12}
                           color="#2f2a25"
                           strokeWidth={2}
                           style={styles.optionIcon}
@@ -175,34 +175,34 @@ function CartScreen({ navigation }) {
                       </View>
                     ) : null}
 
-                    <View className="mt-2 flex-row items-center rounded-full border border-[#ede5da] bg-white px-3 py-2">
+                    <View className="mt-1.5 flex-row items-center rounded-full border border-[#ede5da] bg-white px-2.5 py-1.5">
                       <View
-                        className="h-3.5 w-3.5 rounded-full"
+                        className="h-3 w-3 rounded-full"
                         style={{ backgroundColor: item.selectedMetal.color }}
                       />
-                      <Text className="ml-2 text-[12px] text-[#4c453e]">
+                      <Text className="ml-2 text-[11px] text-[#4c453e]">
                         {item.selectedMetal.label}
                       </Text>
                     </View>
                   </View>
 
-                  <View className="mt-2 w-[118px] flex-row items-center justify-between rounded-[14px] border border-[#ece3d8] bg-white px-2 py-1">
+                  <View className="mt-2 w-[104px] flex-row items-center justify-between rounded-[12px] border border-[#ece3d8] bg-white px-1.5 py-0.5">
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => dispatch(decrementCartItem(item.id))}
-                      className="h-8 w-8 items-center justify-center"
+                      className="h-7 w-7 items-center justify-center"
                     >
-                      <Minus size={17} color="#171411" strokeWidth={2} />
+                      <Minus size={15} color="#171411" strokeWidth={2} />
                     </TouchableOpacity>
-                    <Text className="text-[15px] font-semibold text-[#171411]">
+                    <Text className="text-[14px] font-semibold text-[#171411]">
                       {item.quantity}
                     </Text>
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => dispatch(incrementCartItem(item.id))}
-                      className="h-8 w-8 items-center justify-center"
+                      className="h-7 w-7 items-center justify-center"
                     >
-                      <Plus size={17} color="#171411" strokeWidth={2} />
+                      <Plus size={15} color="#171411" strokeWidth={2} />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -210,7 +210,7 @@ function CartScreen({ navigation }) {
             ))
           )}
 
-          <View className="mx-4 mt-8 flex-row rounded-[16px] bg-[#fbf4eb] px-2 py-4">
+          <View className="mx-4 mt-6 flex-row rounded-[14px] bg-[#fbf4eb] px-2 py-3">
             {cartAssuranceItems.map((item, index) => {
               const Icon = iconMap[item.icon];
 
@@ -223,12 +223,12 @@ function CartScreen({ navigation }) {
                       : ''
                   }`}
                 >
-                  <Icon size={24} color="#1d1a17" strokeWidth={1.7} />
+                  <Icon size={20} color="#1d1a17" strokeWidth={1.7} />
                   <View className="ml-2 flex-1">
-                    <Text className="text-[11px] font-bold leading-[15px] text-[#29241f]">
+                    <Text className="text-[10px] font-bold leading-[13px] text-[#29241f]">
                       {item.title}
                     </Text>
-                    <Text className="text-[11px] font-bold leading-[15px] text-[#29241f]">
+                    <Text className="text-[10px] font-bold leading-[13px] text-[#29241f]">
                       {item.subtitle}
                     </Text>
                   </View>
@@ -238,38 +238,38 @@ function CartScreen({ navigation }) {
           </View>
 
           <View
-            className="mx-4 mt-8 rounded-[18px] border border-[#eee4d8] bg-white px-4 py-5"
+            className="mx-4 mt-6 rounded-[15px] border border-[#eee4d8] bg-white px-3.5 py-4"
             style={styles.cardShadow}
           >
-            <Text className="text-[14px] font-bold tracking-[2px] text-[#1f1b17]">
+            <Text className="text-[13px] font-bold tracking-[2px] text-[#1f1b17]">
               PRICE DETAILS
             </Text>
 
             <View className="mt-4 flex-row justify-between">
-              <Text className="text-[15px] text-[#302b26]">
+              <Text className="text-[14px] text-[#302b26]">
                 Subtotal ({totalQuantity} items)
               </Text>
-              <Text className="text-[15px] font-semibold text-[#171411]">
+              <Text className="text-[14px] font-semibold text-[#171411]">
                 {formatCurrency(subtotal)}
               </Text>
             </View>
 
             <View className="mt-4 flex-row justify-between">
-              <Text className="text-[15px] text-[#302b26]">Shipping</Text>
-              <Text className="text-[15px] font-bold text-[#2f8b55]">FREE</Text>
+              <Text className="text-[14px] text-[#302b26]">Shipping</Text>
+              <Text className="text-[14px] font-bold text-[#2f8b55]">FREE</Text>
             </View>
 
             <View className="mt-3 flex-row justify-between">
               <View className="flex-row items-center">
-                <Text className="text-[15px] text-[#302b26]">Taxes</Text>
+                <Text className="text-[14px] text-[#302b26]">Taxes</Text>
                 <Info
-                  size={14}
+                  size={12}
                   color="#80766d"
                   strokeWidth={2}
                   style={styles.infoIcon}
                 />
               </View>
-              <Text className="text-[15px] font-semibold text-[#171411]">
+              <Text className="text-[14px] font-semibold text-[#171411]">
                 {formatCurrency(taxes)}
               </Text>
             </View>
@@ -277,15 +277,15 @@ function CartScreen({ navigation }) {
             <View className="my-5 h-px bg-[#eee6dc]" />
 
             <View className="flex-row justify-between">
-              <Text className="text-[18px] font-bold text-[#111111]">Total</Text>
-              <Text className="text-[18px] font-bold text-[#111111]">
+              <Text className="text-[16px] font-bold text-[#111111]">Total</Text>
+              <Text className="text-[16px] font-bold text-[#111111]">
                 {formatCurrency(total)}
               </Text>
             </View>
 
             <View className="mt-3 flex-row items-center">
-              <Tag size={18} color="#4a9a64" strokeWidth={1.9} />
-              <Text className="ml-2 text-[13px] font-semibold text-[#4a9a64]">
+              <Tag size={16} color="#4a9a64" strokeWidth={1.9} />
+              <Text className="ml-2 text-[12px] font-semibold text-[#4a9a64]">
                 You are saving {formatCurrency(savings)} on this order
               </Text>
             </View>
@@ -293,16 +293,16 @@ function CartScreen({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => navigation.navigate('Checkout')}
-              className={`mt-6 flex-row items-center justify-center rounded-[12px] py-4 ${
+              className={`mt-5 flex-row items-center justify-center rounded-[11px] py-3.5 ${
                 cartItems.length === 0 ? 'bg-[#8a8580]' : 'bg-[#171717]'
               }`}
               disabled={cartItems.length === 0}
             >
-              <Text className="text-[15px] font-bold tracking-[2px] text-white">
+              <Text className="text-[14px] font-bold tracking-[2px] text-white">
                 PROCEED TO CHECKOUT
               </Text>
               <ArrowRight
-                size={21}
+                size={19}
                 color="#ffffff"
                 strokeWidth={2}
                 style={styles.checkoutIcon}
