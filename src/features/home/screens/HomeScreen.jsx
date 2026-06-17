@@ -35,7 +35,7 @@ const homeBottomNavItems = categoryBottomNavItems.map(item => ({
   active: item.id === 'home',
 }));
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const user = useAppSelector(state => state.auth.user);
 
@@ -75,7 +75,11 @@ function HomeScreen() {
               ))}
             </View>
 
-            <SectionHeader title="Best Sellers" actionLabel="VIEW ALL" />
+            <SectionHeader
+              title="Best Sellers"
+              actionLabel="VIEW ALL"
+              onPress={() => navigation.navigate('AllProducts')}
+            />
             <BestSellerRow items={bestSellerItems} />
             <PromiseSection section={promiseSection} />
             <NewArrivalsSection section={newArrivalsSection} />

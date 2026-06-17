@@ -79,6 +79,25 @@ const authSlice = createSlice({
     clearAuthError(state) {
       state.error = null;
     },
+    updateUserProfile(state, action) {
+      if (!state.user) {
+        return;
+      }
+
+      const nextUser = {
+        ...state.user,
+        ...action.payload,
+      };
+      const sanitizedPhone = `${nextUser.phoneNumber || ''}`
+        .replace(/\D/g, '')
+        .slice(0, 10);
+
+      nextUser.phoneNumber = sanitizedPhone;
+      state.user = nextUser;
+      state.pendingAccount = nextUser;
+      state.phoneNumber = sanitizedPhone;
+      state.maskedPhone = sanitizedPhone ? maskPhoneNumber(sanitizedPhone) : '';
+    },
     resetAuthFlow(state) {
       state.phoneNumber = '';
       state.maskedPhone = '';
@@ -135,5 +154,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthError, resetAuthFlow, logout } = authSlice.actions;
+export const { clearAuthError, resetAuthFlow, logout, updateUserProfile } = authSlice.actions;
 export const authReducer = authSlice.reducer;

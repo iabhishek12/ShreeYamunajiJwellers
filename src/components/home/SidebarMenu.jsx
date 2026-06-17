@@ -26,6 +26,7 @@ import {
   LogIn,
   LogOut,
   MapPin,
+  MessageCircleMore,
   Settings,
   ShieldCheck,
   ShoppingBag,
@@ -106,10 +107,17 @@ const accountItems = [
     icon: Settings,
   },
   {
-    id: 'terms',
-    label: 'Terms & Conditions',
-    subtitle: 'Shopping and account terms',
-    route: 'TermsConditions',
+    id: 'faq',
+    label: 'FAQs',
+    subtitle: 'Shopping, delivery, and returns',
+    route: 'FAQ',
+    icon: FileText,
+  },
+  {
+    id: 'about',
+    label: 'About Us',
+    subtitle: 'Our story and service values',
+    route: 'AboutUs',
     icon: FileText,
   },
   {
@@ -391,7 +399,11 @@ function SidebarMenu({ visible, onClose }) {
                 </View>
               </View>
 
-              <View className="mt-5 flex-row items-center rounded-[24px] border border-[#eadfce] bg-white/75 px-4 py-4">
+              <TouchableOpacity
+                activeOpacity={0.84}
+                className="mt-5 flex-row items-center rounded-[24px] border border-[#eadfce] bg-white/75 px-4 py-4"
+                onPress={() => handleNavigate('ContactUs')}
+              >
                 <View className="h-10 w-10 items-center justify-center rounded-full bg-[#f7efe4]">
                   <HelpCircle size={18} color={gold} strokeWidth={2} />
                 </View>
@@ -400,9 +412,9 @@ function SidebarMenu({ visible, onClose }) {
                   <Text style={styles.helpCopy}>Talk to our jewellery expert</Text>
                 </View>
                 <View className="h-9 w-9 items-center justify-center rounded-full bg-[#201b17]">
-                  <User size={17} color="#ffffff" strokeWidth={2} />
+                  <MessageCircleMore size={17} color="#ffffff" strokeWidth={2} />
                 </View>
-              </View>
+              </TouchableOpacity>
 
               <TouchableOpacity
                 activeOpacity={0.86}

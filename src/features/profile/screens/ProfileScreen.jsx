@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
+  Modal,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -31,12 +34,14 @@ import {
   ShoppingBag,
   Truck,
   User,
+  X,
   XCircle,
 } from 'lucide-react-native';
 import BottomBar from '../../../components/home/BottomBar';
 import { categoryBottomNavItems } from '../../../data/mock/categoryMock';
 import { notificationItems } from '../../../data/mock/notificationMock';
-import { useAppSelector } from '../../../store/hooks';
+import { updateUserProfile } from '../../auth/store/authSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const avatarImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
 const promoImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
@@ -75,6 +80,11 @@ function SectionCard({ title, rows, navigation }) {
             activeOpacity={0.82}
             style={[styles.menuRow, isLast ? styles.lastMenuRow : null]}
             onPress={() => {
+              if (row.onPress) {
+                row.onPress();
+                return;
+              }
+
               if (row.route) {
                 navigation.navigate(row.route);
               }
@@ -91,11 +101,18 @@ function SectionCard({ title, rows, navigation }) {
 }
 
 function ProfileScreen({ navigation }) {
+  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const user = useAppSelector(state => state.auth.user);
   const wishlistCount = useAppSelector(state => state.wishlist.items.length);
   const orders = useAppSelector(state => state.orders.items);
   const unreadCount = notificationItems.filter(item => item.unread).length;
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [profileForm, setProfileForm] = useState({
+    name: '',
+    phoneNumber: '',
+    email: '',
+  });
 
   const displayName = isAuthenticated ? user?.name || 'Guest Shopper' : 'Guest Shopper';
   const firstName = displayName.split(' ')[0] || 'Guest';
@@ -103,11 +120,50 @@ function ProfileScreen({ navigation }) {
     ? `+91 ${user?.phoneNumber || '98765 43210'}`
     : 'Sign in to add mobile number';
   const emailLabel = isAuthenticated
-    ? makeEmail(displayName)
+    ? user?.email || makeEmail(displayName)
     : 'guest@shreeyamunaji.com';
 
+  useEffect(() => {
+    setProfileForm({
+      name: user?.name || '',
+      phoneNumber: user?.phoneNumber || '',
+      email: user?.email || (user?.name ? makeEmail(user.name) : ''),
+    });
+  }, [user]);
+
+  const openPersonalInfoEditor = () => {
+    if (!isAuthenticated) {
+      navigation.navigate('Login');
+      return;
+    }
+
+    setProfileForm({
+      name: user?.name || '',
+      phoneNumber: user?.phoneNumber || '',
+      email: user?.email || (user?.name ? makeEmail(user.name) : ''),
+    });
+    setIsEditModalVisible(true);
+  };
+
+  const handleSaveProfile = () => {
+    const trimmedName = profileForm.name.trim() || 'Guest Shopper';
+    const sanitizedPhone = `${profileForm.phoneNumber || ''}`
+      .replace(/\D/g, '')
+      .slice(0, 10);
+    const trimmedEmail = profileForm.email.trim().toLowerCase();
+
+    dispatch(
+      updateUserProfile({
+        name: trimmedName,
+        phoneNumber: sanitizedPhone,
+        email: trimmedEmail || makeEmail(trimmedName),
+      }),
+    );
+    setIsEditModalVisible(false);
+  };
+
   const accountRows = [
-    { id: 'personal', label: 'Personal Information', icon: User, route: 'Profile' },
+    { id: 'personal', label: 'Personal Information', icon: User, onPress: openPersonalInfoEditor },
     { id: 'addresses', label: 'Addresses', icon: MapPin, route: 'AddressBook' },
     { id: 'payments', label: 'Payment Methods', icon: CreditCard, route: 'Checkout' },
     { id: 'wishlist', label: `My Wishlist (${wishlistCount})`, icon: Heart, route: 'Wishlist' },
@@ -115,9 +171,10 @@ function ProfileScreen({ navigation }) {
   ];
 
   const supportRows = [
-    { id: 'faqs', label: 'FAQs', icon: CircleHelp, route: 'TermsConditions' },
-    { id: 'contact', label: 'Contact Us', icon: Headphones, route: 'Settings' },
-    { id: 'about', label: 'About Shree Yamunaji', icon: Info, route: 'PrivacyPolicy' },
+    { id: 'faqs', label: 'FAQs', icon: CircleHelp, route: 'FAQ' },
+    { id: 'contact', label: 'Contact Us', icon: Headphones, route: 'ContactUs' },
+    { id: 'about', label: 'About Shree Yamunaji', icon: Info, route: 'AboutUs' },
+    { id: 'privacy', label: 'Privacy Policy', icon: Bell, route: 'PrivacyPolicy' },
   ];
   const orderStats = [
     { id: 'total', value: orders.length, label: 'Total Orders', icon: Package },
@@ -205,12 +262,20 @@ function ProfileScreen({ navigation }) {
               Welcome back to Shree Yamunaji
             </Text>
 
-            <TouchableOpacity activeOpacity={0.82} style={styles.contactRow}>
+            <TouchableOpacity
+              activeOpacity={0.82}
+              style={styles.contactRow}
+              onPress={openPersonalInfoEditor}
+            >
               <Phone size={21} color="#4b4742" strokeWidth={1.7} />
               <Text style={styles.contactText}>{phoneLabel}</Text>
               <ChevronRight size={20} color="#4b4742" strokeWidth={1.9} />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.82} style={styles.contactRow}>
+            <TouchableOpacity
+              activeOpacity={0.82}
+              style={styles.contactRow}
+              onPress={openPersonalInfoEditor}
+            >
               <Mail size={21} color="#4b4742" strokeWidth={1.7} />
               <Text style={styles.contactText}>{emailLabel}</Text>
               <ChevronRight size={20} color="#4b4742" strokeWidth={1.9} />
@@ -285,6 +350,99 @@ function ProfileScreen({ navigation }) {
         </ImageBackground>
       </ScrollView>
 
+      <Modal
+        animationType="slide"
+        onRequestClose={() => setIsEditModalVisible(false)}
+        transparent
+        visible={isEditModalVisible}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => setIsEditModalVisible(false)}
+        >
+          <Pressable style={styles.modalCard}>
+            <View style={styles.modalHeader}>
+              <View>
+                <Text style={styles.modalTitle}>Personal Information</Text>
+                <Text style={styles.modalSubtitle}>
+                  Update the details shown on your profile.
+                </Text>
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.82}
+                style={styles.closeButton}
+                onPress={() => setIsEditModalVisible(false)}
+              >
+                <X size={18} color={ink} strokeWidth={2} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Full Name</Text>
+              <TextInput
+                placeholder="Enter your full name"
+                placeholderTextColor="#9a8f82"
+                style={styles.fieldInput}
+                value={profileForm.name}
+                onChangeText={value =>
+                  setProfileForm(current => ({ ...current, name: value }))
+                }
+              />
+            </View>
+
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Mobile Number</Text>
+              <TextInput
+                keyboardType="number-pad"
+                maxLength={10}
+                placeholder="10-digit mobile number"
+                placeholderTextColor="#9a8f82"
+                style={styles.fieldInput}
+                value={profileForm.phoneNumber}
+                onChangeText={value =>
+                  setProfileForm(current => ({
+                    ...current,
+                    phoneNumber: value.replace(/\D/g, ''),
+                  }))
+                }
+              />
+            </View>
+
+            <View style={styles.fieldGroup}>
+              <Text style={styles.fieldLabel}>Email Address</Text>
+              <TextInput
+                autoCapitalize="none"
+                keyboardType="email-address"
+                placeholder="Enter your email"
+                placeholderTextColor="#9a8f82"
+                style={styles.fieldInput}
+                value={profileForm.email}
+                onChangeText={value =>
+                  setProfileForm(current => ({ ...current, email: value }))
+                }
+              />
+            </View>
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity
+                activeOpacity={0.82}
+                style={styles.secondaryButton}
+                onPress={() => setIsEditModalVisible(false)}
+              >
+                <Text style={styles.secondaryButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.82}
+                style={styles.primaryButton}
+                onPress={handleSaveProfile}
+              >
+                <Text style={styles.primaryButtonText}>Save Changes</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
       <BottomBar items={profileBottomNavItems} />
     </SafeAreaView>
   );
@@ -303,6 +461,100 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(25, 23, 20, 0.34)',
+    padding: 16,
+  },
+  modalCard: {
+    borderRadius: 24,
+    backgroundColor: '#fbf7f1',
+    paddingHorizontal: 18,
+    paddingTop: 18,
+    paddingBottom: 22,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  modalTitle: {
+    color: ink,
+    fontFamily: serifFont,
+    fontSize: 24,
+    lineHeight: 28,
+  },
+  modalSubtitle: {
+    marginTop: 4,
+    maxWidth: 220,
+    color: muted,
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 17,
+  },
+  closeButton: {
+    height: 34,
+    width: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 17,
+    backgroundColor: '#f2ebdf',
+  },
+  fieldGroup: {
+    marginTop: 16,
+  },
+  fieldLabel: {
+    marginBottom: 7,
+    color: ink,
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  fieldInput: {
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#e2d7c8',
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: ink,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  modalActions: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  secondaryButton: {
+    flex: 1,
+    marginRight: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#d8cbb9',
+    paddingVertical: 12,
+  },
+  secondaryButtonText: {
+    color: ink,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+  primaryButton: {
+    flex: 1,
+    marginLeft: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 14,
+    backgroundColor: '#201b17',
+    paddingVertical: 12,
+  },
+  primaryButtonText: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '800',
   },
   content: {
     paddingHorizontal: 18,

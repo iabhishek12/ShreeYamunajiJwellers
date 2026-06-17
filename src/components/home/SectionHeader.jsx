@@ -2,11 +2,15 @@ import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ArrowRight } from 'lucide-react-native';
 
-function SectionHeader({ title, actionLabel }) {
+function SectionHeader({ actionLabel, onPress, title }) {
   return (
     <View className="mx-4 mt-8 mb-4 flex-row items-center justify-between">
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity activeOpacity={0.8} className="flex-row items-center">
+      <TouchableOpacity
+        activeOpacity={0.8}
+        className="flex-row items-center"
+        onPress={onPress}
+      >
         <Text className="mr-2 text-[12px] font-bold tracking-[1.2px] text-[#c08d39]">
           {actionLabel}
         </Text>

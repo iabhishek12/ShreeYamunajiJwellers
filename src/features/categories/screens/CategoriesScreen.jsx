@@ -79,8 +79,8 @@ function CategoriesScreen({ navigation }) {
                   key={item.id}
                   activeOpacity={0.9}
                   onPress={() =>
-                    navigation.navigate('ProductDetails', {
-                      productId: item.featuredProductId,
+                    navigation.navigate('AllProducts', {
+                      categoryId: item.id,
                     })
                   }
                   className="mb-4 mt-5 overflow-hidden rounded-[12px] border border-[#eee4d8] bg-white "
