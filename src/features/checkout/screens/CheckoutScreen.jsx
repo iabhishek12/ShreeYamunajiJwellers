@@ -49,6 +49,8 @@ const paymentIconMap = {
   wallet: Wallet,
 };
 
+const green = '#087A34';
+
 function CheckoutScreen({ navigation, route }) {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
@@ -154,13 +156,13 @@ function CheckoutScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fbf7f1]">
-      <StatusBar barStyle="dark-content" backgroundColor="#fbf7f1" />
+    <SafeAreaView className="flex-1 bg-[#087A34]">
+      <StatusBar barStyle="light-content" backgroundColor="#087A34" />
 
-      <View className="flex-1 bg-[#fbf7f1]">
+      <View className="flex-1 bg-[#FFFDF4]">
         <View
-          className="bg-[#fbf7f1] pb-2"
-          style={{ paddingTop: Math.max(insets.top, 8) }}
+          className="bg-[#087A34] pb-3"
+          style={{ paddingTop: Math.max(insets.top, 4) }}
         >
           <HomeHeader />
         </View>
@@ -173,23 +175,23 @@ function CheckoutScreen({ navigation, route }) {
         >
           <View className="mx-4 mt-2">
             <Text style={styles.title}>Checkout</Text>
-            <Text className="mt-1 text-[13px] text-[#756b62]">
+            <Text className="mt-1 text-[13px] text-[#202020]">
               Secure checkout for {totalQuantity} item{totalQuantity === 1 ? '' : 's'}
             </Text>
           </View>
 
-          <View className="mx-4 mt-4 flex-row items-center rounded-[18px] bg-[#fff8ef] px-4 py-4">
+          <View className="mx-4 mt-4 flex-row items-center rounded-[18px] border border-[#F4C23D] bg-white px-4 py-4">
             {checkoutSteps.map((step, index) => (
               <View key={step.id} className="flex-1 flex-row items-center">
                 <View
                   className={`h-7 w-7 items-center justify-center rounded-full ${
-                    step.done ? 'bg-[#bd8934]' : 'border border-[#bd8934] bg-white'
+                    step.done ? 'bg-[#087A34]' : 'border border-[#F4C23D] bg-white'
                   }`}
                 >
                   {step.done ? (
                     <Check size={15} color="#ffffff" strokeWidth={2.2} />
                   ) : (
-                    <Text className="text-[11px] font-bold text-[#bd8934]">
+                    <Text className="text-[11px] font-bold text-[#087A34]">
                       {index + 1}
                     </Text>
                   )}
@@ -197,30 +199,30 @@ function CheckoutScreen({ navigation, route }) {
                 <Text
                   numberOfLines={1}
                   className={`ml-2 text-[11px] font-bold ${
-                    step.done ? 'text-[#2e2823]' : 'text-[#bd8934]'
+                    step.done ? 'text-[#087A34]' : 'text-[#202020]'
                   }`}
                 >
                   {step.label}
                 </Text>
                 {index < checkoutSteps.length - 1 ? (
-                  <View className="mx-2 h-px flex-1 bg-[#e4d8c7]" />
+                  <View className="mx-2 h-px flex-1 bg-[#F4C23D]" />
                 ) : null}
               </View>
             ))}
           </View>
 
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
+          <View className="mx-4 mt-5 rounded-[18px] border border-[#F4C23D] bg-white p-4" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#fbf2e6]">
-                  <MapPin size={20} color="#bd8934" strokeWidth={1.8} />
+                <View className="h-10 w-10 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+                  <MapPin size={20} color={green} strokeWidth={1.8} />
                 </View>
                 <View className="ml-3">
-                  <Text className="text-[15px] font-bold text-[#181410]">
+                  <Text className="text-[15px] font-bold text-[#087A34]">
                     Delivery Address
                   </Text>
                   {selectedAddress ? (
-                    <Text className="mt-1 text-[12px] text-[#7b7167]">
+                    <Text className="mt-1 text-[12px] text-[#202020]">
                       {selectedAddress.label}
                     </Text>
                   ) : null}
@@ -231,70 +233,70 @@ function CheckoutScreen({ navigation, route }) {
                 onPress={() => navigation.navigate('AddressBook')}
                 className="flex-row items-center"
               >
-                <Text className="text-[12px] font-bold text-[#bd8934]">CHANGE</Text>
-                <ChevronRight size={15} color="#bd8934" strokeWidth={2} />
+                <Text className="text-[12px] font-bold text-[#087A34]">CHANGE</Text>
+                <ChevronRight size={15} color={green} strokeWidth={2} />
               </TouchableOpacity>
             </View>
 
             {selectedAddress ? (
               <>
-                <Text className="mt-4 text-[14px] font-semibold text-[#2d2722]">
+                <Text className="mt-4 text-[14px] font-semibold text-[#087A34]">
                   {selectedAddress.name}
                 </Text>
-                <Text className="mt-1 text-[13px] leading-[20px] text-[#615850]">
+                <Text className="mt-1 text-[13px] leading-[20px] text-[#202020]">
                   {selectedAddress.line1}
                 </Text>
-                <Text className="text-[13px] leading-[20px] text-[#615850]">
+                <Text className="text-[13px] leading-[20px] text-[#202020]">
                   {selectedAddress.line2}
                 </Text>
                 <View className="mt-3 flex-row items-center">
-                  <Phone size={14} color="#766b61" strokeWidth={1.8} />
-                  <Text className="ml-2 text-[12px] font-medium text-[#615850]">
+                  <Phone size={14} color={green} strokeWidth={1.8} />
+                  <Text className="ml-2 text-[12px] font-medium text-[#202020]">
                     {selectedAddress.phone}
                   </Text>
                 </View>
               </>
             ) : (
-              <Text className="mt-4 text-[13px] leading-[20px] text-[#615850]">
+              <Text className="mt-4 text-[13px] leading-[20px] text-[#202020]">
                 Add a delivery address to continue checkout.
               </Text>
             )}
           </View>
 
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
+          <View className="mx-4 mt-5 rounded-[18px] border border-[#F4C23D] bg-white p-4" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#fbf2e6]">
-                  <Truck size={20} color="#bd8934" strokeWidth={1.8} />
+                <View className="h-10 w-10 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+                  <Truck size={20} color={green} strokeWidth={1.8} />
                 </View>
                 <View className="ml-3">
-                  <Text className="text-[15px] font-bold text-[#181410]">
+                  <Text className="text-[15px] font-bold text-[#087A34]">
                     {checkoutExpectedDelivery.title}
                   </Text>
-                  <Text className="mt-1 text-[12px] text-[#7b7167]">
+                  <Text className="mt-1 text-[12px] text-[#202020]">
                     {checkoutExpectedDelivery.subtitle}
                   </Text>
                 </View>
               </View>
-              <Text className="text-[12px] font-bold text-[#2f8b55]">
+              <Text className="text-[12px] font-bold text-[#087A34]">
                 {checkoutExpectedDelivery.priceLabel}
               </Text>
             </View>
-            <Text className="mt-4 rounded-[14px] bg-[#fff8ef] px-3 py-3 text-[12px] leading-[18px] text-[#6d6258]">
+            <Text className="mt-4 rounded-[14px] border border-[#F4C23D] bg-[#FFF6DF] px-3 py-3 text-[12px] leading-[18px] text-[#202020]">
               Your order will be packed in tamper-safe jewelry packaging and shipped with tracking.
             </Text>
           </View>
 
-          <View className="mx-4 mt-5 rounded-[16px] border border-[#eee4d8] bg-white p-3.5" style={styles.cardShadow}>
+          <View className="mx-4 mt-5 rounded-[16px] border border-[#F4C23D] bg-white p-3.5" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <Tag size={20} color="#bd8934" strokeWidth={1.8} />
-                <Text className="ml-2 text-[14px] font-semibold text-[#181410]">
+                <Tag size={20} color={green} strokeWidth={1.8} />
+                <Text className="ml-2 text-[14px] font-semibold text-[#087A34]">
                   Offers & Rewards
                 </Text>
               </View>
               <View className="flex-row items-center">
-                <Text className="mr-3 text-[11px] font-semibold text-[#2f8b55]">
+                <Text className="mr-3 text-[11px] font-semibold text-[#087A34]">
                   Saved {formatCurrency(offerDiscount)}
                 </Text>
                 <TouchableOpacity
@@ -304,13 +306,13 @@ function CheckoutScreen({ navigation, route }) {
                   }
                   className="flex-row items-center"
                 >
-                  <Text className="text-[11px] font-semibold text-[#bd8934]">SEE ALL</Text>
-                  <ChevronRight size={14} color="#bd8934" strokeWidth={2} />
+                  <Text className="text-[11px] font-semibold text-[#087A34]">SEE ALL</Text>
+                  <ChevronRight size={14} color={green} strokeWidth={2} />
                 </TouchableOpacity>
               </View>
             </View>
 
-            <View className="mt-3 flex-row items-center rounded-[13px] border border-[#eee5dc] bg-[#fffdf9] px-3 py-2">
+            <View className="mt-3 flex-row items-center rounded-[13px] border border-[#F4C23D] bg-white px-3 py-2">
               <TextInput
                 value={couponCode}
                 onChangeText={value => {
@@ -318,14 +320,14 @@ function CheckoutScreen({ navigation, route }) {
                   setCouponMessage('');
                 }}
                 placeholder="Enter coupon code"
-                placeholderTextColor="#9a9188"
+                placeholderTextColor="#202020"
                 autoCapitalize="characters"
-                className="flex-1 text-[12px] font-medium text-[#181410]"
+                className="flex-1 text-[12px] font-medium text-[#202020]"
               />
               <TouchableOpacity
                 activeOpacity={0.9}
                 onPress={handleApplyCoupon}
-                className="ml-3 rounded-full bg-[#171717] px-3.5 py-2"
+                className="ml-3 rounded-full bg-[#087A34] px-3.5 py-2"
               >
                 <Text className="text-[11px] font-semibold text-white">APPLY</Text>
               </TouchableOpacity>
@@ -335,7 +337,7 @@ function CheckoutScreen({ navigation, route }) {
               <Text
                 className={`mt-2 text-[11px] font-medium ${
                   appliedOffer?.code === couponCode.trim().toUpperCase()
-                    ? 'text-[#2f8b55]'
+                    ? 'text-[#087A34]'
                     : 'text-[#b54b38]'
                 }`}
               >
@@ -357,19 +359,19 @@ function CheckoutScreen({ navigation, route }) {
                   }}
                   className={`mt-2.5 rounded-[13px] border px-3 py-2.5 ${
                     selected
-                      ? 'border-[#bd8934] bg-[#fff8ef]'
-                      : 'border-[#eee5dc] bg-white'
+                      ? 'border-[#087A34] bg-[#FFF6DF]'
+                      : 'border-[#F4C23D] bg-white'
                   }`}
                 >
                   <View className="flex-row items-center justify-between">
-                    <Text className="text-[12px] font-semibold text-[#2d2722]">
+                    <Text className="text-[12px] font-semibold text-[#087A34]">
                       {offer.title}
                     </Text>
                     {selected ? (
-                      <CheckCircle2 size={16} color="#2f8b55" strokeWidth={2} />
+                      <CheckCircle2 size={16} color={green} strokeWidth={2} />
                     ) : null}
                   </View>
-                  <Text className="mt-1 text-[11px] leading-[16px] text-[#7b7167]">
+                  <Text className="mt-1 text-[11px] leading-[16px] text-[#202020]">
                     {offer.subtitle}
                   </Text>
                 </TouchableOpacity>
@@ -377,15 +379,15 @@ function CheckoutScreen({ navigation, route }) {
             })}
           </View>
 
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
+          <View className="mx-4 mt-5 rounded-[18px] border border-[#F4C23D] bg-white p-4" style={styles.cardShadow}>
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
-                <CreditCard size={20} color="#bd8934" strokeWidth={1.8} />
-                <Text className="ml-2 text-[15px] font-bold text-[#181410]">
+                <CreditCard size={20} color={green} strokeWidth={1.8} />
+                <Text className="ml-2 text-[15px] font-bold text-[#087A34]">
                   Payment Method
                 </Text>
               </View>
-              <ShieldCheck size={20} color="#2f8b55" strokeWidth={1.8} />
+              <ShieldCheck size={20} color={green} strokeWidth={1.8} />
             </View>
 
             {checkoutPaymentMethods.map(method => {
@@ -399,44 +401,44 @@ function CheckoutScreen({ navigation, route }) {
                   onPress={() => setSelectedPaymentId(method.id)}
                   className={`mt-3 flex-row items-center justify-between rounded-[15px] border px-3 py-3 ${
                     selected
-                      ? 'border-[#bd8934] bg-[#fff8ef]'
-                      : 'border-[#eee5dc] bg-white'
+                      ? 'border-[#087A34] bg-[#FFF6DF]'
+                      : 'border-[#F4C23D] bg-white'
                   }`}
                 >
                   <View className="flex-row items-center">
-                    <View className="h-9 w-9 items-center justify-center rounded-full bg-[#fbf2e6]">
-                      <Icon size={18} color="#bd8934" strokeWidth={1.8} />
+                    <View className="h-9 w-9 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+                      <Icon size={18} color={green} strokeWidth={1.8} />
                     </View>
                     <View className="ml-3">
-                      <Text className="text-[13px] font-bold text-[#2d2722]">
+                      <Text className="text-[13px] font-bold text-[#087A34]">
                         {method.title}
                       </Text>
-                      <Text className="mt-1 text-[12px] text-[#7b7167]">
+                      <Text className="mt-1 text-[12px] text-[#202020]">
                         {method.subtitle}
                       </Text>
                     </View>
                   </View>
                   <View
                     className={`h-5 w-5 items-center justify-center rounded-full border ${
-                      selected ? 'border-[#bd8934]' : 'border-[#d8cec2]'
+                      selected ? 'border-[#087A34]' : 'border-[#F4C23D]'
                     }`}
                   >
                     {selected ? (
-                      <View className="h-2.5 w-2.5 rounded-full bg-[#bd8934]" />
+                      <View className="h-2.5 w-2.5 rounded-full bg-[#087A34]" />
                     ) : null}
                   </View>
                 </TouchableOpacity>
               );
             })}
           </View>
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
-            <Text className="text-[15px] font-bold text-[#181410]">
+          <View className="mx-4 mt-5 rounded-[18px] border border-[#F4C23D] bg-white p-4" style={styles.cardShadow}>
+            <Text className="text-[15px] font-bold text-[#087A34]">
               Review Items
             </Text>
 
             {cartItems.map(item => (
               <View key={item.id} className="mt-4 flex-row items-center">
-                <View className="h-[54px] w-[54px] overflow-hidden rounded-[12px] bg-[#f8f0e4]">
+                <View className="h-[54px] w-[54px] overflow-hidden rounded-[12px] bg-[#FFF6DF]">
                   <Image
                     source={item.product.gallery[0].image}
                     resizeMode="cover"
@@ -446,58 +448,58 @@ function CheckoutScreen({ navigation, route }) {
                 <View className="ml-3 flex-1">
                   <Text
                     numberOfLines={1}
-                    className="text-[13px] font-bold text-[#2d2722]"
+                    className="text-[13px] font-bold text-[#087A34]"
                   >
                     {item.product.title}
                   </Text>
-                  <Text className="mt-1 text-[12px] text-[#7b7167]">
+                  <Text className="mt-1 text-[12px] text-[#202020]">
                     Qty {item.quantity}
                     {item.selectedSize ? ` | Size ${item.selectedSize.label}` : ''}
                   </Text>
                 </View>
-                <Text className="text-[13px] font-bold text-[#181410]">
+                <Text className="text-[13px] font-bold text-[#087A34]">
                   {formatCurrency(item.lineTotal)}
                 </Text>
               </View>
             ))}
           </View>
 
-          <View className="mx-4 mt-5 rounded-[18px] border border-[#eee4d8] bg-white p-4" style={styles.cardShadow}>
-            <Text className="text-[14px] font-bold tracking-[2px] text-[#1f1b17]">
+          <View className="mx-4 mt-5 rounded-[18px] border border-[#F4C23D] bg-white p-4" style={styles.cardShadow}>
+            <Text className="text-[14px] font-bold text-[#087A34]">
               ORDER SUMMARY
             </Text>
 
             <View className="mt-4 flex-row justify-between">
-              <Text className="text-[14px] text-[#302b26]">Subtotal</Text>
-              <Text className="text-[14px] font-semibold text-[#171411]">
+              <Text className="text-[14px] text-[#202020]">Subtotal</Text>
+              <Text className="text-[14px] font-semibold text-[#087A34]">
                 {formatCurrency(subtotal)}
               </Text>
             </View>
             <View className="mt-3 flex-row justify-between">
-              <Text className="text-[14px] text-[#302b26]">Offer Discount</Text>
-              <Text className="text-[14px] font-bold text-[#2f8b55]">
+              <Text className="text-[14px] text-[#202020]">Offer Discount</Text>
+              <Text className="text-[14px] font-bold text-[#087A34]">
                 - {formatCurrency(offerDiscount)}
               </Text>
             </View>
             <View className="mt-3 flex-row justify-between">
-              <Text className="text-[14px] text-[#302b26]">Delivery</Text>
-              <Text className="text-[14px] font-semibold text-[#171411]">
+              <Text className="text-[14px] text-[#202020]">Delivery</Text>
+              <Text className="text-[14px] font-semibold text-[#087A34]">
                 {deliveryFee === 0 ? 'FREE' : formatCurrency(deliveryFee)}
               </Text>
             </View>
             
             <View className="mt-3 flex-row justify-between">
-              <Text className="text-[14px] text-[#302b26]">Taxes</Text>
-              <Text className="text-[14px] font-semibold text-[#171411]">
+              <Text className="text-[14px] text-[#202020]">Taxes</Text>
+              <Text className="text-[14px] font-semibold text-[#087A34]">
                 {formatCurrency(taxes)}
               </Text>
             </View>
 
-            <View className="my-5 h-px bg-[#eee6dc]" />
+            <View className="my-5 h-px bg-[#F4C23D]" />
 
             <View className="flex-row justify-between">
-              <Text className="text-[18px] font-bold text-[#111111]">Payable Total</Text>
-              <Text className="text-[18px] font-bold text-[#111111]">
+              <Text className="text-[18px] font-bold text-[#087A34]">Payable Total</Text>
+              <Text className="text-[18px] font-bold text-[#087A34]">
                 {formatCurrency(total)}
               </Text>
             </View>
@@ -506,7 +508,7 @@ function CheckoutScreen({ navigation, route }) {
               activeOpacity={0.9}
               onPress={handlePlaceOrder}
               className={`mt-6 flex-row items-center justify-center rounded-[13px] py-4 ${
-                cartItems.length === 0 ? 'bg-[#8a8580]' : 'bg-[#171717]'
+                cartItems.length === 0 ? 'bg-[#8a8580]' : 'bg-[#087A34]'
               }`}
               disabled={cartItems.length === 0}
             >
@@ -541,10 +543,10 @@ const styles = StyleSheet.create({
     }),
     fontSize: 26,
     lineHeight: 32,
-    color: '#171411',
+    color: green,
   },
   cardShadow: {
-    shadowColor: '#d8c1a0',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.04,
     shadowRadius: 10,

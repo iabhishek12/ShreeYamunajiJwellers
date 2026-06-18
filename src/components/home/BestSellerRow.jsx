@@ -1,10 +1,9 @@
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Heart, Plus, Star } from 'lucide-react-native';
+import { Heart } from 'lucide-react-native';
 import { productDetails } from '../../data/mock/productMock';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addToCart } from '../../features/cart/store/cartSlice';
 import {
   addWishlistItem,
   removeWishlistProduct,
@@ -16,30 +15,24 @@ const contentContainerStyle = {
   paddingBottom: 8,
 };
 
+const offerPercent = 20;
+
+const getOriginalPrice = price => {
+  const numericPrice = Number(String(price).replace(/,/g, ''));
+
+  if (!numericPrice) {
+    return price;
+  }
+
+  return Math.round(numericPrice / (1 - offerPercent / 100)).toLocaleString(
+    'en-IN',
+  );
+};
+
 function BestSellerRow({ items }) {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const wishlistItems = useAppSelector(state => state.wishlist.items);
-
-  const handleAddToCart = (event, item) => {
-    event?.stopPropagation?.();
-
-    const product = productDetails[item.productId];
-
-    if (!product) {
-      return;
-    }
-
-    dispatch(
-      addToCart({
-        productId: product.id,
-        selectedMetalId: product.defaultMetal,
-        selectedSizeId: product.defaultSize,
-        quantity: 1,
-        unitPrice: product.price,
-      }),
-    );
-  };
 
   const handleToggleWishlist = (event, item) => {
     event?.stopPropagation?.();
@@ -81,7 +74,7 @@ function BestSellerRow({ items }) {
           onPress={() =>
             navigation.navigate('ProductDetails', { productId: item.productId })
           }
-          className="mr-4 w-[132px] rounded-[22px] border border-[#efe6d8] bg-[#fffdf9] px-3 py-3"
+          className="mr-3 w-[118px] overflow-hidden rounded-[16px] border border-[#F4C23D] bg-[#FFFFFF]"
           style={styles.cardShadow}
         >
           {(() => {
@@ -91,19 +84,19 @@ function BestSellerRow({ items }) {
 
             return (
           <View className="relative">
-            <View className="overflow-hidden rounded-[18px] bg-[#f8f1e6]">
-              <Image source={item.image} resizeMode="cover" className="h-[96px] w-full" />
+            <View className="overflow-hidden bg-[#FFF6DF]">
+              <Image source={item.image} resizeMode="cover" className="h-[98px] w-full" />
             </View>
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={event => handleToggleWishlist(event, item)}
-              className="absolute right-2 top-2 h-[28px] w-[28px] items-center justify-center rounded-full bg-white"
+              className="absolute right-2 top-2 h-[25px] w-[25px] items-center justify-center rounded-full bg-white"
               style={styles.iconShadow}
             >
               <Heart
-                size={15}
-                color={isWishlisted ? '#bd8934' : '#2a2724'}
-                fill={isWishlisted ? '#bd8934' : 'transparent'}
+                size={14}
+                color={isWishlisted ? '#E42B1B' : '#087A34'}
+                fill={isWishlisted ? '#E42B1B' : 'transparent'}
                 strokeWidth={2}
               />
             </TouchableOpacity>
@@ -111,48 +104,28 @@ function BestSellerRow({ items }) {
             );
           })()}
 
-          <Text
-            numberOfLines={1}
-            className="mt-3 text-[11px] font-medium text-[#26221e]"
-          >
-            {item.title}
-          </Text>
-
-          <View className="mt-2 flex-row items-center">
-            <View className="flex-row">
-              {[0, 1, 2, 3, 4].map(index => (
-                <Star
-                  key={`${item.id}-star-${index}`}
-                  size={11}
-                  color="#c49039"
-                  fill="#c49039"
-                  strokeWidth={1.6}
-                />
-              ))}
-            </View>
-            <Text className="ml-1 text-[10px] text-[#4d4742]">
-              {item.rating} ({item.reviews})
-            </Text>
-          </View>
-
-          <Text
-            numberOfLines={2}
-            className="mt-2 min-h-[32px] text-[10px] leading-[15px] text-[#7c756e]"
-          >
-            {item.subtitle}
-          </Text>
-
-          <View className="mt-3 flex-row items-center justify-between">
-            <Text className="text-[16px] font-bold text-[#171513]">
-             Rs {item.price}
-            </Text>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={event => handleAddToCart(event, item)}
-              className="h-[32px] w-[32px] items-center justify-center rounded-full bg-[#1e1c19]"
+          <View className="px-[10px] pb-[10px] pt-2">
+            <Text
+              numberOfLines={2}
+              className="min-h-[31px] text-[10px] font-medium leading-[15px] text-[#202020]"
             >
-              <Plus size={18} color="#ffffff" strokeWidth={2.3} />
-            </TouchableOpacity>
+              {item.title}
+            </Text>
+
+            <Text className="mt-[4px] text-[14px] font-bold text-[#087A34]">
+              Rs {item.price}
+            </Text>
+
+            <View className="mt-[6px] flex-row items-center">
+              <Text className="mr-1 text-[9px] text-[#7A7A7A]" style={styles.originalPrice}>
+                Rs {getOriginalPrice(item.price)}
+              </Text>
+              <View className="rounded-[4px] bg-[#E42B1B] px-[6px] py-[2px] ml-2">
+                <Text className="text-[8px] font-bold text-white">
+                  {offerPercent}% OFF
+                </Text>
+              </View>
+            </View>
           </View>
         </TouchableOpacity>
       ))}
@@ -162,7 +135,7 @@ function BestSellerRow({ items }) {
 
 const styles = {
   cardShadow: {
-    shadowColor: '#6f5430',
+    shadowColor: '#8A6A1B',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.08,
     shadowRadius: 14,
@@ -174,6 +147,9 @@ const styles = {
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 3,
+  },
+  originalPrice: {
+    textDecorationLine: 'line-through',
   },
 };
 

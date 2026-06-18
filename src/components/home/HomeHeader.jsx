@@ -23,7 +23,7 @@ function HomeHeader() {
           className="h-10 w-10 items-center justify-center rounded-full"
           onPress={() => setIsSidebarVisible(true)}
         >
-          <Menu size={24} color="#1d1b18" strokeWidth={2} />
+          <Menu size={24} color="#FFFFFF" strokeWidth={2} />
         </TouchableOpacity>
 
         <View style={styles.logoWrap}>
@@ -36,16 +36,16 @@ function HomeHeader() {
 
         <View className="flex-row items-center">
           {/* <TouchableOpacity activeOpacity={0.8} className="mr-1 h-10 w-10 items-center justify-center rounded-full">
-            <Search size={21} color="#1d1b18" strokeWidth={2} />
+            <Search size={21} color="#FFFFFF" strokeWidth={2} />
           </TouchableOpacity> */}
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate('Notifications')}
             className="relative mr-1 h-10 w-10 items-center justify-center rounded-full"
           >
-            <Bell size={21} color="#1d1b18" strokeWidth={2} />
+            <Bell size={21} color="#FFFFFF" strokeWidth={2} />
             {unreadCount > 0 ? (
-              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#E42B1B] px-1">
                 <Text className="text-[10px] font-bold text-white">
                   {unreadCount}
                 </Text>
@@ -57,9 +57,9 @@ function HomeHeader() {
             onPress={() => navigation.navigate('Wishlist')}
             className="relative mr-1 h-10 w-10 items-center justify-center rounded-full"
           >
-            <Heart size={21} color="#1d1b18" strokeWidth={2} />
+            <Heart size={21} color="#FFFFFF" strokeWidth={2} />
             {wishlistCount > 0 ? (
-              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#E42B1B] px-1">
                 <Text className="text-[10px] font-bold text-white">
                   {wishlistCount}
                 </Text>
@@ -71,9 +71,9 @@ function HomeHeader() {
             onPress={() => navigation.navigate('Cart')}
             className="relative h-10 w-10 items-center justify-center rounded-full"
           >
-            <ShoppingBag size={21} color="#1d1b18" strokeWidth={2} />
+            <ShoppingBag size={21} color="#FFFFFF" strokeWidth={2} />
             {cartCount > 0 ? (
-              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#c79a3b] px-1">
+              <View className="absolute right-0 top-0 h-4 min-w-[15px] items-center justify-center rounded-full bg-[#E42B1B] px-1">
                 <Text className="text-[10px] font-bold text-white">{cartCount}</Text>
               </View>
             ) : null}

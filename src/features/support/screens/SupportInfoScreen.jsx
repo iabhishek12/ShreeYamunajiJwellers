@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -26,11 +27,11 @@ import {
 } from 'lucide-react-native';
 import HomeHeader from '../../../components/home/HomeHeader';
 
-const gold = '#bd8934';
-const softGold = '#d7c39a';
-const ink = '#201b17';
-const muted = '#75695a';
-const line = '#eadfce';
+const green = '#087A34';
+const gold = '#F4C23D';
+const softGold = '#FFF6DF';
+const ink = '#202020';
+const line = '#F4C23D';
 
 const supportConfigs = {
   FAQ: {
@@ -239,16 +240,21 @@ function SupportInfoScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <HomeHeader />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
+
+      <View style={styles.headerWrap}>
+        <HomeHeader />
+      </View>
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.heroCard}>
           <View style={styles.heroGlow} />
           <View style={styles.heroIconWrap}>
-            <Icon size={25} color={softGold} strokeWidth={1.9} />
+            <Icon size={25} color={green} strokeWidth={1.9} />
           </View>
           <Text style={styles.eyebrow}>{config.eyebrow}</Text>
           <Text style={styles.title}>{config.title}</Text>
@@ -264,7 +270,7 @@ function SupportInfoScreen({ navigation, route }) {
               return (
                 <View key={item.id} style={styles.infoRow}>
                   <View style={styles.rowIconWrap}>
-                    <RowIcon size={18} color={gold} strokeWidth={2} />
+                    <RowIcon size={18} color={green} strokeWidth={2} />
                   </View>
                   <View style={styles.rowCopy}>
                     <Text style={styles.rowTitle}>{item.title}</Text>
@@ -282,7 +288,7 @@ function SupportInfoScreen({ navigation, route }) {
         ))}
 
         <View style={styles.noteCard}>
-          <MapPin size={18} color={gold} strokeWidth={1.9} />
+          <MapPin size={18} color={green} strokeWidth={1.9} />
           <Text style={styles.noteText}>
             Store timings, product availability, and support guidance may vary across collections and order status.
           </Text>
@@ -310,7 +316,15 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fbf7f1',
+    backgroundColor: green,
+  },
+  headerWrap: {
+    backgroundColor: green,
+    paddingBottom: 3,
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: '#FFFDF4',
   },
   content: {
     paddingHorizontal: 20,
@@ -319,10 +333,10 @@ const styles = StyleSheet.create({
   heroCard: {
     marginTop: 15,
     overflow: 'hidden',
-    borderRadius: 28,
+    borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#e3d0ad',
-    backgroundColor: softGold,
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     padding: 12,
   },
   heroGlow: {
@@ -332,7 +346,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     borderRadius: 75,
-    backgroundColor: 'rgba(255, 255, 255, 0.32)',
+    backgroundColor: 'rgba(244, 194, 61, 0.2)',
   },
   heroIconWrap: {
     height: 40,
@@ -340,13 +354,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 28,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: softGold,
   },
   eyebrow: {
     marginTop: 6,
     fontSize: 10,
     fontWeight: '900',
-    color: '#8f6422',
+    color: green,
     letterSpacing: 2.6,
   },
   title: {
@@ -354,7 +370,7 @@ const styles = StyleSheet.create({
     fontFamily: serifFont,
     fontSize: 28,
     lineHeight: 30,
-    color: ink,
+    color: green,
   },
   subtitle: {
     marginTop: 4,
@@ -362,14 +378,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     lineHeight: 20,
-    color: '#6e614f',
+    color: ink,
   },
   sectionWrap: {
     marginTop: 15,
   },
   sectionTitle: {
     marginBottom: 10,
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 18,
     lineHeight: 22,
@@ -381,7 +397,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: line,
-    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 14,
     paddingVertical: 13,
   },
@@ -391,7 +407,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 21,
-    backgroundColor: '#f8efe3',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: softGold,
   },
   rowCopy: {
     marginLeft: 12,
@@ -400,18 +418,20 @@ const styles = StyleSheet.create({
   rowTitle: {
     fontSize: 14,
     fontWeight: '900',
-    color: ink,
+    color: green,
   },
   rowSubtitle: {
     marginTop: 3,
     fontSize: 11,
     fontWeight: '600',
     lineHeight: 16,
-    color: '#8b8176',
+    color: ink,
   },
   valuePill: {
     borderRadius: 14,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 9,
     paddingVertical: 5,
   },
@@ -427,14 +447,14 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     borderColor: line,
-    backgroundColor: '#fffaf3',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
   noteText: {
     marginLeft: 10,
     flex: 1,
-    color: muted,
+    color: ink,
     fontSize: 11,
     fontWeight: '700',
     lineHeight: 16,
@@ -444,8 +464,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 24,
-    backgroundColor: '#201b17',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 18,
     paddingVertical: 14,
   },

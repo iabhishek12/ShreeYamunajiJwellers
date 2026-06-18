@@ -4,17 +4,17 @@ import { ArrowRight } from 'lucide-react-native';
 
 function SectionHeader({ actionLabel, onPress, title }) {
   return (
-    <View className="mx-4 mt-8 mb-4 flex-row items-center justify-between">
+    <View className="mx-4 mt-4 mb-4 flex-row items-center justify-between">
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity
         activeOpacity={0.8}
         className="flex-row items-center"
         onPress={onPress}
       >
-        <Text className="mr-2 text-[12px] font-bold tracking-[1.2px] text-[#c08d39]">
+        <Text className="mr-2 text-[12px] font-bold tracking-[1.2px] text-[#F28A00]">
           {actionLabel}
         </Text>
-        <ArrowRight size={16} color="#c08d39" strokeWidth={2.2} />
+        <ArrowRight size={16} color="#F28A00" strokeWidth={2.2} />
       </TouchableOpacity>
     </View>
   );
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     }),
     fontSize: 23,
     lineHeight: 28,
-    color: '#171513',
+    color: '#087A34',
   },
 });
 

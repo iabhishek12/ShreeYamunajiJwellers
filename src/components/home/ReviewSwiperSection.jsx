@@ -21,7 +21,7 @@ function ReviewSwiperSection({ section }) {
   };
 
   return (
-    <View className="mx-4 mt-5 mb-4 rounded-[28px] px-[9px] py-[14px]" style={styles.container}>
+    <View className="mx-4 mt-5 mb-4 rounded-[28px] px-[9px] py-[14px] bg-orange-300" style={styles.container}>
       <View className="h-[345px]">
         <Swiper
           ref={ref => {
@@ -42,11 +42,11 @@ function ReviewSwiperSection({ section }) {
           {section.reviews.map(item => (
             <View key={item.id} className="px-3 py-3">
               <View className="items-center">
-                <View className="h-[38px] w-[38px] items-center justify-center rounded-full border border-[#cf9a45] bg-[#f5ede1]">
-                  <Award size={16} color="#c28b3f" strokeWidth={1.8} />
+                <View className="h-[40px] w-[40px] items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+                  <Award size={20} color="#087A34" strokeWidth={1.8} />
                 </View>
 
-                <Text className="mt-3 text-center text-[9px] font-bold tracking-[2.8px] text-[#c28b3f]">
+                <Text className="mt-3 text-center text-[9px] font-bold tracking-[2.8px] text-[#000000]">
                   {section.label}
                 </Text>
 
@@ -54,27 +54,27 @@ function ReviewSwiperSection({ section }) {
                   {[0, 1, 2, 3, 4].map(index => (
                     <Star
                       key={`${item.id}-star-${index}`}
-                      size={12}
-                      color="#c28b3f"
-                      fill="#c28b3f"
+                      size={15}
+                      color="yellow"
+                      fill="yellow"
                       strokeWidth={1.6}
                     />
                   ))}
                 </View>
 
-                <Text style={styles.quote} className="mt-3 px-3 text-center">
+                <Text style={styles.quote} className="mt-3 px-3 font-700 text-center">
                   "{item.quote}"
                 </Text>
 
                 <View className="mt-5 flex-row items-center">
-                  <View className="h-[40px] w-[40px] items-center justify-center rounded-full bg-[#f6ead7]">
+                  <View className="h-[40px] w-[40px] items-center justify-center rounded-full bg-[#087A34]">
                     <Text style={styles.avatarText}>{item.initials}</Text>
                   </View>
                   <View className="ml-3">
-                    <Text className="text-[14px] font-bold text-[#22201d]">
+                    <Text className="text-[14px] font-bold text-[#202020]">
                       {item.name}
                     </Text>
-                    <Text className="mt-[2px] text-[11px] text-[#7d766d]">
+                    <Text className="mt-[2px] text-[11px] text-[#5B5B5B]">
                       {item.location} | {item.badge}
                     </Text>
                   </View>
@@ -90,10 +90,10 @@ function ReviewSwiperSection({ section }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f4ecdf',
+    // backgroundColor: '#0b63cee7',
     borderWidth: 1,
-    borderColor: '#eee2cf',
-    shadowColor: '#8f7449',
+    borderColor: '#F4C23D',
+    shadowColor: '#8A6A1B',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.06,
     shadowRadius: 22,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     }),
     fontSize: 17,
     lineHeight: 28,
-    color: '#28231d',
+    color: '#ffff',
   },
   avatarText: {
     fontFamily: Platform.select({
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
       default: 'serif',
     }),
     fontSize: 16,
-    color: '#c28b3f',
+    color: '#FFFFFF',
   },
   pagination: {
     bottom: 2,
@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 999,
     marginHorizontal: 4,
-    backgroundColor: '#dfd0ba',
+    backgroundColor: '#F4D77D',
   },
   activeDot: {
     width: 20,
     height: 8,
     borderRadius: 999,
     marginHorizontal: 4,
-    backgroundColor: '#c28b3f',
+    backgroundColor: '#087A34',
   },
 });
 

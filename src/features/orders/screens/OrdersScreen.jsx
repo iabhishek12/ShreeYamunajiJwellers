@@ -26,12 +26,11 @@ import { orderStatusMeta, orderTabs } from '../../../data/mock/ordersMock';
 import { productDetails } from '../../../data/mock/productMock';
 import { useAppSelector } from '../../../store/hooks';
 
-const gold = '#bd8934';
-const darkGold = '#a66d16';
-const ink = '#191714';
-const muted = '#6f6860';
-const ivory = '#fbf7f1';
-const line = '#ece4d9';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ink = '#202020';
+const ivory = '#FFFDF4';
+const line = '#F4C23D';
 
 const statusConfig = {
   Delivered: {
@@ -163,12 +162,12 @@ function OrdersScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
       <View
         style={[
           styles.headerWrap,
-          { paddingTop: Math.max(insets.top, 8) },
+          { paddingTop: Math.max(insets.top, 4) },
         ]}
       >
         <HomeHeader />
@@ -214,7 +213,7 @@ function OrdersScreen({ navigation }) {
         ) : (
           <View style={styles.emptyCard}>
             <View style={styles.emptyIcon}>
-              <Package size={28} color={gold} strokeWidth={1.8} />
+              <Package size={28} color={green} strokeWidth={1.8} />
             </View>
             <Text style={styles.emptyTitle}>No orders yet</Text>
             <Text style={styles.emptyText}>
@@ -225,7 +224,7 @@ function OrdersScreen({ navigation }) {
 
         <View style={styles.helpCard}>
           <View style={styles.helpIcon}>
-            <Headphones size={21} color={ink} strokeWidth={1.8} />
+            <Headphones size={21} color={green} strokeWidth={1.8} />
           </View>
           <View style={styles.helpCopy}>
             <Text style={styles.helpTitle}>Need Help with Your Order?</Text>
@@ -233,7 +232,7 @@ function OrdersScreen({ navigation }) {
           </View>
           <TouchableOpacity activeOpacity={0.84} style={styles.supportButton}>
             <Text style={styles.supportText}>Contact Support</Text>
-            <ChevronRight size={18} color={darkGold} strokeWidth={2} />
+            <ChevronRight size={18} color={green} strokeWidth={2} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -252,11 +251,11 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   headerWrap: {
-    backgroundColor: ivory,
-    paddingBottom: 2,
+    backgroundColor: green,
+    paddingBottom: 3,
   },
   titleArea: {
     borderBottomWidth: 1,
@@ -265,7 +264,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
   },
   screenTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 28,
     fontWeight: '900',
@@ -279,12 +278,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabText: {
-    color: '#45403b',
+    color: ink,
     fontSize: 13,
     fontWeight: '800',
   },
   activeTabText: {
-    color: darkGold,
+    color: green,
   },
   tabLine: {
     marginTop: 10,
@@ -297,6 +296,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+    backgroundColor: ivory,
   },
   content: {
     paddingHorizontal: 16,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#eadfce',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingVertical: 32,
@@ -318,11 +318,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 29,
-    backgroundColor: '#fbf2e6',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   emptyTitle: {
     marginTop: 14,
-    color: ink,
+    color: green,
     fontSize: 16,
     fontWeight: '800',
   },
@@ -330,7 +332,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
     maxWidth: 240,
     textAlign: 'center',
-    color: muted,
+    color: ink,
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 18,
@@ -340,10 +342,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#eadfce',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 10,
-    shadowColor: '#6b5742',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 10,
@@ -353,7 +355,7 @@ const styles = StyleSheet.create({
     width: 62,
     overflow: 'hidden',
     borderRadius: 9,
-    backgroundColor: '#f6efe6',
+    backgroundColor: '#FFF6DF',
   },
   orderThumb: {
     height: 45,
@@ -374,13 +376,13 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   orderTitle: {
-    color: ink,
+    color: green,
     fontSize: 14,
     fontWeight: '700',
   },
   placedText: {
     marginTop: 5,
-    color: '#4f4a44',
+    color: ink,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -400,7 +402,7 @@ const styles = StyleSheet.create({
   },
   statusLine: {
     marginTop: 5,
-    color: '#302c28',
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
     lineHeight: 15,
@@ -412,7 +414,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   itemCount: {
-    color: muted,
+    color: ink,
     fontSize: 11,
     fontWeight: '800',
   },
@@ -422,13 +424,13 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   totalLabel: {
-    color: ink,
+    color: green,
     fontSize: 12,
     fontWeight: '700',
   },
   totalValue: {
     marginLeft: 6,
-    color: ink,
+    color: green,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -436,12 +438,14 @@ const styles = StyleSheet.create({
     minWidth: 100,
     alignItems: 'center',
     borderRadius: 9,
-    backgroundColor: '#f5ede5',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 10,
     paddingVertical: 8,
   },
   actionText: {
-    color: ink,
+    color: '#FFFFFF',
     fontSize: 12,
     fontWeight: '800',
   },
@@ -450,6 +454,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 12,
   },
@@ -459,20 +465,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 21,
-    backgroundColor: '#f6efe6',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   helpCopy: {
     marginLeft: 12,
     flex: 1,
   },
   helpTitle: {
-    color: ink,
+    color: green,
     fontSize: 10,
     fontWeight: '900',
   },
   helpText: {
     marginTop: 3,
-    color: muted,
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
     
@@ -482,7 +490,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   supportText: {
-    color: darkGold,
+    color: green,
     fontSize: 10,
     fontWeight: '800',
   },

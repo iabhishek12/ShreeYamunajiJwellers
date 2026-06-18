@@ -10,17 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, Star } from 'lucide-react-native';
 import { productDetails } from '../../../data/mock/productMock';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addReview } from '../store/reviewsSlice';
 
-const ink = '#191714';
-const gold = '#bd8934';
-const ivory = '#fbf7f1';
-const line = '#eadfce';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ivory = '#FFFDF4';
+const ink = '#202020';
 
 function AddReviewScreen({ navigation, route }) {
+  const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const productId = route.params?.productId ?? 'infinity-sparkle-ring';
@@ -44,21 +46,22 @@ function AddReviewScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: Math.max(insets.top, 4) }]}>
         <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <ArrowLeft size={21} color={ink} strokeWidth={2.2} />
+          <ArrowLeft size={21} color="#FFFFFF" strokeWidth={2.2} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Rate & Review</Text>
         <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView
+        style={styles.body}
         bounces={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
@@ -89,7 +92,7 @@ function AddReviewScreen({ navigation, route }) {
           <Text style={styles.fieldTitle}>Review Title</Text>
           <TextInput
             placeholder="Summarize your experience"
-            placeholderTextColor="#998d80"
+            placeholderTextColor={ink}
             style={styles.input}
             value={title}
             onChangeText={setTitle}
@@ -99,7 +102,7 @@ function AddReviewScreen({ navigation, route }) {
           <TextInput
             multiline
             placeholder="Tell others about quality, comfort, gifting, or overall look."
-            placeholderTextColor="#998d80"
+            placeholderTextColor={ink}
             style={[styles.input, styles.multilineInput]}
             textAlignVertical="top"
             value={comment}
@@ -128,18 +131,17 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   header: {
-    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: line,
+    borderBottomColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 16,
-    paddingBottom: 8,
-    paddingTop: 10,
+    paddingBottom: 12,
   },
   backButton: {
     height: 38,
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 19,
   },
   headerTitle: {
-    color: ink,
+    color: '#FFFFFF',
     fontFamily: serifFont,
     fontSize: 24,
     lineHeight: 28,
@@ -157,19 +159,23 @@ const styles = StyleSheet.create({
   headerSpacer: {
     width: 38,
   },
+  body: {
+    flex: 1,
+    backgroundColor: ivory,
+  },
   content: {
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
   productName: {
     marginTop: 16,
-    color: ink,
+    color: green,
     fontSize: 16,
     fontWeight: '700',
   },
   subtitle: {
     marginTop: 2,
-    color: '#73695f',
+    color: ink,
     fontSize: 11,
     fontWeight: '600',
   },
@@ -177,13 +183,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: line,
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 14,
   },
   fieldTitle: {
     marginTop: 14,
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '700',
   },
@@ -198,8 +204,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: line,
-    backgroundColor: '#fbf8f2',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 14,
     paddingVertical: 12,
     color: ink,
@@ -214,7 +220,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingVertical: 14,
   },
   submitText: {

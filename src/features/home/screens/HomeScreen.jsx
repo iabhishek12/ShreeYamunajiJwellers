@@ -40,12 +40,12 @@ function HomeScreen({ navigation }) {
   const user = useAppSelector(state => state.auth.user);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fbf7f1]">
-      <StatusBar barStyle="dark-content" backgroundColor="#fbf7f1" />
+    <SafeAreaView className="flex-1 bg-[#087A34]">
+      <StatusBar barStyle="light-content" backgroundColor="#087A34" />
 
-      <View className="flex-1 bg-[#fbf7f1]">
+      <View className="flex-1 bg-[#FFFDF4]">
         <View
-          className="bg-[#fbf7f1] pb-3"
+          className="bg-[#087A34] pb-3"
           style={{ paddingTop: Math.max(insets.top, 4) }}
         >
           <HomeHeader />
@@ -62,9 +62,14 @@ function HomeScreen({ navigation }) {
             <HeroBanner banner={heroBanner} />
             <CategoryRow items={categoryItems} />
             <AssuranceStrip items={assuranceItems} />
-
+             <SectionHeader
+              title="Best Sellers"
+              actionLabel="VIEW ALL"
+              onPress={() => navigation.navigate('AllProducts')}
+            />
+<BestSellerRow items={bestSellerItems} />
             {user ? (
-              <Text className="mx-4 mt-4 text-[12px] font-medium text-[#8b7c6c]">
+              <Text className="mx-4 mt-4 text-[12px] font-medium text-[#087A34]">
                 Welcome back, {user.name}
               </Text>
             ) : null}
@@ -75,12 +80,8 @@ function HomeScreen({ navigation }) {
               ))}
             </View>
 
-            <SectionHeader
-              title="Best Sellers"
-              actionLabel="VIEW ALL"
-              onPress={() => navigation.navigate('AllProducts')}
-            />
-            <BestSellerRow items={bestSellerItems} />
+           
+            
             <PromiseSection section={promiseSection} />
             <NewArrivalsSection section={newArrivalsSection} />
             <ReviewSwiperSection section={reviewSection} />

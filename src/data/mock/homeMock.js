@@ -1,6 +1,11 @@
 const heroImage = require('../../assets/images/products/jewelry-login-hero.png');
+const heroBannerImage = require('../../assets/images/loginBanner/image.png');
 const modernRingsImage = require('../../assets/images/products/modern-rings.jpg.jpeg');
 const signaturePendantImage = require('../../assets/images/products/signature-pendant.jpg.jpeg');
+const categoryBraceletsImage = require('../../assets/images/categories/bracelets.png');
+const categoryEarringsImage = require('../../assets/images/categories/earrings.png');
+const categoryNecklaceImage = require('../../assets/images/categories/necklace.png');
+const categoryRingImage = require('../../assets/images/categories/Ring.png');
 
 export const heroBanner = {
   eyebrow: 'NEW COLLECTION',
@@ -8,14 +13,14 @@ export const heroBanner = {
   accentTitle: 'Made for You.',
   description: "Timeless designs that celebrate life's most beautiful moments.",
   ctaLabel: 'SHOP NOW',
-  image: heroImage,
+  image: heroBannerImage,
 };
 
 export const categoryItems = [
-  { id: 'rings', label: 'RINGS', icon: 'Circle' },
-  { id: 'earrings', label: 'EARRINGS', icon: 'Cable' },
-  { id: 'necklaces', label: 'NECKLACES', icon: 'Gem' },
-  { id: 'bracelets', label: 'BRACELETS', icon: 'BadgeHelp' },
+  { id: 'rings', label: 'RINGS', icon: 'Circle', image: categoryRingImage },
+  { id: 'earrings', label: 'EARRINGS', icon: 'Cable', image: categoryEarringsImage },
+  { id: 'necklaces', label: 'NECKLACES', icon: 'Gem', image: categoryNecklaceImage },
+  { id: 'bracelets', label: 'BRACELETS', icon: 'BadgeHelp', image: categoryBraceletsImage },
   { id: 'more', label: 'MORE', icon: 'LayoutGrid' },
 ];
 

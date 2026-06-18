@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowRight } from 'lucide-react-native';
 import BottomBar from '../../../components/home/BottomBar';
 import HomeHeader from '../../../components/home/HomeHeader';
+import SearchBar from '../../../components/home/SearchBar';
 import { iconMap } from '../../../components/home/iconMap';
 import {
   categoryAssuranceItems,
@@ -27,6 +28,8 @@ import {
 
 const gridHorizontalPadding = 28;
 const cardGap = 5;
+const green = '#087A34';
+const gold = '#F4C23D';
 
 function CategoriesScreen({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -37,13 +40,13 @@ function CategoriesScreen({ navigation }) {
   const cardImageHeight = Math.round(cardWidth * 1.08);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fbf7f1]">
-      <StatusBar barStyle="dark-content" backgroundColor="#fbf7f1" />
+    <SafeAreaView className="flex-1 bg-[#087A34]">
+      <StatusBar barStyle="light-content" backgroundColor="#087A34" />
 
-      <View className="flex-1 bg-[#fbf7f1]">
+      <View className="flex-1 bg-[#FFFDF4]">
         <View
-          className="bg-[#fbf7f1] pb-2"
-          style={{ paddingTop: Math.max(insets.top, 8) }}
+          className="bg-[#087A34] pb-3"
+          style={{ paddingTop: Math.max(insets.top, 4) }}
         >
           <HomeHeader />
         </View>
@@ -54,23 +57,25 @@ function CategoriesScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
         >
+          <SearchBar />
+
           <ImageBackground
             source={categoryHero.image}
             resizeMode="cover"
-            className="mx-[14px] mt-2 h-[180px] overflow-hidden rounded-[14px]"
+            className="mx-4 mt-5 h-[180px] overflow-hidden rounded-[18px] bg-[#FFD44D]"
           >
             <View
-              className="flex-1 justify-center px-2"
+              className="flex-1 justify-center px-4"
               style={styles.heroOverlay}
             >
               <Text style={styles.heroTitle}>{categoryHero.title}</Text>
-              <Text className="mt-3 text-[12px] leading-[10px] text-[#5d554d]">
+              <Text className="mt-2 max-w-[170px] text-[11px] font-semibold leading-[15px] text-[#202020]">
                 {categoryHero.description}
               </Text>
             </View>
           </ImageBackground>
 
-          <View className="mx-[14px] mt-4 flex-row flex-wrap justify-between">
+          <View className="mx-4 mt-4 flex-row flex-wrap justify-between">
             {categoryCards.map(item => {
               const Icon = iconMap[item.icon];
 
@@ -83,35 +88,35 @@ function CategoriesScreen({ navigation }) {
                       categoryId: item.id,
                     })
                   }
-                  className="mb-4 mt-5 overflow-hidden rounded-[12px] border border-[#eee4d8] bg-white "
+                  className="mb-4 mt-5 overflow-hidden rounded-[16px] border border-[#F4C23D] bg-white"
                   style={[styles.cardShadow, { width: cardWidth }]}
                 >
                   <Image
                     source={item.image}
                     resizeMode="cover"
-                    className="w-full bg-[#f8f0e4]"
+                    className="w-full bg-[#FFF6DF]"
                     style={{ height: cardImageHeight }}
                   />
 
                   <View className="items-center px-2 pb-3 pt-0">
                     <View
-                      className="-mt-5 h-[44px] w-[44px] items-center justify-center rounded-full bg-white"
+                      className="-mt-5 h-[44px] w-[44px] items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFFDF4]"
                       style={styles.iconBadgeShadow}
                     >
-                      <Icon size={19} color="#c08d39" strokeWidth={1.7} />
+                      <Icon size={19} color={green} strokeWidth={1.7} />
                     </View>
 
-                    <Text className="mt-2 text-center text-[10px] font-bold tracking-[0.5px] text-[#1f1a16]">
+                    <Text className="mt-2 text-center text-[10px] font-bold text-[#087A34]">
                       {item.title}
                     </Text>
 
                     <View className="mt-2 flex-row items-center">
-                      <Text className="text-[10px] font-medium text-[#6e655c]">
+                      <Text className="text-[10px] font-medium text-[#202020]">
                         {item.subtitle}
                       </Text>
                       <ArrowRight
                         size={12}
-                        color="#7a7066"
+                        color={green}
                         strokeWidth={2}
                         style={styles.arrowSpacing}
                       />
@@ -129,7 +134,7 @@ function CategoriesScreen({ navigation }) {
                 productId: categoryPromo.featuredProductId,
               })
             }
-            className="mx-[14px] mt-5 overflow-hidden rounded-[12px] bg-[#f5ecdf]"
+            className="mx-4 mt-5 overflow-hidden rounded-[18px] border border-[#F4C23D] bg-[#087A34]"
             style={styles.cardShadow}
           >
             <ImageBackground
@@ -137,28 +142,31 @@ function CategoriesScreen({ navigation }) {
               resizeMode="cover"
               className="h-[150px] w-full"
             >
-              <View className="flex-1 justify-center bg-[#fff8f14d] px-2 py-4">
+              <View
+                className="flex-1 justify-center px-4 py-4"
+                style={styles.promoOverlay}
+              >
                 <View className="max-w-[72%]">
-                  <Text className="text-[10px] font-bold tracking-[1.8px] text-[#e6ce96]">
+                  <Text className="text-[10px] font-extrabold text-[#F4C23D]">
                     {categoryPromo.eyebrow}
                   </Text>
                   <Text
                     style={styles.promoTitle}
-                    className="mt-3 text-[#181410]"
+                    className="mt-3 text-white"
                   >
                     {categoryPromo.title}
                   </Text>
-                  <Text className="mt-1 text-[11px] font-semibold leading-[8px] text-[#5f554d]">
+                  <Text className="mt-1 text-[11px] font-semibold leading-[15px] text-[#FFFDF4]">
                     {categoryPromo.description}
                   </Text>
 
-                  <View className="mt-2 flex-row items-center self-start rounded-full bg-[#1b1a18] px-4 py-2.5">
-                    <Text className="text-[12px] font-bold text-white">
+                  <View className="mt-4 flex-row items-center self-start rounded-[14px] bg-[#F4C23D] px-4 py-2.5">
+                    <Text className="text-[12px] font-bold text-[#087A34]">
                       {categoryPromo.buttonLabel}
                     </Text>
                     <ArrowRight
                       size={14}
-                      color="#ffffff"
+                      color={green}
                       strokeWidth={2.1}
                       style={styles.arrowSpacing}
                     />
@@ -168,7 +176,7 @@ function CategoriesScreen({ navigation }) {
             </ImageBackground>
           </TouchableOpacity>
 
-          <View className="mx-[14px] mt-10 flex-row border-y border-[#eee5d8] bg-[#fbf7f1] py-5">
+          <View className="mx-4 mt-5 flex-row rounded-[18px] border border-[#F4C23D] bg-[#087A34] px-2 py-3">
             {categoryAssuranceItems.map((item, index) => {
               const Icon = iconMap[item.icon];
 
@@ -177,15 +185,15 @@ function CategoriesScreen({ navigation }) {
                   key={item.id}
                   className={`flex-1 items-center px-2 ${
                     index < categoryAssuranceItems.length - 1
-                      ? 'border-r border-[#e2d9cb]'
+                      ? 'border-r border-[#F4C23D]'
                       : ''
                   }`}
                 >
-                  <Icon size={24} color="#1f1d1b" strokeWidth={1.8} />
-                  <Text className="mt-3 text-center text-[9px] font-bold leading-[13px] text-[#2a2622]">
+                  <Icon size={20} color={gold} strokeWidth={1.8} />
+                  <Text className="mt-2 text-center text-[8px] font-semibold leading-[11px] text-white">
                     {item.title}
                   </Text>
-                  <Text className="text-center text-[9px] font-bold leading-[13px] text-[#2a2622]">
+                  <Text className="text-center text-[8px] font-semibold leading-[11px] text-white">
                     {item.subtitle}
                   </Text>
                 </View>
@@ -205,7 +213,7 @@ const styles = StyleSheet.create({
     paddingBottom: 18,
   },
   heroOverlay: {
-    backgroundColor: 'rgba(255,255,255,0.18)',
+    backgroundColor: 'rgba(255,212,77,0.62)',
   },
   heroTitle: {
     fontFamily: Platform.select({
@@ -216,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 24,
-    color: '#171411',
+    color: green,
   },
   promoTitle: {
     fontFamily: Platform.select({
@@ -228,18 +236,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 22,
   },
+  promoOverlay: {
+    backgroundColor: 'rgba(8,122,52,0.72)',
+  },
   arrowSpacing: {
     marginLeft: 8,
   },
   cardShadow: {
-    shadowColor: '#d8c1a0',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.025,
+    shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 1,
   },
   iconBadgeShadow: {
-    shadowColor: '#baa17b',
+    shadowColor: gold,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.12,
     shadowRadius: 7,

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   ImageBackground,
   Modal,
   Platform,
@@ -38,11 +39,16 @@ import {
 import { logout } from '../../features/auth/store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-const shopNowImage = require('../../assets/images/products/modern-rings.jpg.jpeg');
+const shopNowImage = require('../../assets/images/products/modern-rings.jpg1.jpeg');
+const logoImage = require('../../assets/images/logo/logo.png');
 
-const gold = '#bd8934';
-const softGold = '#d7c39a';
-const ink = '#201b17';
+const green = '#087A34';
+const gold = '#F4C23D';
+const orange = '#F28A00';
+const red = '#E42B1B';
+const cream = '#FFFDF4';
+const warmCream = '#FFF6DF';
+const ink = '#202020';
 
 const primaryItems = [
   {
@@ -194,18 +200,16 @@ function SidebarMenu({ visible, onClose }) {
           <SafeAreaView className="flex-1">
             <View className="flex-row items-center justify-between px-5 pb-3 pt-2">
               <View className="flex-row items-center">
-                <View className="mr-3 h-11 w-11 items-center justify-center rounded-full bg-[#201b17]">
-                  <Gem size={22} color={softGold} strokeWidth={1.8} />
-                </View>
-                <View>
-                  <Text style={styles.brandTitle}>Shree</Text>
-                  <Text style={styles.brandSubtitle}>Yamunaji Jewellers</Text>
-                </View>
+                <Image
+                  source={logoImage}
+                  resizeMode="contain"
+                  style={styles.headerLogo}
+                />
               </View>
 
               <TouchableOpacity
                 activeOpacity={0.8}
-                className="h-10 w-10 items-center justify-center rounded-full bg-white/80"
+                className="h-10 w-10 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFFFFF]"
                 onPress={onClose}
               >
                 <X size={19} color={ink} strokeWidth={2.2} />
@@ -228,7 +232,7 @@ function SidebarMenu({ visible, onClose }) {
                   </View>
                 </View>
 
-                <View className="mt-4 flex-row rounded-3xl bg-white/70 p-2">
+                <View className="mt-4 flex-row rounded-3xl border border-[#F4C23D] bg-white/80 p-2">
                   <View className="flex-1 items-center">
                     <Text style={styles.statValue}>{wishlistCount}</Text>
                     <Text style={styles.statLabel}>Wishlist</Text>
@@ -269,7 +273,7 @@ function SidebarMenu({ visible, onClose }) {
                         >
                           <Icon
                             size={19}
-                            color={isActive ? '#ffffff' : gold}
+                            color={isActive ? '#ffffff' : green}
                             strokeWidth={2}
                           />
                         </View>
@@ -294,7 +298,7 @@ function SidebarMenu({ visible, onClose }) {
                           </View>
                           <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
                         </View>
-                        <ChevronRight size={17} color="#8f8477" strokeWidth={2} />
+                        <ChevronRight size={17} color={green} strokeWidth={2} />
                       </TouchableOpacity>
                     );
                   })}
@@ -323,7 +327,7 @@ function SidebarMenu({ visible, onClose }) {
                         >
                           <Icon
                             size={19}
-                            color={isActive ? '#ffffff' : gold}
+                            color={isActive ? '#ffffff' : green}
                             strokeWidth={2}
                           />
                         </View>
@@ -341,7 +345,7 @@ function SidebarMenu({ visible, onClose }) {
                           </Text>
                           <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
                         </View>
-                        <ChevronRight size={17} color="#8f8477" strokeWidth={2} />
+                        <ChevronRight size={17} color={green} strokeWidth={2} />
                       </TouchableOpacity>
                     );
                   })}
@@ -363,13 +367,13 @@ function SidebarMenu({ visible, onClose }) {
                       Explore handcrafted designs in gold, diamonds, and soft sparkle.
                     </Text>
                   </View>
-                  <View className="h-14 w-14 items-center justify-center rounded-full bg-[#201b17]/90">
-                    <Sparkles size={24} color={softGold} strokeWidth={1.9} />
+                  <View className="h-14 w-14 items-center justify-center rounded-full border border-[#F4C23D] bg-[#087A34]/90">
+                    <Sparkles size={24} color={gold} strokeWidth={1.9} />
                   </View>
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.86}
-                  className="mt-4 self-start rounded-full bg-[#201b17] px-5 py-3"
+                  className="mt-4 self-start rounded-full bg-[#087A34] px-5 py-3"
                   onPress={() => handleNavigate('Categories')}
                 >
                   <Text className="text-[11px] font-extrabold uppercase tracking-[2px] text-white">
@@ -380,13 +384,13 @@ function SidebarMenu({ visible, onClose }) {
 
               <View className="mt-5">
                 <Text style={styles.sectionLabel}>Our Promise</Text>
-                <View className="flex-row rounded-[26px] border border-[#eadfce] bg-white/80 p-3">
+                <View className="flex-row rounded-[26px] border border-[#F4C23D] bg-white/90 p-3">
                   {promiseItems.map((item, index) => {
                     const Icon = item.icon;
 
                     return (
                       <View className="flex-1 items-center" key={item.id}>
-                        <View className="h-10 w-10 items-center justify-center rounded-full bg-[#f7efe4]">
+                        <View className="h-10 w-10 items-center justify-center rounded-full bg-[#FFF6DF]">
                           <Icon size={18} color={gold} strokeWidth={1.9} />
                         </View>
                         <Text style={styles.promiseText}>{item.label}</Text>
@@ -401,31 +405,31 @@ function SidebarMenu({ visible, onClose }) {
 
               <TouchableOpacity
                 activeOpacity={0.84}
-                className="mt-5 flex-row items-center rounded-[24px] border border-[#eadfce] bg-white/75 px-4 py-4"
+                className="mt-5 flex-row items-center rounded-[24px] border border-[#F4C23D] bg-white/90 px-4 py-4"
                 onPress={() => handleNavigate('ContactUs')}
               >
-                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#f7efe4]">
-                  <HelpCircle size={18} color={gold} strokeWidth={2} />
+                <View className="h-10 w-10 items-center justify-center rounded-full bg-[#FFF6DF]">
+                  <HelpCircle size={18} color={green} strokeWidth={2} />
                 </View>
                 <View className="ml-3 flex-1">
                   <Text style={styles.helpTitle}>Need styling help?</Text>
                   <Text style={styles.helpCopy}>Talk to our jewellery expert</Text>
                 </View>
-                <View className="h-9 w-9 items-center justify-center rounded-full bg-[#201b17]">
+                <View className="h-9 w-9 items-center justify-center rounded-full bg-[#087A34]">
                   <MessageCircleMore size={17} color="#ffffff" strokeWidth={2} />
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity
                 activeOpacity={0.86}
-                className="mt-5 flex-row items-center rounded-[26px] bg-[#201b17] px-4 py-4"
+                className="mt-5 flex-row items-center rounded-[26px] bg-[#087A34] px-4 py-4"
                 onPress={handleAuthAction}
               >
                 <View className="h-11 w-11 items-center justify-center rounded-full bg-white/10">
                   {isAuthenticated ? (
-                    <LogOut size={20} color={softGold} strokeWidth={2} />
+                    <LogOut size={20} color={gold} strokeWidth={2} />
                   ) : (
-                    <LogIn size={20} color={softGold} strokeWidth={2} />
+                    <LogIn size={20} color={gold} strokeWidth={2} />
                   )}
                 </View>
                 <View className="ml-3 flex-1">
@@ -460,14 +464,14 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'rgba(32, 27, 23, 0.34)',
+    backgroundColor: 'rgba(8, 122, 52, 0.28)',
   },
   panel: {
     height: '100%',
     overflow: 'hidden',
     borderTopRightRadius: 34,
     borderBottomRightRadius: 34,
-    backgroundColor: '#fbf7f1',
+    backgroundColor: cream,
     shadowColor: '#000',
     shadowOffset: { width: 10, height: 0 },
     shadowOpacity: 0.22,
@@ -481,7 +485,7 @@ const styles = StyleSheet.create({
     height: 160,
     width: 160,
     borderRadius: 80,
-    backgroundColor: 'rgba(215, 195, 154, 0.36)',
+    backgroundColor: 'rgba(8, 122, 52, 0.12)',
   },
   decorTwo: {
     position: 'absolute',
@@ -490,22 +494,11 @@ const styles = StyleSheet.create({
     height: 170,
     width: 170,
     borderRadius: 85,
-    backgroundColor: 'rgba(189, 137, 52, 0.1)',
+    backgroundColor: 'rgba(8, 122, 52, 0.12)',
   },
-  brandTitle: {
-    fontFamily: serifFont,
-    fontSize: 24,
-    lineHeight: 27,
-    color: ink,
-    letterSpacing: 4,
-  },
-  brandSubtitle: {
-    marginTop: 1,
-    fontSize: 7,
-    fontWeight: '700',
-    color: gold,
-    letterSpacing: 2.4,
-    textTransform: 'uppercase',
+  headerLogo: {
+    height: 54,
+    width: 158,
   },
   scrollContent: {
     paddingHorizontal: 20,
@@ -515,8 +508,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 28,
     borderWidth: 1,
-    borderColor: '#e3d0ad',
-    backgroundColor: softGold,
+    borderColor: gold,
+    backgroundColor: green,
     padding: 10,
   },
   avatar: {
@@ -525,7 +518,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 26,
-    backgroundColor: '#201b17',
+    backgroundColor: red,
   },
   avatarText: {
     fontSize: 16,
@@ -537,29 +530,29 @@ const styles = StyleSheet.create({
     fontFamily: serifFont,
     fontSize: 18,
     lineHeight: 20,
-    color: ink,
+    color: '#ffffff',
   },
   customerMeta: {
     marginTop: 2,
     fontSize: 11,
     fontWeight: '700',
-    color: '#746144',
+    color: warmCream,
   },
   statDivider: {
     width: 1,
     marginVertical: 4,
-    backgroundColor: 'rgba(117, 94, 59, 0.18)',
+    backgroundColor: 'rgba(244, 194, 61, 0.42)',
   },
   statValue: {
     fontSize: 14,
     fontWeight: '900',
-    color: ink,
+    color: green,
   },
   statLabel: {
     marginTop: 1,
     fontSize: 9,
     fontWeight: '700',
-    color: '#786c5e',
+    color: ink,
     textTransform: 'uppercase',
   },
   sectionLabel: {
@@ -567,7 +560,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 10,
     fontWeight: '900',
-    color: '#a47429',
+    color: orange,
     letterSpacing: 2.5,
     textTransform: 'uppercase',
   },
@@ -575,8 +568,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 28,
     borderWidth: 1,
-    borderColor: '#eadfce',
-    backgroundColor: 'rgba(255, 255, 255, 0.88)',
+    borderColor: gold,
+    backgroundColor: 'rgba(255, 255, 255, 0.94)',
   },
   menuIcon: {
     height: 40,
@@ -584,14 +577,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    backgroundColor: '#f7efe4',
+    backgroundColor: warmCream,
   },
   activeMenuIcon: {
-    backgroundColor: gold,
+    backgroundColor: green,
   },
   menuDivider: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f0e7da',
+    borderBottomColor: '#F4D77D',
     paddingBottom: 12,
   },
   menuTitle: {
@@ -600,13 +593,13 @@ const styles = StyleSheet.create({
     color: ink,
   },
   activeMenuTitle: {
-    color: gold,
+    color: green,
   },
   menuSubtitle: {
     marginTop: 2,
     fontSize: 11,
     fontWeight: '600',
-    color: '#8b8176',
+    color: '#5B5B5B',
   },
   countPill: {
     marginLeft: 8,
@@ -614,7 +607,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 11,
-    backgroundColor: ink,
+    backgroundColor: red,
     paddingHorizontal: 2,
     paddingVertical: 2,
   },
@@ -627,7 +620,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: ink,
+    backgroundColor: green,
     minHeight: 178,
     padding: 18,
   },
@@ -636,12 +629,12 @@ const styles = StyleSheet.create({
   },
   collectionOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(32, 27, 23, 0.68)',
+    backgroundColor: 'rgba(8, 122, 52, 0.68)',
   },
   collectionKicker: {
     fontSize: 9,
     fontWeight: '900',
-    color: softGold,
+    color: gold,
     letterSpacing: 2.4,
   },
   collectionTitle: {
@@ -656,13 +649,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     lineHeight: 17,
-    color: '#d6cab9',
+    color: warmCream,
   },
   promiseText: {
     marginTop: 7,
     fontSize: 9,
     fontWeight: '900',
-    color: ink,
+    color: green,
     textTransform: 'uppercase',
   },
   promiseDivider: {
@@ -671,18 +664,18 @@ const styles = StyleSheet.create({
     top: 8,
     bottom: 8,
     width: 1,
-    backgroundColor: '#eadfce',
+    backgroundColor: '#F4D77D',
   },
   helpTitle: {
     fontSize: 13,
     fontWeight: '900',
-    color: ink,
+    color: green,
   },
   helpCopy: {
     marginTop: 2,
     fontSize: 11,
     fontWeight: '600',
-    color: '#8a8075',
+    color: '#5B5B5B',
   },
   authTitle: {
     fontSize: 14,
@@ -693,7 +686,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 11,
     fontWeight: '600',
-    color: '#d6cab9',
+    color: warmCream,
   },
 });
 

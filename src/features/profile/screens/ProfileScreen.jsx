@@ -44,15 +44,14 @@ import { updateUserProfile } from '../../auth/store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const avatarImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
-const promoImage = require('../../../assets/images/products/signature-pendant.jpg.jpeg');
+const promoImage = require('../../../assets/images/products/modern-rings.jpg1.jpeg');
 const logoImage = require('../../../assets/images/logo/logo.png');
 
-const gold = '#bd8934';
-const darkGold = '#a66d16';
-const ink = '#191714';
-const muted = '#6f6860';
-const ivory = '#fbf7f1';
-const line = '#ece4d9';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ink = '#202020';
+const ivory = '#FFFDF4';
+const line = '#F4C23D';
 
 const profileBottomNavItems = categoryBottomNavItems.map(item => ({
   ...item,
@@ -90,9 +89,9 @@ function SectionCard({ title, rows, navigation }) {
               }
             }}
           >
-            <Icon size={19} color={ink} strokeWidth={1.8} />
+            <Icon size={19} color={green} strokeWidth={1.8} />
             <Text style={styles.menuLabel}>{row.label}</Text>
-            <ChevronRight size={18} color={ink} strokeWidth={1.9} />
+            <ChevronRight size={18} color={green} strokeWidth={1.9} />
           </TouchableOpacity>
         );
       })}
@@ -206,7 +205,7 @@ function ProfileScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
       <View style={styles.fixedHeader}>
         <View style={styles.topBar}>
@@ -224,7 +223,7 @@ function ProfileScreen({ navigation }) {
               style={styles.headerIcon}
               onPress={() => navigation.navigate('Notifications')}
             >
-              <Bell size={21} color={ink} strokeWidth={1.9} />
+              <Bell size={21} color="#FFFFFF" strokeWidth={1.9} />
               {unreadCount > 0 ? (
                 <View style={styles.notificationBadge}>
                   <Text style={styles.notificationBadgeText}>{unreadCount}</Text>
@@ -236,7 +235,7 @@ function ProfileScreen({ navigation }) {
               style={styles.headerIcon}
               onPress={() => navigation.navigate('Settings')}
             >
-              <Settings size={22} color={ink} strokeWidth={1.9} />
+              <Settings size={22} color="#FFFFFF" strokeWidth={1.9} />
             </TouchableOpacity>
           </View>
         </View>
@@ -267,18 +266,18 @@ function ProfileScreen({ navigation }) {
               style={styles.contactRow}
               onPress={openPersonalInfoEditor}
             >
-              <Phone size={21} color="#4b4742" strokeWidth={1.7} />
+              <Phone size={21} color={green} strokeWidth={1.7} />
               <Text style={styles.contactText}>{phoneLabel}</Text>
-              <ChevronRight size={20} color="#4b4742" strokeWidth={1.9} />
+              <ChevronRight size={20} color={green} strokeWidth={1.9} />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.82}
               style={styles.contactRow}
               onPress={openPersonalInfoEditor}
             >
-              <Mail size={21} color="#4b4742" strokeWidth={1.7} />
+              <Mail size={21} color={green} strokeWidth={1.7} />
               <Text style={styles.contactText}>{emailLabel}</Text>
-              <ChevronRight size={20} color="#4b4742" strokeWidth={1.9} />
+              <ChevronRight size={20} color={green} strokeWidth={1.9} />
             </TouchableOpacity>
           </View>
         </View>
@@ -286,7 +285,7 @@ function ProfileScreen({ navigation }) {
         <View style={styles.ordersCard}>
           <View style={styles.ordersHeader}>
             <View style={styles.orderBadge}>
-              <ShoppingBag size={20} color={gold} strokeWidth={1.8} />
+              <ShoppingBag size={20} color={green} strokeWidth={1.8} />
             </View>
             <Text style={styles.ordersTitle}>My Orders</Text>
             <TouchableOpacity
@@ -295,7 +294,7 @@ function ProfileScreen({ navigation }) {
               onPress={() => navigation.navigate('Orders')}
             >
               <Text style={styles.viewAllText}>View All</Text>
-              <ChevronRight size={18} color={darkGold} strokeWidth={2.1} />
+              <ChevronRight size={18} color={green} strokeWidth={2.1} />
             </TouchableOpacity>
           </View>
 
@@ -306,7 +305,7 @@ function ProfileScreen({ navigation }) {
               return (
                 <View key={item.id} style={styles.orderStatWrap}>
                   {index > 0 ? <View style={styles.orderDivider} /> : null}
-                  <Icon size={19} color={gold} strokeWidth={1.65} />
+                  <Icon size={19} color={green} strokeWidth={1.65} />
                   <Text style={styles.orderValue}>{item.value}</Text>
                   <Text style={styles.orderLabel}>{item.label}</Text>
                 </View>
@@ -373,7 +372,7 @@ function ProfileScreen({ navigation }) {
                 style={styles.closeButton}
                 onPress={() => setIsEditModalVisible(false)}
               >
-                <X size={18} color={ink} strokeWidth={2} />
+                <X size={18} color={green} strokeWidth={2} />
               </TouchableOpacity>
             </View>
 
@@ -381,7 +380,7 @@ function ProfileScreen({ navigation }) {
               <Text style={styles.fieldLabel}>Full Name</Text>
               <TextInput
                 placeholder="Enter your full name"
-                placeholderTextColor="#9a8f82"
+                placeholderTextColor="#202020"
                 style={styles.fieldInput}
                 value={profileForm.name}
                 onChangeText={value =>
@@ -396,7 +395,7 @@ function ProfileScreen({ navigation }) {
                 keyboardType="number-pad"
                 maxLength={10}
                 placeholder="10-digit mobile number"
-                placeholderTextColor="#9a8f82"
+                placeholderTextColor="#202020"
                 style={styles.fieldInput}
                 value={profileForm.phoneNumber}
                 onChangeText={value =>
@@ -414,7 +413,7 @@ function ProfileScreen({ navigation }) {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 placeholder="Enter your email"
-                placeholderTextColor="#9a8f82"
+                placeholderTextColor="#202020"
                 style={styles.fieldInput}
                 value={profileForm.email}
                 onChangeText={value =>
@@ -457,20 +456,23 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   scroll: {
     flex: 1,
+    backgroundColor: ivory,
   },
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(25, 23, 20, 0.34)',
+    backgroundColor: 'rgba(8, 122, 52, 0.32)',
     padding: 16,
   },
   modalCard: {
     borderRadius: 24,
-    backgroundColor: '#fbf7f1',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: ivory,
     paddingHorizontal: 18,
     paddingTop: 18,
     paddingBottom: 22,
@@ -481,7 +483,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   modalTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 24,
     lineHeight: 28,
@@ -489,7 +491,7 @@ const styles = StyleSheet.create({
   modalSubtitle: {
     marginTop: 4,
     maxWidth: 220,
-    color: muted,
+    color: ink,
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 17,
@@ -500,21 +502,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 17,
-    backgroundColor: '#f2ebdf',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   fieldGroup: {
     marginTop: 16,
   },
   fieldLabel: {
     marginBottom: 7,
-    color: ink,
+    color: green,
     fontSize: 12,
     fontWeight: '800',
   },
   fieldInput: {
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#e2d7c8',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     paddingHorizontal: 14,
     paddingVertical: 12,
@@ -534,11 +538,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#d8cbb9',
+    borderColor: gold,
     paddingVertical: 12,
   },
   secondaryButtonText: {
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '800',
   },
@@ -548,7 +552,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 14,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingVertical: 12,
   },
   primaryButtonText: {
@@ -566,8 +572,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     // borderBottomWidth: 1,
     // borderBottomColor: '#efe7dc',
-    backgroundColor: ivory,
-    // shadowColor: '#6b5742',
+    backgroundColor: green,
+    // shadowColor: '#087A34',
     // shadowOffset: { width: 0, height: 3 },
     // shadowOpacity: 0.06,
     // shadowRadius: 8,
@@ -638,8 +644,8 @@ const styles = StyleSheet.create({
     width: 70,
     borderRadius: 54,
     borderWidth: 1,
-    borderColor: '#eadfce',
-    backgroundColor: '#efe4d2',
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   cameraButton: {
     position: 'absolute',
@@ -651,9 +657,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 21,
     borderWidth: 1,
-    borderColor: '#eadfce',
+    borderColor: gold,
     backgroundColor: '#ffffff',
-    shadowColor: '#6b5742',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.12,
     shadowRadius: 10,
@@ -664,7 +670,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   greetingTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 26,
     lineHeight: 30,
@@ -672,7 +678,7 @@ const styles = StyleSheet.create({
   },
   greetingSubtitle: {
     marginTop: 4,
-    color: muted,
+    color: ink,
     fontSize: 14,
     fontWeight: '700',
     lineHeight: 20,
@@ -684,13 +690,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
-    paddingHorizontal:6,
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 6,
   },
   contactText: {
     marginLeft: 14,
     flex: 1,
-    color: ink,
+    color: green,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -698,12 +706,12 @@ const styles = StyleSheet.create({
     marginTop: 18,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#eadfce',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 11,
     paddingTop: 12,
     paddingBottom: 12,
-    shadowColor: '#6b5742',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 9 },
     shadowOpacity: 0.08,
     shadowRadius: 20,
@@ -719,8 +727,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    backgroundColor: '#ffffff',
-    shadowColor: '#6b5742',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 7 },
     shadowOpacity: 0.12,
     shadowRadius: 12,
@@ -729,7 +739,7 @@ const styles = StyleSheet.create({
   ordersTitle: {
     marginLeft: 12,
     flex: 1,
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 18,
     lineHeight: 22,
@@ -739,7 +749,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewAllText: {
-    color: darkGold,
+    color: green,
     fontSize: 13,
     fontWeight: '800',
   },
@@ -764,14 +774,14 @@ const styles = StyleSheet.create({
   },
   orderValue: {
     marginTop: 5,
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '900',
   },
   orderLabel: {
     marginTop: 3,
     textAlign: 'center',
-    color: '#2e2a26',
+    color: ink,
     fontSize: 9,
     fontWeight: '700',
     lineHeight: 12,
@@ -781,13 +791,13 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: line,
-    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 12,
     paddingTop: 12,
     paddingBottom: 4,
   },
   sectionTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 17,
     lineHeight: 21,
@@ -805,7 +815,7 @@ const styles = StyleSheet.create({
   menuLabel: {
     marginLeft: 15,
     flex: 1,
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '700',
   },
@@ -814,28 +824,30 @@ const styles = StyleSheet.create({
     minHeight: 118,
     overflow: 'hidden',
     borderRadius: 14,
-    backgroundColor: '#eadfce',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   promoImage: {
     borderRadius: 14,
   },
   promoShade: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255, 248, 239, 0.62)',
+    backgroundColor: 'rgba(255, 246, 223, 0.72)',
   },
   promoCopy: {
     maxWidth: '58%',
     padding: 12,
   },
   promoTitle: {
-    color: darkGold,
+    color: green,
     fontFamily: serifFont,
     fontSize: 18,
     lineHeight: 22,
   },
   promoText: {
     marginTop: 5,
-    color: '#5f5850',
+    color: '#ffff',
     fontSize: 11,
     fontWeight: '700',
     lineHeight: 15,
@@ -844,7 +856,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     alignSelf: 'flex-start',
     borderRadius: 8,
-    backgroundColor: ink,
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 13,
     paddingVertical: 8,
   },
@@ -855,7 +869,7 @@ const styles = StyleSheet.create({
   },
   addressHint: {
     marginTop: 12,
-    color: '#8b8176',
+    color: ink,
     fontSize: 11,
     fontWeight: '700',
     lineHeight: 16,

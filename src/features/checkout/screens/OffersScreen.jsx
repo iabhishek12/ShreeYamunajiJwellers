@@ -9,13 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, CheckCircle2, ChevronRight, Gift, Tag, TicketPercent } from 'lucide-react-native';
 import { checkoutOffers } from '../../../data/mock/checkoutMock';
 
-const gold = '#bd8934';
-const ink = '#191714';
-const ivory = '#fbf7f1';
-const line = '#eadfce';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ink = '#202020';
+const ivory = '#FFFDF4';
 
 const kindIconMap = {
   Coupon: Tag,
@@ -24,6 +25,7 @@ const kindIconMap = {
 };
 
 function OffersScreen({ navigation, route }) {
+  const insets = useSafeAreaInsets();
   const selectedOfferId = route.params?.selectedOfferId ?? 'welcome';
 
   const handleApplyOffer = offer => {
@@ -35,21 +37,22 @@ function OffersScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: Math.max(insets.top, 4) }]}>
         <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <ArrowLeft size={21} color={ink} strokeWidth={2.2} />
+          <ArrowLeft size={21} color="#FFFFFF" strokeWidth={2.2} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Offers & Vouchers</Text>
         <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView
+        style={styles.body}
         bounces={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
@@ -96,7 +99,7 @@ function OffersScreen({ navigation, route }) {
                   {selected ? 'Applied in Checkout' : 'Apply Offer'}
                 </Text>
                 {selected ? (
-                  <CheckCircle2 size={18} color="#2f8b55" strokeWidth={2} />
+                  <CheckCircle2 size={18} color={green} strokeWidth={2} />
                 ) : (
                   <ChevronRight size={18} color={gold} strokeWidth={2} />
                 )}
@@ -118,17 +121,17 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: line,
+    borderBottomColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 16,
     paddingBottom: 12,
-    paddingTop: 8,
   },
   backButton: {
     height: 38,
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 19,
   },
   headerTitle: {
-    color: ink,
+    color: '#FFFFFF',
     fontFamily: serifFont,
     fontSize: 24,
     lineHeight: 28,
@@ -146,13 +149,17 @@ const styles = StyleSheet.create({
   headerSpacer: {
     width: 38,
   },
+  body: {
+    flex: 1,
+    backgroundColor: ivory,
+  },
   content: {
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
   subtitle: {
     marginTop: 16,
-    color: '#71675e',
+    color: ink,
     fontSize: 12,
     fontWeight: '600',
     lineHeight: 18,
@@ -161,13 +168,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: line,
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 12,
   },
   selectedOfferCard: {
-    borderColor: '#bd8934',
-    backgroundColor: '#fff8ef',
+    borderColor: green,
+    backgroundColor: '#FFF6DF',
   },
   offerTop: {
     flexDirection: 'row',
@@ -179,7 +186,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 19,
-    backgroundColor: '#fbf2e6',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
   },
   offerCopy: {
     marginLeft: 10,
@@ -191,25 +200,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   offerKind: {
-    color: '#8f6422',
+    color: green,
     fontSize: 9,
     fontWeight: '800',
     textTransform: 'uppercase',
   },
   offerSavings: {
-    color: '#2f8b55',
+    color: green,
     fontSize: 9,
     fontWeight: '700',
   },
   offerTitle: {
     marginTop: 4,
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '700',
   },
   offerSubtitle: {
     marginTop: 3,
-    color: '#71675e',
+    color: ink,
     fontSize: 10,
     fontWeight: '500',
     lineHeight: 15,
@@ -218,7 +227,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     alignSelf: 'flex-start',
     borderRadius: 10,
-    backgroundColor: '#201b17',
+    backgroundColor: green,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
@@ -233,11 +242,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: '#efe4d5',
+    borderTopColor: gold,
     paddingTop: 10,
   },
   applyText: {
-    color: gold,
+    color: green,
     fontSize: 11,
     fontWeight: '700',
   },

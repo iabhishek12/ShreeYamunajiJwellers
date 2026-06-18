@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -25,9 +26,9 @@ import HomeHeader from '../../../components/home/HomeHeader';
 import { logout } from '../../auth/store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-const gold = '#bd8934';
-const softGold = '#d7c39a';
-const ink = '#201b17';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ink = '#202020';
 
 const configs = {
   Profile: {
@@ -121,17 +122,22 @@ function MenuInfoScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fbf7f1]">
-      <HomeHeader />
+    <SafeAreaView className="flex-1 bg-[#087A34]">
+      <StatusBar barStyle="light-content" backgroundColor={green} />
+
+      <View className="bg-[#087A34] pb-3">
+        <HomeHeader />
+      </View>
 
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.heroCard}>
           <View style={styles.heroGlow} />
-          <View className="h-14 w-14 items-center justify-center rounded-full bg-[#201b17]">
-            <Icon size={25} color={softGold} strokeWidth={1.9} />
+          <View className="h-14 w-14 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+            <Icon size={25} color={green} strokeWidth={1.9} />
           </View>
           <Text style={styles.eyebrow}>{config.eyebrow}</Text>
           <Text style={styles.title}>{config.title}</Text>
@@ -144,8 +150,8 @@ function MenuInfoScreen({ navigation, route }) {
 
             return (
               <View key={item.id} style={styles.infoRow}>
-                <View className="h-11 w-11 items-center justify-center rounded-full bg-[#f8efe3]">
-                  <RowIcon size={19} color={gold} strokeWidth={2} />
+                <View className="h-11 w-11 items-center justify-center rounded-full border border-[#F4C23D] bg-[#FFF6DF]">
+                  <RowIcon size={19} color={green} strokeWidth={2} />
                 </View>
                 <View className="ml-3 flex-1">
                   <Text style={styles.rowTitle}>{item.title}</Text>
@@ -164,7 +170,7 @@ function MenuInfoScreen({ navigation, route }) {
         {isProfile ? (
           <TouchableOpacity
             activeOpacity={0.88}
-            className="mt-5 flex-row items-center justify-center rounded-[24px] bg-[#201b17] px-5 py-4"
+            className="mt-5 flex-row items-center justify-center rounded-[18px] border border-[#F4C23D] bg-[#087A34] px-5 py-4"
             onPress={handleAuthPress}
           >
             {isAuthenticated ? (
@@ -179,7 +185,7 @@ function MenuInfoScreen({ navigation, route }) {
         ) : (
           <TouchableOpacity
             activeOpacity={0.88}
-            className="mt-5 flex-row items-center justify-center rounded-[24px] bg-[#201b17] px-5 py-4"
+            className="mt-5 flex-row items-center justify-center rounded-[18px] border border-[#F4C23D] bg-[#087A34] px-5 py-4"
             onPress={() => navigation.navigate('Categories')}
           >
             <Gem size={20} color="#ffffff" strokeWidth={2.2} />
@@ -200,6 +206,10 @@ const serifFont = Platform.select({
 });
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+    backgroundColor: '#FFFDF4',
+  },
   content: {
     paddingHorizontal: 20,
     paddingBottom: 30,
@@ -207,10 +217,10 @@ const styles = StyleSheet.create({
   heroCard: {
     marginTop: 18,
     overflow: 'hidden',
-    borderRadius: 34,
+    borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#e3d0ad',
-    backgroundColor: softGold,
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     padding: 22,
   },
   heroGlow: {
@@ -220,13 +230,13 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     borderRadius: 75,
-    backgroundColor: 'rgba(255, 255, 255, 0.32)',
+    backgroundColor: 'rgba(244, 194, 61, 0.2)',
   },
   eyebrow: {
     marginTop: 18,
     fontSize: 10,
     fontWeight: '900',
-    color: '#8f6422',
+    color: green,
     letterSpacing: 2.6,
   },
   title: {
@@ -234,7 +244,7 @@ const styles = StyleSheet.create({
     fontFamily: serifFont,
     fontSize: 31,
     lineHeight: 36,
-    color: ink,
+    color: green,
   },
   subtitle: {
     marginTop: 8,
@@ -242,7 +252,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     lineHeight: 20,
-    color: '#6e614f',
+    color: ink,
   },
   infoRow: {
     marginBottom: 12,
@@ -250,26 +260,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 24,
     borderWidth: 1,
-    borderColor: '#eadfce',
-    backgroundColor: 'rgba(255, 255, 255, 0.86)',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 14,
     paddingVertical: 13,
   },
   rowTitle: {
     fontSize: 14,
     fontWeight: '900',
-    color: ink,
+    color: green,
   },
   rowSubtitle: {
     marginTop: 2,
     fontSize: 11,
     fontWeight: '600',
     lineHeight: 16,
-    color: '#8b8176',
+    color: ink,
   },
   valuePill: {
     borderRadius: 14,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 9,
     paddingVertical: 5,
   },

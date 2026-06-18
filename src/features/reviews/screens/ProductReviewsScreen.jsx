@@ -9,16 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, ChevronRight, ShieldCheck, Star } from 'lucide-react-native';
 import { productDetails } from '../../../data/mock/productMock';
 import { useAppSelector } from '../../../store/hooks';
 
-const ink = '#191714';
-const gold = '#bd8934';
-const ivory = '#fbf7f1';
-const line = '#eadfce';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ivory = '#FFFDF4';
+const ink = '#202020';
 
 function ProductReviewsScreen({ navigation, route }) {
+  const insets = useSafeAreaInsets();
   const productId = route.params?.productId ?? 'infinity-sparkle-ring';
   const product = productDetails[productId] ?? productDetails['infinity-sparkle-ring'];
   const reviewState = useAppSelector(
@@ -27,21 +29,22 @@ function ProductReviewsScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: Math.max(insets.top, 4) }]}>
         <TouchableOpacity
           activeOpacity={0.85}
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <ArrowLeft size={21} color={ink} strokeWidth={2.2} />
+          <ArrowLeft size={21} color="#FFFFFF" strokeWidth={2.2} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Reviews</Text>
         <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView
+        style={styles.body}
         bounces={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
@@ -105,7 +108,7 @@ function ProductReviewsScreen({ navigation, route }) {
               </View>
               {review.verified ? (
                 <View style={styles.verifiedPill}>
-                  <ShieldCheck size={13} color="#35694f" strokeWidth={2} />
+                  <ShieldCheck size={13} color={green} strokeWidth={2} />
                   <Text style={styles.verifiedText}>Verified</Text>
                 </View>
               ) : null}
@@ -141,18 +144,17 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   header: {
-    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: line,
+    borderBottomColor: gold,
+    backgroundColor: green,
     paddingHorizontal: 16,
-    paddingBottom: 4,
-    paddingTop: 12,
+    paddingBottom: 12,
   },
   backButton: {
     height: 38,
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     borderRadius: 19,
   },
   headerTitle: {
-    color: ink,
+    color: '#FFFFFF',
     fontFamily: serifFont,
     fontSize: 24,
     lineHeight: 28,
@@ -170,13 +172,17 @@ const styles = StyleSheet.create({
   headerSpacer: {
     width: 38,
   },
+  body: {
+    flex: 1,
+    backgroundColor: ivory,
+  },
   content: {
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
   productName: {
     marginTop: 16,
-    color: ink,
+    color: green,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -186,12 +192,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: line,
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 10,
   },
   averageText: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 26,
     lineHeight: 30,
@@ -202,7 +208,7 @@ const styles = StyleSheet.create({
   },
   summaryMeta: {
     marginTop: 6,
-    color: '#72685f',
+    color: ink,
     fontSize: 11,
     fontWeight: '700',
   },
@@ -211,7 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   recommendValue: {
-    color: gold,
+    color: green,
     fontSize: 20,
     fontWeight: '800',
   },
@@ -219,7 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     maxWidth: 120,
     textAlign: 'right',
-    color: '#756b61',
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
     lineHeight: 14,
@@ -230,7 +236,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
-    backgroundColor: '#201b17',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: green,
     paddingVertical: 13,
   },
   actionText: {
@@ -243,7 +251,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: line,
+    borderColor: gold,
     backgroundColor: '#ffffff',
     padding: 14,
   },
@@ -257,10 +265,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 21,
-    backgroundColor: '#f6eee1',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: ivory,
   },
   reviewerInitials: {
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '900',
   },
@@ -269,13 +279,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   reviewerName: {
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '700',
   },
   reviewerMeta: {
     marginTop: 2,
-    color: '#7a7066',
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
   },
@@ -283,13 +293,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,
-    backgroundColor: '#ebf7ef',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: ivory,
     paddingHorizontal: 8,
     paddingVertical: 5,
   },
   verifiedText: {
     marginLeft: 4,
-    color: '#35694f',
+    color: green,
     fontSize: 10,
     fontWeight: '800',
   },
@@ -299,13 +311,13 @@ const styles = StyleSheet.create({
   },
   reviewTitle: {
     marginTop: 10,
-    color: ink,
+    color: green,
     fontSize: 12,
     fontWeight: '700',
   },
   reviewComment: {
     marginTop: 5,
-    color: '#5f5750',
+    color: ink,
     fontSize: 12,
     fontWeight: '600',
     lineHeight: 18,

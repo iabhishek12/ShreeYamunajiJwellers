@@ -29,11 +29,11 @@ import { productList } from '../../../data/mock/productMock';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addWishlistItem, removeWishlistProduct } from '../../wishlist/store/wishlistSlice';
 
-const gold = '#bd8934';
-const ink = '#191714';
-const muted = '#7d7368';
-const ivory = '#fbf7f1';
-const line = '#eadfce';
+const green = '#087A34';
+const gold = '#F4C23D';
+const ink = '#202020';
+const ivory = '#FFFDF4';
+const line = '#F4C23D';
 
 const productBottomNavItems = categoryBottomNavItems.map(item => ({
   ...item,
@@ -96,7 +96,7 @@ function FilterChip({ active, icon, label, onPress, wide }) {
       {Icon ? (
         <Icon
           size={17}
-          color={active ? gold : '#45403a'}
+          color={active ? green : ink}
           strokeWidth={2}
           style={styles.filterIcon}
         />
@@ -104,7 +104,7 @@ function FilterChip({ active, icon, label, onPress, wide }) {
       <Text style={[styles.filterText, active ? styles.activeFilterText : null]}>
         {label}
       </Text>
-      <ChevronDown size={16} color={active ? gold : '#4d4742'} strokeWidth={2} />
+      <ChevronDown size={16} color={active ? green : ink} strokeWidth={2} />
     </TouchableOpacity>
   );
 }
@@ -136,8 +136,8 @@ function ProductCard({ item, listMode, navigation, onToggleWishlist, wishlistIte
         >
           <Heart
             size={18}
-            color={isWishlisted ? gold : '#292521'}
-            fill={isWishlisted ? gold : 'transparent'}
+            color={isWishlisted ? green : ink}
+            fill={isWishlisted ? green : 'transparent'}
             strokeWidth={2}
           />
         </TouchableOpacity>
@@ -158,8 +158,8 @@ function ProductCard({ item, listMode, navigation, onToggleWishlist, wishlistIte
               <Star
                 key={`${item.id}-${index}`}
                 size={11}
-                color="#c49039"
-                fill="#c49039"
+                color={gold}
+                fill={gold}
                 strokeWidth={1.6}
               />
             ))}
@@ -304,9 +304,9 @@ function AllProductsScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={ivory} />
+      <StatusBar barStyle="light-content" backgroundColor={green} />
 
-      <View style={[styles.headerWrap, { paddingTop: Math.max(insets.top, 8) }]}>
+      <View style={[styles.headerWrap, { paddingTop: Math.max(insets.top, 4) }]}>
         <HomeHeader />
       </View>
 
@@ -338,7 +338,7 @@ function AllProductsScreen({ navigation, route }) {
               >
                 <SlidersHorizontal
                   size={18}
-                  color={filtersVisible ? gold : '#3f3934'}
+                  color={filtersVisible ? green : ink}
                   strokeWidth={2}
                 />
                 <Text style={styles.primaryFilterText}>
@@ -408,7 +408,7 @@ function AllProductsScreen({ navigation, route }) {
                 >
                   <LayoutGrid
                     size={19}
-                    color={viewMode === 'grid' ? gold : '#6f675e'}
+                    color={viewMode === 'grid' ? green : ink}
                     strokeWidth={2}
                   />
                 </TouchableOpacity>
@@ -419,7 +419,7 @@ function AllProductsScreen({ navigation, route }) {
                 >
                   <List
                     size={19}
-                    color={viewMode === 'list' ? gold : '#6f675e'}
+                    color={viewMode === 'list' ? green : ink}
                     strokeWidth={2}
                   />
                 </TouchableOpacity>
@@ -498,22 +498,23 @@ const serifFont = Platform.select({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: ivory,
+    backgroundColor: green,
   },
   headerWrap: {
-    backgroundColor: ivory,
-    paddingBottom: 2,
+    backgroundColor: green,
+    paddingBottom: 3,
   },
   listContent: {
     paddingHorizontal: 14,
     paddingBottom: 18,
+    backgroundColor: ivory,
   },
   titleWrap: {
     paddingTop: 8,
     paddingBottom: 10,
   },
   screenTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 30,
     lineHeight: 36,
@@ -521,7 +522,7 @@ const styles = StyleSheet.create({
   },
   screenSubtitle: {
     marginTop: 5,
-    color: '#686058',
+    color: ink,
     fontSize: 13,
     fontWeight: '600',
     lineHeight: 20,
@@ -538,12 +539,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 11,
     borderWidth: 1,
-    borderColor: '#e6dcca',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     paddingHorizontal: 10,
   },
   primaryFilterButtonActive: {
-    backgroundColor: '#fffaf0',
+    backgroundColor: '#FFF6DF',
   },
   primaryFilterText: {
     marginLeft: 6,
@@ -563,19 +564,21 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(25, 23, 20, 0.34)',
+    backgroundColor: 'rgba(8, 122, 52, 0.32)',
   },
   modalCard: {
     maxHeight: '68%',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    backgroundColor: '#fbf7f1',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: ivory,
     paddingHorizontal: 16,
     paddingTop: 18,
     paddingBottom: 24,
   },
   modalTitle: {
-    color: ink,
+    color: green,
     fontFamily: serifFont,
     fontSize: 24,
     lineHeight: 28,
@@ -588,22 +591,22 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e6dcca',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   selectedOptionRow: {
-    borderColor: '#ecd6ab',
-    backgroundColor: '#fff6e6',
+    borderColor: green,
+    backgroundColor: '#FFF6DF',
   },
   optionText: {
-    color: '#2d2824',
+    color: ink,
     fontSize: 12,
     fontWeight: '700',
   },
   selectedOptionText: {
-    color: ink,
+    color: green,
   },
   filterChip: {
     height: 30,
@@ -612,13 +615,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 11,
     borderWidth: 1,
-    borderColor: '#e6dcca',
+    borderColor: gold,
     backgroundColor: '#ffffff',
     paddingHorizontal: 6,
   },
   activeFilterChip: {
-    backgroundColor: '#fff6e6',
-    borderColor: '#ecd6ab',
+    backgroundColor: '#FFF6DF',
+    borderColor: green,
   },
   wideFilterChip: {
     minWidth: 90,
@@ -628,19 +631,19 @@ const styles = StyleSheet.create({
   },
   filterText: {
     marginRight: 5,
-    color: '#2d2824',
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
   },
   activeFilterText: {
-    color: ink,
+    color: green,
   },
   clearButton: {
     justifyContent: 'center',
     paddingHorizontal: 4,
   },
   clearButtonText: {
-    color: gold,
+    color: green,
     fontSize: 10,
     fontWeight: '800',
   },
@@ -655,7 +658,7 @@ const styles = StyleSheet.create({
     paddingTop: 14,
   },
   resultsText: {
-    color: '#69615a',
+    color: ink,
     fontSize: 13,
     fontWeight: '700',
   },
@@ -665,7 +668,7 @@ const styles = StyleSheet.create({
   },
   viewLabel: {
     marginRight: 8,
-    color: '#6a6259',
+    color: ink,
     fontSize: 13,
     fontWeight: '700',
   },
@@ -679,9 +682,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#efe5d8',
+    borderColor: gold,
     backgroundColor: '#ffffff',
-    shadowColor: '#6b5742',
+    shadowColor: green,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.05,
     shadowRadius: 12,
@@ -698,7 +701,7 @@ const styles = StyleSheet.create({
   imageWrap: {
     position: 'relative',
     overflow: 'hidden',
-    backgroundColor: '#f7f0e6',
+    backgroundColor: '#FFF6DF',
   },
   listImageWrap: {
     width: 112,
@@ -713,12 +716,14 @@ const styles = StyleSheet.create({
     left: 8,
     top: 8,
     borderRadius: 6,
-    backgroundColor: '#fbefdc',
+    borderWidth: 1,
+    borderColor: gold,
+    backgroundColor: '#FFF6DF',
     paddingHorizontal: 7,
     paddingVertical: 4,
   },
   badgeText: {
-    color: '#3d352d',
+    color: green,
     fontSize: 8,
     fontWeight: '900',
   },
@@ -743,19 +748,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   productTitle: {
-    color: ink,
+    color: green,
     fontSize: 13,
     fontWeight: '800',
   },
   productMeta: {
     marginTop: 3,
-    color: muted,
+    color: ink,
     fontSize: 10,
     fontWeight: '600',
   },
   productPrice: {
     marginTop: 8,
-    color: '#141210',
+    color: green,
     fontSize: 15,
     fontWeight: '900',
   },
@@ -769,7 +774,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     marginLeft: 5,
-    color: '#5a534b',
+    color: ink,
     fontSize: 10,
     fontWeight: '700',
   },

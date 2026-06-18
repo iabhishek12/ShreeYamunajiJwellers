@@ -55,6 +55,11 @@ const categoryLabelMap = {
   'mens-jewelry': "Men's Jewelry",
 };
 
+const green = '#087A34';
+const gold = '#F4C23D';
+const softGold = '#FFF6DF';
+const ink = '#202020';
+
 function ProductDetailsScreen({ navigation, route }) {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
@@ -163,17 +168,20 @@ function ProductDetailsScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fcf8f2]">
-      <StatusBar barStyle="dark-content" backgroundColor="#fcf8f2" />
+    <SafeAreaView className="flex-1 bg-[#087A34]">
+      <StatusBar barStyle="light-content" backgroundColor="#087A34" />
 
-      <View className="flex-1" style={{ paddingTop: Math.max(insets.top, 6) }}>
-        <View className="flex-row items-center justify-between border-b border-[#eee4d5] px-4 pb-4">
+      <View className="flex-1 bg-[#FFFDF4]">
+        <View
+          className="flex-row items-center justify-between border-b border-[#F4C23D] bg-[#087A34] px-4 pb-3"
+          style={{ paddingTop: Math.max(insets.top, 4) }}
+        >
           <TouchableOpacity
             activeOpacity={0.85}
             onPress={() => navigation.goBack()}
             className="h-10 w-10 items-center justify-center rounded-full"
           >
-            <ArrowLeft size={22} color="#201b17" strokeWidth={2.2} />
+            <ArrowLeft size={22} color="#FFFFFF" strokeWidth={2.2} />
           </TouchableOpacity>
 
           <View className="flex-row items-center">
@@ -181,7 +189,7 @@ function ProductDetailsScreen({ navigation, route }) {
               activeOpacity={0.85}
               className="mr-2 h-10 w-10 items-center justify-center rounded-full"
             >
-              <Share2 size={20} color="#201b17" strokeWidth={2.1} />
+              <Share2 size={20} color="#FFFFFF" strokeWidth={2.1} />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.85}
@@ -190,8 +198,8 @@ function ProductDetailsScreen({ navigation, route }) {
             >
               <Heart
                 size={20}
-                color={isWishlisted ? '#bd8934' : '#201b17'}
-                fill={isWishlisted ? '#bd8934' : 'transparent'}
+                color={isWishlisted ? gold : '#FFFFFF'}
+                fill={isWishlisted ? gold : 'transparent'}
                 strokeWidth={2.1}
               />
             </TouchableOpacity>
@@ -200,9 +208,9 @@ function ProductDetailsScreen({ navigation, route }) {
               onPress={() => navigation.navigate('Cart')}
               className="relative h-10 w-10 items-center justify-center rounded-full"
             >
-              <ShoppingBag size={20} color="#201b17" strokeWidth={2.1} />
+              <ShoppingBag size={20} color="#FFFFFF" strokeWidth={2.1} />
               {cartCount > 0 ? (
-                <View className="absolute right-0 top-0 h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ba8531] px-1">
+                <View className="absolute right-0 top-0 h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#E42B1B] px-1">
                   <Text className="text-[10px] font-bold text-white">
                     {cartCount}
                   </Text>
@@ -230,8 +238,8 @@ function ProductDetailsScreen({ navigation, route }) {
                     onPress={() => setSelectedGalleryId(item.id)}
                     className={`mb-2.5 h-[60px] overflow-hidden rounded-[14px] border ${
                       selected
-                        ? 'border-[#c08d39] bg-[#fff6e7]'
-                        : 'border-[#e7ddcf] bg-white'
+                        ? 'border-[#F4C23D] bg-[#FFF6DF]'
+                        : 'border-[#F4C23D] bg-white'
                     }`}
                   >
                     <Image source={item.image} resizeMode="cover" className="h-full w-full" />
@@ -241,7 +249,7 @@ function ProductDetailsScreen({ navigation, route }) {
                         style={styles.videoOverlay}
                       >
                         {/* <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
-                          <Play size={14} color="#6f5a43" fill="#6f5a43" strokeWidth={1.6} />
+                          <Play size={14} color="#087A34" fill="#087A34" strokeWidth={1.6} />
                         </View> */}
                       </View>
                     ) : null}
@@ -250,7 +258,7 @@ function ProductDetailsScreen({ navigation, route }) {
               })}
             </View>
 
-            <View className="flex-1 h-[280px] overflow-hidden rounded-[28px] bg-[#f8efe1] ">
+            <View className="h-[280px] flex-1 overflow-hidden rounded-[18px] border border-[#F4C23D] bg-[#FFF6DF]">
               <Image
                 source={selectedImage.image}
                 resizeMode="cover"
@@ -260,15 +268,15 @@ function ProductDetailsScreen({ navigation, route }) {
           </View>
 
           <View className="px-4 pb-10">
-            <Text className="mt-5 text-[11px] font-bold tracking-[4px] text-[#c08d39]">
+            <Text className="mt-5 text-[11px] font-bold text-[#F4C23D]">
               {product.badge}
             </Text>
 
-            <Text className="mt-2 text-[#15120f]" style={styles.productTitle}>
+            <Text className="mt-2 text-[#087A34]" style={styles.productTitle}>
               {product.title}
             </Text>
 
-            <Text className="mt-0 text-[15px] text-[#564d44]">{product.subtitle}</Text>
+            <Text className="mt-0 text-[15px] text-[#202020]">{product.subtitle}</Text>
 
             <View className="mt-2 flex-row items-center">
               <View className="flex-row">
@@ -276,33 +284,33 @@ function ProductDetailsScreen({ navigation, route }) {
                   <Star
                     key={`rating-star-${index}`}
                     size={18}
-                    color="#b98433"
-                    fill="#b98433"
+                    color={gold}
+                    fill={gold}
                     strokeWidth={1.6}
                   />
                 ))}
               </View>
-              <Text className="ml-2 text-[15px] font-medium text-[#2d251d]">
+              <Text className="ml-2 text-[15px] font-medium text-[#087A34]">
                 {reviewState?.summary?.average?.toFixed(1) || product.rating}
               </Text>
-              <Text className="ml-2 text-[15px] text-[#675e55]">
+              <Text className="ml-2 text-[15px] text-[#202020]">
                 ({reviewState?.summary?.totalCount || product.reviews} reviews)
               </Text>
             </View>
 
             <View className="mt-4 flex-row items-center">
-              <Text className="text-[22px] font-bold text-[#111111]">Rs {product.price}</Text>
-              <Text className="ml-3 text-[18px] text-[#8a8178]" style={styles.strikeText}>
+              <Text className="text-[22px] font-bold text-[#087A34]">Rs {product.price}</Text>
+              <Text className="ml-3 text-[18px] text-[#202020]" style={styles.strikeText}>
                 Rs {product.originalPrice}
               </Text>
-              <View className="ml-3 rounded-full bg-[#f8ebd9] px-4 py-2">
-                <Text className="text-[12px] font-bold text-[#c08d39]">
+              <View className="ml-3 rounded-full bg-[#FFF6DF] px-4 py-2">
+                <Text className="text-[12px] font-bold text-[#087A34]">
                   {product.discountLabel}
                 </Text>
               </View>
             </View>
 
-            <View className="mt-5 rounded-[16px] border border-[#e8dece] bg-[#fffdf9] px-1 py-1.5">
+            <View className="mt-5 rounded-[18px] border border-[#F4C23D] bg-[#087A34] px-1 py-2">
               <View className="flex-row">
                 {product.assuranceItems.map((item, index) => {
                   const Icon = assuranceIconMap[item.icon];
@@ -312,15 +320,15 @@ function ProductDetailsScreen({ navigation, route }) {
                       key={item.id}
                       className={`flex-1 items-center px-2 ${
                         index < product.assuranceItems.length - 1
-                          ? 'border-r border-[#efe5d7]'
+                          ? 'border-r border-[#F4C23D]'
                           : ''
                       }`}
                     >
-                      <Icon size={18} color="#c08d39" strokeWidth={1.8} />
-                      <Text className="mt-2 text-center text-[9px] font-semibold leading-[12px] text-[#3d352d]">
+                      <Icon size={18} color={gold} strokeWidth={1.8} />
+                      <Text className="mt-2 text-center text-[9px] font-semibold leading-[12px] text-white">
                         {item.title}
                       </Text>
-                      <Text className="text-center text-[9px] font-semibold leading-[12px] text-[#3d352d]">
+                      <Text className="text-center text-[9px] font-semibold leading-[12px] text-white">
                         {item.subtitle}
                       </Text>
                     </View>
@@ -330,10 +338,10 @@ function ProductDetailsScreen({ navigation, route }) {
             </View>
 
             <View className="mt-4 flex-row items-center justify-between">
-              <Text className="text-[16px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
+              <Text className="text-[16px] font-semibold text-[#087A34]" style={styles.sectionTitle}>
                 Metal
               </Text>
-              <Text className="text-[13px] text-[#7d705f]">{selectedMetal.value}</Text>
+              <Text className="text-[13px] text-[#202020]">{selectedMetal.value}</Text>
             </View>
 
             <View className="mt-1.5 flex-row justify-between">
@@ -347,15 +355,15 @@ function ProductDetailsScreen({ navigation, route }) {
                     onPress={() => setSelectedMetalId(item.id)}
                     className={`w-[31%] rounded-[14px] border px-2 py-2.5 ${
                       selected
-                        ? 'border-[#c08d39] bg-[#fff8eb]'
-                        : 'border-[#e7ddcf] bg-white'
+                        ? 'border-[#087A34] bg-[#FFF6DF]'
+                        : 'border-[#F4C23D] bg-white'
                     }`}
                   >
                     <View
                       className="mx-auto h-3.5 w-3.5 rounded-full"
                       style={{ backgroundColor: item.color }}
                     />
-                    <Text className="mt-2 text-center text-[11px] font-medium text-[#31261c]">
+                    <Text className="mt-2 text-center text-[11px] font-medium text-[#202020]">
                       {item.label}
                     </Text>
                   </TouchableOpacity>
@@ -364,10 +372,10 @@ function ProductDetailsScreen({ navigation, route }) {
             </View>
 
             <View className="mt-5 flex-row items-center justify-between">
-              <Text className="text-[16px] font-semibold text-[#17120f]" style={styles.sectionTitle}>
+              <Text className="text-[16px] font-semibold text-[#087A34]" style={styles.sectionTitle}>
                 Size
               </Text>
-              <Text className="text-[13px] text-[#7d705f]">Choose ring size</Text>
+              <Text className="text-[13px] text-[#202020]">Choose ring size</Text>
             </View>
 
             <View className="mt-1.5 flex-row justify-between">
@@ -381,13 +389,13 @@ function ProductDetailsScreen({ navigation, route }) {
                     onPress={() => setSelectedSizeId(item.id)}
                     className={`w-[22%] items-center rounded-[14px] border px-2 py-2.5 ${
                       selected
-                        ? 'border-[#c08d39] bg-[#fff8eb]'
-                        : 'border-[#e7ddcf] bg-white'
+                        ? 'border-[#087A34] bg-[#FFF6DF]'
+                        : 'border-[#F4C23D] bg-white'
                     }`}
                   >
                     <Text
                       className={`text-[14px] font-semibold ${
-                        selected ? 'text-[#9f6f28]' : 'text-[#31261c]'
+                        selected ? 'text-[#087A34]' : 'text-[#202020]'
                       }`}
                     >
                       {item.label}
@@ -399,24 +407,24 @@ function ProductDetailsScreen({ navigation, route }) {
 
             <View className="mt-4 flex-row items-end justify-between">
               <View className="flex-1 pr-4">
-                <Text className="text-[16px] font-bold text-[#17120f]" style={styles.sectionTitle}>
+                <Text className="text-[16px] font-bold text-[#087A34]" style={styles.sectionTitle}>
                   Quantity
                 </Text>
                 <View className="mt-2.5 flex-row items-center">
                   <View className="mr-2 h-2 w-2 rounded-full bg-[#1ab37a]" />
-                  <Text className="text-[13px] text-[#5b5148]">{product.stockLabel}</Text>
+                  <Text className="text-[13px] text-[#202020]">{product.stockLabel}</Text>
                 </View>
               </View>
 
-              <View className="flex-row items-center rounded-[15px] border border-[#e7ddcf] bg-white px-1 py-0.5">
+              <View className="flex-row items-center rounded-[15px] border border-[#F4C23D] bg-white px-1 py-0.5">
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={() => setQuantity(current => Math.max(1, current - 1))}
                   className="h-10 w-10 items-center justify-center"
                 >
-                  <Minus size={16} color="#7b736b" strokeWidth={2.1} />
+                  <Minus size={16} color={green} strokeWidth={2.1} />
                 </TouchableOpacity>
-                <Text className="mx-2.5 min-w-[18px] text-center text-[17px] font-semibold text-[#17120f]">
+                <Text className="mx-2.5 min-w-[18px] text-center text-[17px] font-semibold text-[#087A34]">
                   {quantity}
                 </Text>
                 <TouchableOpacity
@@ -424,7 +432,7 @@ function ProductDetailsScreen({ navigation, route }) {
                   onPress={() => setQuantity(current => current + 1)}
                   className="h-9 w-10 items-center justify-center"
                 >
-                  <Plus size={16} color="#17120f" strokeWidth={2.1} />
+                  <Plus size={16} color={green} strokeWidth={2.1} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -433,21 +441,21 @@ function ProductDetailsScreen({ navigation, route }) {
               <TouchableOpacity
                 activeOpacity={0.92}
                 onPress={handleAddToCart}
-                className="w-[45%] items-center rounded-[16px] bg-[#1a1a1a] py-4"
+                className="w-[45%] items-center rounded-[16px] border border-[#F4C23D] bg-[#087A34] py-4"
               >
-                <Text className="text-[18px] font-semibold text-white">Add to Bag</Text>
+                <Text className="text-[18px] font-semibold text-white">Add to Cart</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 activeOpacity={0.92}
                 onPress={handleBuyNow}
-                className="w-[47%] items-center rounded-[16px] bg-[#bc8735] py-4"
+                className="w-[47%] items-center border border-[#087A34] rounded-[16px] bg-[#F4C23D] py-4"
               >
-                <Text className="text-[18px] font-semibold text-white">Buy Now</Text>
+                <Text className="text-[18px] font-semibold text-[#087A34] ">Buy Now</Text>
               </TouchableOpacity>
             </View>
 
-            <View className="mt-9 flex-row overflow-hidden rounded-[18px] border border-[#e8dece] bg-[#fbf8f1]">
+            <View className="mt-9 flex-row overflow-hidden rounded-[18px] border border-[#F4C23D] bg-white">
               {product.highlights.map((item, index) => {
                 const Icon = highlightIconMap[item.icon];
 
@@ -455,15 +463,15 @@ function ProductDetailsScreen({ navigation, route }) {
                   <View
                     key={item.id}
                     className={`flex-1 flex-row items-center px-2 py-1.5 ${
-                      index === 0 ? 'border-r border-[#ebe1d3]' : ''
+                      index === 0 ? 'border-r border-[#F4C23D]' : ''
                     }`}
                   >
-                    <Icon size={20} color="#c08d39" strokeWidth={1.8} />
+                    <Icon size={20} color={green} strokeWidth={1.8} />
                     <View className="ml-3 flex-1">
-                      <Text className="text-[11px] font-semibold text-[#2f2924]">
+                      <Text className="text-[11px] font-semibold text-[#087A34]">
                         {item.title}
                       </Text>
-                      <Text className="mt-1 text-[9px] text-[#7a7168]">
+                      <Text className="mt-1 text-[9px] text-[#202020]">
                         {item.description}
                       </Text>
                     </View>
@@ -472,10 +480,10 @@ function ProductDetailsScreen({ navigation, route }) {
               })}
             </View>
 
-            <Text className="mt-8 text-[#17120f]" style={styles.detailsTitle}>
+            <Text className="mt-8 text-[#087A34]" style={styles.detailsTitle}>
               Details
             </Text>
-            <Text className="mt-1.5 text-[14px] leading-[20px] text-[#4f4740]">
+            <Text className="mt-1.5 text-[14px] leading-[20px] text-[#202020]">
               {product.details}
             </Text>
 
@@ -500,7 +508,7 @@ function ProductDetailsScreen({ navigation, route }) {
                     Read customer feedback and ratings
                   </Text>
                 </View>
-                <ChevronRight size={16} color="#6b5a43" strokeWidth={2.1} />
+                <ChevronRight size={16} color={green} strokeWidth={2.1} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -514,7 +522,7 @@ function ProductDetailsScreen({ navigation, route }) {
                     Share your experience with this piece
                   </Text>
                 </View>
-                <ChevronRight size={16} color="#6b5a43" strokeWidth={2.1} />
+                <ChevronRight size={16} color={green} strokeWidth={2.1} />
               </TouchableOpacity>
             </View>
 
@@ -560,8 +568,8 @@ function ProductDetailsScreen({ navigation, route }) {
                       <View style={styles.similarRatingRow}>
                         <Star
                           size={11}
-                          color="#b98433"
-                          fill="#b98433"
+                          color={gold}
+                          fill={gold}
                           strokeWidth={1.6}
                         />
                         <Text style={styles.similarRatingText}>
@@ -619,28 +627,27 @@ const styles = StyleSheet.create({
   detailCardsWrap: {
     marginTop: 10,
     borderWidth: 1,
-  
-    borderColor: '#e8dece',
+    borderColor: gold,
     padding: 4,
   },
   detailCard: {
     marginTop: 6,
     borderRadius: 13,
     borderWidth: 1,
-    borderColor: '#e8dece',
-    backgroundColor: '#fffdf9',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
   detailCardLabel: {
-    color: '#8a7d6f',
+    color: green,
     fontSize: 9,
     fontWeight: '800',
     textTransform: 'uppercase',
   },
   detailCardValue: {
     marginTop: 4,
-    color: '#17120f',
+    color: ink,
     fontSize: 11,
     fontWeight: '700',
     lineHeight: 16,
@@ -652,19 +659,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#e7ddcf',
-    backgroundColor: '#fffdf9',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 12,
     paddingVertical: 11,
   },
   reviewActionTitle: {
-    color: '#17120f',
+    color: green,
     fontSize: 13,
     fontWeight: '800',
   },
   reviewActionMeta: {
     marginTop: 3,
-    color: '#746c63',
+    color: ink,
     fontSize: 10,
     fontWeight: '600',
   },
@@ -677,7 +684,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   similarViewAllText: {
-    color: '#bc8735',
+    color: green,
     fontSize: 12,
     fontWeight: '800',
   },
@@ -691,26 +698,26 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#e8dece',
-    backgroundColor: '#fffdf9',
+    borderColor: gold,
+    backgroundColor: '#FFFFFF',
     paddingBottom: 8,
   },
   similarImage: {
     height: 106,
     width: '100%',
-    backgroundColor: '#f6efe3',
+    backgroundColor: softGold,
   },
   similarTitle: {
     marginTop: 8,
     paddingHorizontal: 9,
-    color: '#17120f',
+    color: green,
     fontSize: 12,
     fontWeight: '700',
   },
   similarSubtitle: {
     marginTop: 3,
     paddingHorizontal: 9,
-    color: '#6f665d',
+    color: ink,
     fontSize: 9,
     fontWeight: '600',
   },
@@ -722,14 +729,14 @@ const styles = StyleSheet.create({
   },
   similarRatingText: {
     marginLeft: 4,
-    color: '#5d554d',
+    color: ink,
     fontSize: 9,
     fontWeight: '700',
   },
   similarPrice: {
     marginTop: 7,
     paddingHorizontal: 9,
-    color: '#17120f',
+    color: green,
     fontSize: 13,
     fontWeight: '800',
   },
@@ -737,7 +744,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   videoOverlay: {
-    backgroundColor: 'rgba(255,255,255,0.48)',
+    backgroundColor: 'rgba(255,253,244,0.48)',
   },
 });
 
